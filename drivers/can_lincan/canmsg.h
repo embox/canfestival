@@ -1,4 +1,4 @@
-/* canmsg.h - common kernel-space and user-space CAN message structure
+/* canmsg.h - common CAN message structure
  * Linux CAN-bus device driver.
  * Written by Pavel Pisa - OCERA team member
  * email:pisa@cmp.felk.cvut.cz
@@ -9,17 +9,8 @@
 #ifndef _CANMSG_T_H
 #define _CANMSG_T_H
 
-#ifdef __KERNEL__
-
-#include <linux/time.h>
-#include <linux/types.h>
-
-#else /* __KERNEL__ */
-
 #include <sys/time.h>
 #include <sys/types.h>
-
-#endif /* __KERNEL__ */
 
 #ifdef __cplusplus
 extern "C" {

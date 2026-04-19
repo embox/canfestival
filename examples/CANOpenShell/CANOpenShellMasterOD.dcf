@@ -1,0 +1,4985 @@
+[FileInfo]
+FileName=CANOpenShellMasterOD.dcf
+FileVersion=1
+FileRevision=1
+EDSVersion=4.0
+Description=
+CreationTime=09:53AM
+CreationDate=04-19-2026
+CreatedBy=CANFestival
+ModificationTime=09:53AM
+ModificationDate=04-19-2026
+ModifiedBy=CANFestival
+
+[DeviceInfo]
+VendorName=CANFestival
+VendorNumber=0x00000000
+ProductName=CANOpenShellMasterOD
+ProductNumber=0x00000000
+RevisionNumber=0x00000000
+BaudRate_10=1
+BaudRate_20=1
+BaudRate_50=1
+BaudRate_125=1
+BaudRate_250=1
+BaudRate_500=1
+BaudRate_800=1
+BaudRate_1000=1
+SimpleBootUpMaster=1
+SimpleBootUpSlave=0
+Granularity=8
+DynamicChannelsSupported=0
+CompactPDO=0
+GroupMessaging=0
+NrOfRXPDO=0
+NrOfTXPDO=0
+LSS_Supported=0
+
+[DummyUsage]
+Dummy0001=0
+Dummy0002=1
+Dummy0003=1
+Dummy0004=1
+Dummy0005=1
+Dummy0006=1
+Dummy0007=1
+
+[Comments]
+Lines=0
+
+[MandatoryObjects]
+SupportedObjects=3
+1=0x1000
+2=0x1001
+3=0x1018
+
+[1000]
+ParameterName=Device Type
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1001]
+ParameterName=Error Register
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=0
+PDOMapping=1
+
+[1018]
+ParameterName=Identity
+ObjectType=0x9
+SubNumber=5
+
+[1018sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=4
+PDOMapping=0
+
+[1018sub1]
+ParameterName=Vendor ID
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1018sub2]
+ParameterName=Product Code
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1018sub3]
+ParameterName=Revision Number
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[1018sub4]
+ParameterName=Serial Number
+ObjectType=0x7
+DataType=0x0007
+AccessType=ro
+DefaultValue=0
+PDOMapping=0
+
+[OptionalObjects]
+SupportedObjects=130
+1=0x1005
+2=0x1006
+3=0x1017
+4=0x1280
+5=0x1281
+6=0x1282
+7=0x1283
+8=0x1284
+9=0x1285
+10=0x1286
+11=0x1287
+12=0x1288
+13=0x1289
+14=0x128A
+15=0x128B
+16=0x128C
+17=0x128D
+18=0x128E
+19=0x128F
+20=0x1290
+21=0x1291
+22=0x1292
+23=0x1293
+24=0x1294
+25=0x1295
+26=0x1296
+27=0x1297
+28=0x1298
+29=0x1299
+30=0x129A
+31=0x129B
+32=0x129C
+33=0x129D
+34=0x129E
+35=0x129F
+36=0x12A0
+37=0x12A1
+38=0x12A2
+39=0x12A3
+40=0x12A4
+41=0x12A5
+42=0x12A6
+43=0x12A7
+44=0x12A8
+45=0x12A9
+46=0x12AA
+47=0x12AB
+48=0x12AC
+49=0x12AD
+50=0x12AE
+51=0x12AF
+52=0x12B0
+53=0x12B1
+54=0x12B2
+55=0x12B3
+56=0x12B4
+57=0x12B5
+58=0x12B6
+59=0x12B7
+60=0x12B8
+61=0x12B9
+62=0x12BA
+63=0x12BB
+64=0x12BC
+65=0x12BD
+66=0x12BE
+67=0x12BF
+68=0x12C0
+69=0x12C1
+70=0x12C2
+71=0x12C3
+72=0x12C4
+73=0x12C5
+74=0x12C6
+75=0x12C7
+76=0x12C8
+77=0x12C9
+78=0x12CA
+79=0x12CB
+80=0x12CC
+81=0x12CD
+82=0x12CE
+83=0x12CF
+84=0x12D0
+85=0x12D1
+86=0x12D2
+87=0x12D3
+88=0x12D4
+89=0x12D5
+90=0x12D6
+91=0x12D7
+92=0x12D8
+93=0x12D9
+94=0x12DA
+95=0x12DB
+96=0x12DC
+97=0x12DD
+98=0x12DE
+99=0x12DF
+100=0x12E0
+101=0x12E1
+102=0x12E2
+103=0x12E3
+104=0x12E4
+105=0x12E5
+106=0x12E6
+107=0x12E7
+108=0x12E8
+109=0x12E9
+110=0x12EA
+111=0x12EB
+112=0x12EC
+113=0x12ED
+114=0x12EE
+115=0x12EF
+116=0x12F0
+117=0x12F1
+118=0x12F2
+119=0x12F3
+120=0x12F4
+121=0x12F5
+122=0x12F6
+123=0x12F7
+124=0x12F8
+125=0x12F9
+126=0x12FA
+127=0x12FB
+128=0x12FC
+129=0x12FD
+130=0x12FE
+
+[1005]
+ParameterName=SYNC COB ID
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1073741952
+PDOMapping=0
+
+[1006]
+ParameterName=Communication Cycle Period
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1017]
+ParameterName=Producer Heartbeat Time
+ObjectType=0x7
+DataType=0x0006
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1280]
+ParameterName=Client SDO 1 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1280sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1280sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1536
+PDOMapping=0
+
+[1280sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1408
+PDOMapping=0
+
+[1280sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=0
+PDOMapping=0
+
+[1281]
+ParameterName=Client SDO 2 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1281sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1281sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1537
+PDOMapping=0
+
+[1281sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1409
+PDOMapping=0
+
+[1281sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=1
+PDOMapping=0
+
+[1282]
+ParameterName=Client SDO 3 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1282sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1282sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1538
+PDOMapping=0
+
+[1282sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1410
+PDOMapping=0
+
+[1282sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=2
+PDOMapping=0
+
+[1283]
+ParameterName=Client SDO 4 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1283sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1283sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1539
+PDOMapping=0
+
+[1283sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1411
+PDOMapping=0
+
+[1283sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=3
+PDOMapping=0
+
+[1284]
+ParameterName=Client SDO 5 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1284sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1284sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1540
+PDOMapping=0
+
+[1284sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1412
+PDOMapping=0
+
+[1284sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=4
+PDOMapping=0
+
+[1285]
+ParameterName=Client SDO 6 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1285sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1285sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1541
+PDOMapping=0
+
+[1285sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1413
+PDOMapping=0
+
+[1285sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=5
+PDOMapping=0
+
+[1286]
+ParameterName=Client SDO 7 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1286sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1286sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1542
+PDOMapping=0
+
+[1286sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1414
+PDOMapping=0
+
+[1286sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=6
+PDOMapping=0
+
+[1287]
+ParameterName=Client SDO 8 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1287sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1287sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1543
+PDOMapping=0
+
+[1287sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1415
+PDOMapping=0
+
+[1287sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=7
+PDOMapping=0
+
+[1288]
+ParameterName=Client SDO 9 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1288sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1288sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1544
+PDOMapping=0
+
+[1288sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1416
+PDOMapping=0
+
+[1288sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=8
+PDOMapping=0
+
+[1289]
+ParameterName=Client SDO 10 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1289sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1289sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1545
+PDOMapping=0
+
+[1289sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1417
+PDOMapping=0
+
+[1289sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=9
+PDOMapping=0
+
+[128A]
+ParameterName=Client SDO 11 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[128Asub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[128Asub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1546
+PDOMapping=0
+
+[128Asub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1418
+PDOMapping=0
+
+[128Asub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=10
+PDOMapping=0
+
+[128B]
+ParameterName=Client SDO 12 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[128Bsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[128Bsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1547
+PDOMapping=0
+
+[128Bsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1419
+PDOMapping=0
+
+[128Bsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=11
+PDOMapping=0
+
+[128C]
+ParameterName=Client SDO 13 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[128Csub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[128Csub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1548
+PDOMapping=0
+
+[128Csub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1420
+PDOMapping=0
+
+[128Csub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=12
+PDOMapping=0
+
+[128D]
+ParameterName=Client SDO 14 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[128Dsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[128Dsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1549
+PDOMapping=0
+
+[128Dsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1421
+PDOMapping=0
+
+[128Dsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=13
+PDOMapping=0
+
+[128E]
+ParameterName=Client SDO 15 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[128Esub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[128Esub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1550
+PDOMapping=0
+
+[128Esub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1422
+PDOMapping=0
+
+[128Esub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=14
+PDOMapping=0
+
+[128F]
+ParameterName=Client SDO 16 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[128Fsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[128Fsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1551
+PDOMapping=0
+
+[128Fsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1423
+PDOMapping=0
+
+[128Fsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=15
+PDOMapping=0
+
+[1290]
+ParameterName=Client SDO 17 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1290sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1290sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1552
+PDOMapping=0
+
+[1290sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1424
+PDOMapping=0
+
+[1290sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=16
+PDOMapping=0
+
+[1291]
+ParameterName=Client SDO 18 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1291sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1291sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1553
+PDOMapping=0
+
+[1291sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1425
+PDOMapping=0
+
+[1291sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=17
+PDOMapping=0
+
+[1292]
+ParameterName=Client SDO 19 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1292sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1292sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1554
+PDOMapping=0
+
+[1292sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1426
+PDOMapping=0
+
+[1292sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=18
+PDOMapping=0
+
+[1293]
+ParameterName=Client SDO 20 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1293sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1293sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1555
+PDOMapping=0
+
+[1293sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1427
+PDOMapping=0
+
+[1293sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=19
+PDOMapping=0
+
+[1294]
+ParameterName=Client SDO 21 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1294sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1294sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1556
+PDOMapping=0
+
+[1294sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1428
+PDOMapping=0
+
+[1294sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=20
+PDOMapping=0
+
+[1295]
+ParameterName=Client SDO 22 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1295sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1295sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1557
+PDOMapping=0
+
+[1295sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1429
+PDOMapping=0
+
+[1295sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=21
+PDOMapping=0
+
+[1296]
+ParameterName=Client SDO 23 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1296sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1296sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1558
+PDOMapping=0
+
+[1296sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1430
+PDOMapping=0
+
+[1296sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=22
+PDOMapping=0
+
+[1297]
+ParameterName=Client SDO 24 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1297sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1297sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1559
+PDOMapping=0
+
+[1297sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1431
+PDOMapping=0
+
+[1297sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=23
+PDOMapping=0
+
+[1298]
+ParameterName=Client SDO 25 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1298sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1298sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1560
+PDOMapping=0
+
+[1298sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1432
+PDOMapping=0
+
+[1298sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=24
+PDOMapping=0
+
+[1299]
+ParameterName=Client SDO 26 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[1299sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[1299sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1561
+PDOMapping=0
+
+[1299sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1433
+PDOMapping=0
+
+[1299sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=25
+PDOMapping=0
+
+[129A]
+ParameterName=Client SDO 27 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[129Asub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[129Asub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1562
+PDOMapping=0
+
+[129Asub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1434
+PDOMapping=0
+
+[129Asub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=26
+PDOMapping=0
+
+[129B]
+ParameterName=Client SDO 28 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[129Bsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[129Bsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1563
+PDOMapping=0
+
+[129Bsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1435
+PDOMapping=0
+
+[129Bsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=27
+PDOMapping=0
+
+[129C]
+ParameterName=Client SDO 29 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[129Csub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[129Csub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1564
+PDOMapping=0
+
+[129Csub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1436
+PDOMapping=0
+
+[129Csub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=28
+PDOMapping=0
+
+[129D]
+ParameterName=Client SDO 30 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[129Dsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[129Dsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1565
+PDOMapping=0
+
+[129Dsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1437
+PDOMapping=0
+
+[129Dsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=29
+PDOMapping=0
+
+[129E]
+ParameterName=Client SDO 31 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[129Esub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[129Esub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1566
+PDOMapping=0
+
+[129Esub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1438
+PDOMapping=0
+
+[129Esub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=30
+PDOMapping=0
+
+[129F]
+ParameterName=Client SDO 32 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[129Fsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[129Fsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1567
+PDOMapping=0
+
+[129Fsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1439
+PDOMapping=0
+
+[129Fsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=31
+PDOMapping=0
+
+[12A0]
+ParameterName=Client SDO 33 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A0sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A0sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1568
+PDOMapping=0
+
+[12A0sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1440
+PDOMapping=0
+
+[12A0sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=32
+PDOMapping=0
+
+[12A1]
+ParameterName=Client SDO 34 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A1sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A1sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1569
+PDOMapping=0
+
+[12A1sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1441
+PDOMapping=0
+
+[12A1sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=33
+PDOMapping=0
+
+[12A2]
+ParameterName=Client SDO 35 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A2sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A2sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1570
+PDOMapping=0
+
+[12A2sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1442
+PDOMapping=0
+
+[12A2sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=34
+PDOMapping=0
+
+[12A3]
+ParameterName=Client SDO 36 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A3sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A3sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1571
+PDOMapping=0
+
+[12A3sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1443
+PDOMapping=0
+
+[12A3sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=35
+PDOMapping=0
+
+[12A4]
+ParameterName=Client SDO 37 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A4sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A4sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1572
+PDOMapping=0
+
+[12A4sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1444
+PDOMapping=0
+
+[12A4sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=36
+PDOMapping=0
+
+[12A5]
+ParameterName=Client SDO 38 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A5sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A5sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1573
+PDOMapping=0
+
+[12A5sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1445
+PDOMapping=0
+
+[12A5sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=37
+PDOMapping=0
+
+[12A6]
+ParameterName=Client SDO 39 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A6sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A6sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1574
+PDOMapping=0
+
+[12A6sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1446
+PDOMapping=0
+
+[12A6sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=38
+PDOMapping=0
+
+[12A7]
+ParameterName=Client SDO 40 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A7sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A7sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1575
+PDOMapping=0
+
+[12A7sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1447
+PDOMapping=0
+
+[12A7sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=39
+PDOMapping=0
+
+[12A8]
+ParameterName=Client SDO 41 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A8sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A8sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1576
+PDOMapping=0
+
+[12A8sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1448
+PDOMapping=0
+
+[12A8sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=40
+PDOMapping=0
+
+[12A9]
+ParameterName=Client SDO 42 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12A9sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12A9sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1577
+PDOMapping=0
+
+[12A9sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1449
+PDOMapping=0
+
+[12A9sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=41
+PDOMapping=0
+
+[12AA]
+ParameterName=Client SDO 43 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12AAsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12AAsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1578
+PDOMapping=0
+
+[12AAsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1450
+PDOMapping=0
+
+[12AAsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=42
+PDOMapping=0
+
+[12AB]
+ParameterName=Client SDO 44 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12ABsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12ABsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1579
+PDOMapping=0
+
+[12ABsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1451
+PDOMapping=0
+
+[12ABsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=43
+PDOMapping=0
+
+[12AC]
+ParameterName=Client SDO 45 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12ACsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12ACsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1580
+PDOMapping=0
+
+[12ACsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1452
+PDOMapping=0
+
+[12ACsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=44
+PDOMapping=0
+
+[12AD]
+ParameterName=Client SDO 46 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12ADsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12ADsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1581
+PDOMapping=0
+
+[12ADsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1453
+PDOMapping=0
+
+[12ADsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=45
+PDOMapping=0
+
+[12AE]
+ParameterName=Client SDO 47 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12AEsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12AEsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1582
+PDOMapping=0
+
+[12AEsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1454
+PDOMapping=0
+
+[12AEsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=46
+PDOMapping=0
+
+[12AF]
+ParameterName=Client SDO 48 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12AFsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12AFsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1583
+PDOMapping=0
+
+[12AFsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1455
+PDOMapping=0
+
+[12AFsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=47
+PDOMapping=0
+
+[12B0]
+ParameterName=Client SDO 49 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B0sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B0sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1584
+PDOMapping=0
+
+[12B0sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1456
+PDOMapping=0
+
+[12B0sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=48
+PDOMapping=0
+
+[12B1]
+ParameterName=Client SDO 50 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B1sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B1sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1585
+PDOMapping=0
+
+[12B1sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1457
+PDOMapping=0
+
+[12B1sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=49
+PDOMapping=0
+
+[12B2]
+ParameterName=Client SDO 51 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B2sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B2sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1586
+PDOMapping=0
+
+[12B2sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1458
+PDOMapping=0
+
+[12B2sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=50
+PDOMapping=0
+
+[12B3]
+ParameterName=Client SDO 52 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B3sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B3sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1587
+PDOMapping=0
+
+[12B3sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1459
+PDOMapping=0
+
+[12B3sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=51
+PDOMapping=0
+
+[12B4]
+ParameterName=Client SDO 53 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B4sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B4sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1588
+PDOMapping=0
+
+[12B4sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1460
+PDOMapping=0
+
+[12B4sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=52
+PDOMapping=0
+
+[12B5]
+ParameterName=Client SDO 54 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B5sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B5sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1589
+PDOMapping=0
+
+[12B5sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1461
+PDOMapping=0
+
+[12B5sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=53
+PDOMapping=0
+
+[12B6]
+ParameterName=Client SDO 55 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B6sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B6sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1590
+PDOMapping=0
+
+[12B6sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1462
+PDOMapping=0
+
+[12B6sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=54
+PDOMapping=0
+
+[12B7]
+ParameterName=Client SDO 56 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B7sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B7sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1591
+PDOMapping=0
+
+[12B7sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1463
+PDOMapping=0
+
+[12B7sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=55
+PDOMapping=0
+
+[12B8]
+ParameterName=Client SDO 57 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B8sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B8sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1592
+PDOMapping=0
+
+[12B8sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1464
+PDOMapping=0
+
+[12B8sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=56
+PDOMapping=0
+
+[12B9]
+ParameterName=Client SDO 58 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12B9sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12B9sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1593
+PDOMapping=0
+
+[12B9sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1465
+PDOMapping=0
+
+[12B9sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=57
+PDOMapping=0
+
+[12BA]
+ParameterName=Client SDO 59 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12BAsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12BAsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1594
+PDOMapping=0
+
+[12BAsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1466
+PDOMapping=0
+
+[12BAsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=58
+PDOMapping=0
+
+[12BB]
+ParameterName=Client SDO 60 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12BBsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12BBsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1595
+PDOMapping=0
+
+[12BBsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1467
+PDOMapping=0
+
+[12BBsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=59
+PDOMapping=0
+
+[12BC]
+ParameterName=Client SDO 61 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12BCsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12BCsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1596
+PDOMapping=0
+
+[12BCsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1468
+PDOMapping=0
+
+[12BCsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=60
+PDOMapping=0
+
+[12BD]
+ParameterName=Client SDO 62 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12BDsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12BDsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1597
+PDOMapping=0
+
+[12BDsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1469
+PDOMapping=0
+
+[12BDsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=61
+PDOMapping=0
+
+[12BE]
+ParameterName=Client SDO 63 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12BEsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12BEsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1598
+PDOMapping=0
+
+[12BEsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1470
+PDOMapping=0
+
+[12BEsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=62
+PDOMapping=0
+
+[12BF]
+ParameterName=Client SDO 64 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12BFsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12BFsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1599
+PDOMapping=0
+
+[12BFsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1471
+PDOMapping=0
+
+[12BFsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=63
+PDOMapping=0
+
+[12C0]
+ParameterName=Client SDO 65 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C0sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C0sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1600
+PDOMapping=0
+
+[12C0sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1472
+PDOMapping=0
+
+[12C0sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=64
+PDOMapping=0
+
+[12C1]
+ParameterName=Client SDO 66 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C1sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C1sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1601
+PDOMapping=0
+
+[12C1sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1473
+PDOMapping=0
+
+[12C1sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=65
+PDOMapping=0
+
+[12C2]
+ParameterName=Client SDO 67 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C2sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C2sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1602
+PDOMapping=0
+
+[12C2sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1474
+PDOMapping=0
+
+[12C2sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=66
+PDOMapping=0
+
+[12C3]
+ParameterName=Client SDO 68 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C3sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C3sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1603
+PDOMapping=0
+
+[12C3sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1475
+PDOMapping=0
+
+[12C3sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=67
+PDOMapping=0
+
+[12C4]
+ParameterName=Client SDO 69 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C4sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C4sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1604
+PDOMapping=0
+
+[12C4sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1476
+PDOMapping=0
+
+[12C4sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=68
+PDOMapping=0
+
+[12C5]
+ParameterName=Client SDO 70 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C5sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C5sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1605
+PDOMapping=0
+
+[12C5sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1477
+PDOMapping=0
+
+[12C5sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=69
+PDOMapping=0
+
+[12C6]
+ParameterName=Client SDO 71 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C6sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C6sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1606
+PDOMapping=0
+
+[12C6sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1478
+PDOMapping=0
+
+[12C6sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=70
+PDOMapping=0
+
+[12C7]
+ParameterName=Client SDO 72 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C7sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C7sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1607
+PDOMapping=0
+
+[12C7sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1479
+PDOMapping=0
+
+[12C7sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=71
+PDOMapping=0
+
+[12C8]
+ParameterName=Client SDO 73 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C8sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C8sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1608
+PDOMapping=0
+
+[12C8sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1480
+PDOMapping=0
+
+[12C8sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=72
+PDOMapping=0
+
+[12C9]
+ParameterName=Client SDO 74 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12C9sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12C9sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1609
+PDOMapping=0
+
+[12C9sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1481
+PDOMapping=0
+
+[12C9sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=73
+PDOMapping=0
+
+[12CA]
+ParameterName=Client SDO 75 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12CAsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12CAsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1610
+PDOMapping=0
+
+[12CAsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1482
+PDOMapping=0
+
+[12CAsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=74
+PDOMapping=0
+
+[12CB]
+ParameterName=Client SDO 76 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12CBsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12CBsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1611
+PDOMapping=0
+
+[12CBsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1483
+PDOMapping=0
+
+[12CBsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=75
+PDOMapping=0
+
+[12CC]
+ParameterName=Client SDO 77 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12CCsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12CCsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1612
+PDOMapping=0
+
+[12CCsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1484
+PDOMapping=0
+
+[12CCsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=76
+PDOMapping=0
+
+[12CD]
+ParameterName=Client SDO 78 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12CDsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12CDsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1613
+PDOMapping=0
+
+[12CDsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1485
+PDOMapping=0
+
+[12CDsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=77
+PDOMapping=0
+
+[12CE]
+ParameterName=Client SDO 79 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12CEsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12CEsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1614
+PDOMapping=0
+
+[12CEsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1486
+PDOMapping=0
+
+[12CEsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=78
+PDOMapping=0
+
+[12CF]
+ParameterName=Client SDO 80 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12CFsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12CFsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1615
+PDOMapping=0
+
+[12CFsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1487
+PDOMapping=0
+
+[12CFsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=79
+PDOMapping=0
+
+[12D0]
+ParameterName=Client SDO 81 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D0sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D0sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1616
+PDOMapping=0
+
+[12D0sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1488
+PDOMapping=0
+
+[12D0sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=80
+PDOMapping=0
+
+[12D1]
+ParameterName=Client SDO 82 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D1sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D1sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1617
+PDOMapping=0
+
+[12D1sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1489
+PDOMapping=0
+
+[12D1sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=81
+PDOMapping=0
+
+[12D2]
+ParameterName=Client SDO 83 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D2sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D2sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1618
+PDOMapping=0
+
+[12D2sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1490
+PDOMapping=0
+
+[12D2sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=82
+PDOMapping=0
+
+[12D3]
+ParameterName=Client SDO 84 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D3sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D3sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1619
+PDOMapping=0
+
+[12D3sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1491
+PDOMapping=0
+
+[12D3sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=83
+PDOMapping=0
+
+[12D4]
+ParameterName=Client SDO 85 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D4sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D4sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1620
+PDOMapping=0
+
+[12D4sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1492
+PDOMapping=0
+
+[12D4sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=84
+PDOMapping=0
+
+[12D5]
+ParameterName=Client SDO 86 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D5sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D5sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1621
+PDOMapping=0
+
+[12D5sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1493
+PDOMapping=0
+
+[12D5sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=85
+PDOMapping=0
+
+[12D6]
+ParameterName=Client SDO 87 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D6sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D6sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1622
+PDOMapping=0
+
+[12D6sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1494
+PDOMapping=0
+
+[12D6sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=86
+PDOMapping=0
+
+[12D7]
+ParameterName=Client SDO 88 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D7sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D7sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1623
+PDOMapping=0
+
+[12D7sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1495
+PDOMapping=0
+
+[12D7sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=87
+PDOMapping=0
+
+[12D8]
+ParameterName=Client SDO 89 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D8sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D8sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1624
+PDOMapping=0
+
+[12D8sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1496
+PDOMapping=0
+
+[12D8sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=88
+PDOMapping=0
+
+[12D9]
+ParameterName=Client SDO 90 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12D9sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12D9sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1625
+PDOMapping=0
+
+[12D9sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1497
+PDOMapping=0
+
+[12D9sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=89
+PDOMapping=0
+
+[12DA]
+ParameterName=Client SDO 91 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12DAsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12DAsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1626
+PDOMapping=0
+
+[12DAsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1498
+PDOMapping=0
+
+[12DAsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=90
+PDOMapping=0
+
+[12DB]
+ParameterName=Client SDO 92 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12DBsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12DBsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1627
+PDOMapping=0
+
+[12DBsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1499
+PDOMapping=0
+
+[12DBsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=91
+PDOMapping=0
+
+[12DC]
+ParameterName=Client SDO 93 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12DCsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12DCsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1628
+PDOMapping=0
+
+[12DCsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1500
+PDOMapping=0
+
+[12DCsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=92
+PDOMapping=0
+
+[12DD]
+ParameterName=Client SDO 94 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12DDsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12DDsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1629
+PDOMapping=0
+
+[12DDsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1501
+PDOMapping=0
+
+[12DDsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=93
+PDOMapping=0
+
+[12DE]
+ParameterName=Client SDO 95 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12DEsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12DEsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1630
+PDOMapping=0
+
+[12DEsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1502
+PDOMapping=0
+
+[12DEsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=94
+PDOMapping=0
+
+[12DF]
+ParameterName=Client SDO 96 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12DFsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12DFsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1631
+PDOMapping=0
+
+[12DFsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1503
+PDOMapping=0
+
+[12DFsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=95
+PDOMapping=0
+
+[12E0]
+ParameterName=Client SDO 97 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E0sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E0sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1632
+PDOMapping=0
+
+[12E0sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1504
+PDOMapping=0
+
+[12E0sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=96
+PDOMapping=0
+
+[12E1]
+ParameterName=Client SDO 98 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E1sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E1sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1633
+PDOMapping=0
+
+[12E1sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1505
+PDOMapping=0
+
+[12E1sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=97
+PDOMapping=0
+
+[12E2]
+ParameterName=Client SDO 99 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E2sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E2sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1634
+PDOMapping=0
+
+[12E2sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1506
+PDOMapping=0
+
+[12E2sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=98
+PDOMapping=0
+
+[12E3]
+ParameterName=Client SDO 100 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E3sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E3sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1635
+PDOMapping=0
+
+[12E3sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1507
+PDOMapping=0
+
+[12E3sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=99
+PDOMapping=0
+
+[12E4]
+ParameterName=Client SDO 101 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E4sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E4sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1636
+PDOMapping=0
+
+[12E4sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1508
+PDOMapping=0
+
+[12E4sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=100
+PDOMapping=0
+
+[12E5]
+ParameterName=Client SDO 102 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E5sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E5sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1637
+PDOMapping=0
+
+[12E5sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1509
+PDOMapping=0
+
+[12E5sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=101
+PDOMapping=0
+
+[12E6]
+ParameterName=Client SDO 103 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E6sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E6sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1638
+PDOMapping=0
+
+[12E6sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1510
+PDOMapping=0
+
+[12E6sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=102
+PDOMapping=0
+
+[12E7]
+ParameterName=Client SDO 104 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E7sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E7sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1639
+PDOMapping=0
+
+[12E7sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1511
+PDOMapping=0
+
+[12E7sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=103
+PDOMapping=0
+
+[12E8]
+ParameterName=Client SDO 105 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E8sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E8sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1640
+PDOMapping=0
+
+[12E8sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1512
+PDOMapping=0
+
+[12E8sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=104
+PDOMapping=0
+
+[12E9]
+ParameterName=Client SDO 106 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12E9sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12E9sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1641
+PDOMapping=0
+
+[12E9sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1513
+PDOMapping=0
+
+[12E9sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=105
+PDOMapping=0
+
+[12EA]
+ParameterName=Client SDO 107 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12EAsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12EAsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1642
+PDOMapping=0
+
+[12EAsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1514
+PDOMapping=0
+
+[12EAsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=106
+PDOMapping=0
+
+[12EB]
+ParameterName=Client SDO 108 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12EBsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12EBsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1643
+PDOMapping=0
+
+[12EBsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1515
+PDOMapping=0
+
+[12EBsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=107
+PDOMapping=0
+
+[12EC]
+ParameterName=Client SDO 109 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12ECsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12ECsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1644
+PDOMapping=0
+
+[12ECsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1516
+PDOMapping=0
+
+[12ECsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=108
+PDOMapping=0
+
+[12ED]
+ParameterName=Client SDO 110 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12EDsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12EDsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1645
+PDOMapping=0
+
+[12EDsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1517
+PDOMapping=0
+
+[12EDsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=109
+PDOMapping=0
+
+[12EE]
+ParameterName=Client SDO 111 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12EEsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12EEsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1646
+PDOMapping=0
+
+[12EEsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1518
+PDOMapping=0
+
+[12EEsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=110
+PDOMapping=0
+
+[12EF]
+ParameterName=Client SDO 112 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12EFsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12EFsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1647
+PDOMapping=0
+
+[12EFsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1519
+PDOMapping=0
+
+[12EFsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=111
+PDOMapping=0
+
+[12F0]
+ParameterName=Client SDO 113 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F0sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F0sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1648
+PDOMapping=0
+
+[12F0sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1520
+PDOMapping=0
+
+[12F0sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=112
+PDOMapping=0
+
+[12F1]
+ParameterName=Client SDO 114 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F1sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F1sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1649
+PDOMapping=0
+
+[12F1sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1521
+PDOMapping=0
+
+[12F1sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=113
+PDOMapping=0
+
+[12F2]
+ParameterName=Client SDO 115 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F2sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F2sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1650
+PDOMapping=0
+
+[12F2sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1522
+PDOMapping=0
+
+[12F2sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=114
+PDOMapping=0
+
+[12F3]
+ParameterName=Client SDO 116 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F3sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F3sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1651
+PDOMapping=0
+
+[12F3sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1523
+PDOMapping=0
+
+[12F3sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=115
+PDOMapping=0
+
+[12F4]
+ParameterName=Client SDO 117 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F4sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F4sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1652
+PDOMapping=0
+
+[12F4sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1524
+PDOMapping=0
+
+[12F4sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=116
+PDOMapping=0
+
+[12F5]
+ParameterName=Client SDO 118 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F5sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F5sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1653
+PDOMapping=0
+
+[12F5sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1525
+PDOMapping=0
+
+[12F5sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=117
+PDOMapping=0
+
+[12F6]
+ParameterName=Client SDO 119 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F6sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F6sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1654
+PDOMapping=0
+
+[12F6sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1526
+PDOMapping=0
+
+[12F6sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=118
+PDOMapping=0
+
+[12F7]
+ParameterName=Client SDO 120 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F7sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F7sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1655
+PDOMapping=0
+
+[12F7sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1527
+PDOMapping=0
+
+[12F7sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=119
+PDOMapping=0
+
+[12F8]
+ParameterName=Client SDO 121 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F8sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F8sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1656
+PDOMapping=0
+
+[12F8sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1528
+PDOMapping=0
+
+[12F8sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=120
+PDOMapping=0
+
+[12F9]
+ParameterName=Client SDO 122 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12F9sub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12F9sub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1657
+PDOMapping=0
+
+[12F9sub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1529
+PDOMapping=0
+
+[12F9sub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=121
+PDOMapping=0
+
+[12FA]
+ParameterName=Client SDO 123 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12FAsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12FAsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1658
+PDOMapping=0
+
+[12FAsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1530
+PDOMapping=0
+
+[12FAsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=122
+PDOMapping=0
+
+[12FB]
+ParameterName=Client SDO 124 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12FBsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12FBsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1659
+PDOMapping=0
+
+[12FBsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1531
+PDOMapping=0
+
+[12FBsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=123
+PDOMapping=0
+
+[12FC]
+ParameterName=Client SDO 125 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12FCsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12FCsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1660
+PDOMapping=0
+
+[12FCsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1532
+PDOMapping=0
+
+[12FCsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=124
+PDOMapping=0
+
+[12FD]
+ParameterName=Client SDO 126 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12FDsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12FDsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1661
+PDOMapping=0
+
+[12FDsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1533
+PDOMapping=0
+
+[12FDsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=125
+PDOMapping=0
+
+[12FE]
+ParameterName=Client SDO 127 Parameter
+ObjectType=0x9
+SubNumber=4
+
+[12FEsub0]
+ParameterName=Number of Entries
+ObjectType=0x7
+DataType=0x0005
+AccessType=ro
+DefaultValue=3
+PDOMapping=0
+
+[12FEsub1]
+ParameterName=COB ID Client to Server (Transmit SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1662
+PDOMapping=0
+
+[12FEsub2]
+ParameterName=COB ID Server to Client (Receive SDO)
+ObjectType=0x7
+DataType=0x0007
+AccessType=rw
+DefaultValue=1534
+PDOMapping=0
+
+[12FEsub3]
+ParameterName=Node ID of the SDO Server
+ObjectType=0x7
+DataType=0x0005
+AccessType=rw
+DefaultValue=126
+PDOMapping=0
+
+[ManufacturerObjects]
+SupportedObjects=0
+
+[CanFestivalNode]
+NodeName=CANOpenShellMasterOD
+NodeType=master
+NodeID=0x00
+Description=
+ProfileName=None
+DefaultStringSize=10
+
+[CanFestivalDS302]
+Enabled=1

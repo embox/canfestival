@@ -21,20 +21,20 @@
 #License along with this library; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-from gnosis.xml.pickle import *
-from gnosis.xml.pickle.util import setParanoia
-setParanoia(0)
+# gnosis XML pickle removed - will be replaced with DCF format in Phase 2
+# from gnosis.xml.pickle import *
+# from gnosis.xml.pickle.util import setParanoia
+# setParanoia(0)
 
 from node import *
 import eds_utils, gen_cfile
 
-from types import *
 import os, re
 
 UndoBufferLength = 20
 
-type_model = re.compile('([\_A-Z]*)([0-9]*)')
-range_model = re.compile('([\_A-Z]*)([0-9]*)\[([\-0-9]*)-([\-0-9]*)\]')
+type_model = re.compile(r'([\_A-Z]*)([0-9]*)')
+range_model = re.compile(r'([\_A-Z]*)([0-9]*)\[([\-0-9]*)-([\-0-9]*)\]')
 
 # ID for the file viewed
 CurrentID = 0
@@ -65,7 +65,7 @@ class UndoBuffer:
             self.MinIndex = 0
             self.MaxIndex = 0
         # Initialising buffer with currentstate at the first place
-        for i in xrange(UndoBufferLength):
+        for i in range(UndoBufferLength):
             if i == 0:
                 self.Buffer.append(currentstate)
             else:
@@ -211,9 +211,13 @@ class NodeManager:
                     # Charging DS-302 profile if choosen by user
                     if os.path.isfile(DS302Path):
                         try:
-                            execfile(DS302Path)
-                            self.CurrentNode.SetDS302Profile(Mapping)
-                            self.CurrentNode.ExtendSpecificMenu(AddMenuEntries)
+                            profile_globals = {
+                                "nosub": nosub, "var": var, "array": array, "rec": rec,
+                                "plurivar": plurivar, "pluriarray": pluriarray, "plurirec": plurirec,
+                            }
+                            exec(compile(open(DS302Path).read(), DS302Path, 'exec'), profile_globals)
+                            self.CurrentNode.SetDS302Profile(profile_globals["Mapping"])
+                            self.CurrentNode.ExtendSpecificMenu(profile_globals["AddMenuEntries"])
                         except:
                             return _("Problem with DS-302! Syntax Error.")
                     else:
@@ -255,10 +259,14 @@ class NodeManager:
         if profile != "None":
             # Try to charge the profile given
             try:
-                execfile(filepath)
+                profile_globals = {
+                    "nosub": nosub, "var": var, "array": array, "rec": rec,
+                    "plurivar": plurivar, "pluriarray": pluriarray, "plurirec": plurirec,
+                }
+                exec(compile(open(filepath).read(), filepath, 'exec'), profile_globals)
                 node.SetProfileName(profile)
-                node.SetProfile(Mapping)
-                node.SetSpecificMenu(AddMenuEntries)
+                node.SetProfile(profile_globals["Mapping"])
+                node.SetSpecificMenu(profile_globals["AddMenuEntries"])
                 return None
             except:
                 return _("Syntax Error\nBad OD Profile file!")
@@ -274,16 +282,15 @@ class NodeManager:
     """
     def OpenFileInCurrent(self, filepath):
         try:
-            # Open and load file
-            file = open(filepath, "r")
-            node = load(file)
-            file.close()
-            self.CurrentNode = node
-            self.CurrentNode.SetNodeID(0)
-            # Add a new buffer and defining current state
-            index = self.AddNodeBuffer(self.CurrentNode.Copy(), True)
-            self.SetCurrentFilePath(filepath)
-            return index
+            result = eds_utils.LoadNodeFromDCF(filepath)
+            if isinstance(result, Node):
+                self.CurrentNode = result
+                # Add a new buffer and defining current state
+                index = self.AddNodeBuffer(self.CurrentNode.Copy(), True)
+                self.SetCurrentFilePath(filepath)
+                return index
+            else:
+                return result
         except:
             return _("Unable to load file \"%s\"!")%filepath
 
@@ -291,15 +298,13 @@ class NodeManager:
     Save current node in  a file
     """
     def SaveCurrentInFile(self, filepath = None):
-        # if no filepath given, verify if current node has a filepath defined
         if not filepath:
             filepath = self.GetCurrentFilePath()
             if filepath == "":
                 return False
-        # Save node in file
-        file = open(filepath, "w")
-        dump(self.CurrentNode, file)
-        file.close()
+        result = eds_utils.SaveNodeAsDCF(filepath, self.CurrentNode)
+        if result is not None:
+            return False
         self.SetCurrentFilePath(filepath)
         # Update saved state in buffer
         self.UndoBuffers[self.NodeIndex].CurrentSaved()
@@ -378,7 +383,7 @@ class NodeManager:
             default = self.GetTypeDefaultValue(subentry_infos["type"])   
         # First case entry is record
         if infos["struct"] & OD_IdenticalSubindexes: 
-            for i in xrange(1, min(number,subentry_infos["nbmax"]-length) + 1):
+            for i in range(1, min(number,subentry_infos["nbmax"]-length) + 1):
                 node.AddEntry(index, length + i, default)
             if not disable_buffer:
                 self.BufferCurrentNode()
@@ -386,7 +391,7 @@ class NodeManager:
         # Second case entry is array, only possible for manufacturer specific
         elif infos["struct"] & OD_MultipleSubindexes and 0x2000 <= index <= 0x5FFF:
             values = {"name" : "Undefined", "type" : 5, "access" : "rw", "pdo" : True}
-            for i in xrange(1, min(number,0xFE-length) + 1):
+            for i in range(1, min(number,0xFE-length) + 1):
                 node.AddMappingEntry(index, length + i, values = values.copy())
                 node.AddEntry(index, length + i, 0)
             if not disable_buffer:
@@ -408,7 +413,7 @@ class NodeManager:
             nbmin = 1
         # Entry is a record, or is an array of manufacturer specific
         if infos["struct"] & OD_IdenticalSubindexes or 0x2000 <= index <= 0x5FFF and infos["struct"] & OD_IdenticalSubindexes:
-            for i in xrange(min(number, length - nbmin)):
+            for i in range(min(number, length - nbmin)):
                 self.RemoveCurrentVariable(index, length - i)
             self.BufferCurrentNode()
 
@@ -497,7 +502,7 @@ class NodeManager:
                         default = self.GetTypeDefaultValue(subentry_infos["type"])
                     node.AddEntry(index, value = [])
                     if "nbmin" in subentry_infos:
-                        for i in xrange(subentry_infos["nbmin"]):
+                        for i in range(subentry_infos["nbmin"]):
                             node.AddEntry(index, i + 1, default)
                     else:
                         node.AddEntry(index, 1, default)
@@ -581,7 +586,7 @@ class NodeManager:
             for menu,list in self.CurrentNode.GetSpecificMenu():
                 for i in list:
                     iinfos = self.GetEntryInfos(i)
-                    indexes = [i + incr * iinfos["incr"] for incr in xrange(iinfos["nbmax"])] 
+                    indexes = [i + incr * iinfos["incr"] for incr in range(iinfos["nbmax"])] 
                     if index in indexes:
                         found = True
                         diff = index - i
@@ -613,10 +618,10 @@ class NodeManager:
                     if struct == rec:
                         values = {"name" : name + " %d[(sub)]", "type" : 0x05, "access" : "rw", "pdo" : True, "nbmax" : 0xFE}
                         node.AddMappingEntry(index, 1, values = values)
-                        for i in xrange(number):
+                        for i in range(number):
                             node.AddEntry(index, i + 1, 0)
                     else:
-                        for i in xrange(number):
+                        for i in range(number):
                             values = {"name" : "Undefined", "type" : 0x05, "access" : "rw", "pdo" : True}
                             node.AddMappingEntry(index, i + 1, values = values)
                             node.AddEntry(index, i + 1, 0)
@@ -698,7 +703,7 @@ class NodeManager:
                     try:
                         if len(value) % 2 != 0:
                             value = "0" + value
-                        value = value.decode('hex_codec')
+                        value = bytes.fromhex(value)
                         node.SetEntry(index, subIndex, value)
                     except:
                         pass
@@ -739,7 +744,7 @@ class NodeManager:
                     node.UpdateMapVariable(index, subIndex, size)
                 elif editor in ["access","raccess"]:
                     dic = {}
-                    for abbrev,access in AccessType.iteritems():
+                    for abbrev,access in AccessType.items():
                         dic[access] = abbrev
                     value = dic[value]
                     if editor == "raccess" and not node.IsMappingEntry(index):
@@ -838,8 +843,7 @@ class NodeManager:
         return self.GetFilename(self.NodeIndex)
     
     def GetAllFilenames(self):
-        indexes = self.UndoBuffers.keys()
-        indexes.sort()
+        indexes = sorted(self.UndoBuffers.keys())
         return [self.GetFilename(idx) for idx in indexes]
     
     def GetFilename(self, index):
@@ -873,7 +877,7 @@ class NodeManager:
 
     def GetCurrentCommunicationLists(self):
         list = []
-        for index in MappingDictionary.iterkeys():
+        for index in MappingDictionary:
             if 0x1000 <= index < 0x1200:
                 list.append(index)
         return self.GetProfileLists(MappingDictionary, list)
@@ -889,7 +893,7 @@ class NodeManager:
         exclusionlist = []
         for name, list in self.CurrentNode.GetSpecificMenu():
             exclusionlist.extend(list)
-        for index in mappingdictionary.iterkeys():
+        for index in mappingdictionary:
             if index not in exclusionlist:
                 validlist.append(index)
         return self.GetProfileLists(mappingdictionary, validlist)
@@ -1029,7 +1033,7 @@ class NodeManager:
             editors = []
             values = node.GetEntry(index, compute = False)
             params = node.GetParamsEntry(index)
-            if isinstance(values, ListType):
+            if isinstance(values, list):
                 for i, value in enumerate(values):
                     data.append({"value" : value})
                     data[-1].update(params[i])      
@@ -1049,7 +1053,7 @@ class NodeManager:
                           "type" : None, "value" : None,
                           "access" : None, "save" : "option", 
                           "callback" : "option", "comment" : "string"}
-                if isinstance(values, ListType) and i == 0:
+                if isinstance(values, list) and i == 0:
                     if 0x1600 <= index <= 0x17FF or 0x1A00 <= index <= 0x1C00:
                         editor["access"] = "raccess"
                 else:
@@ -1079,7 +1083,7 @@ class NodeManager:
                                 editor["value"] = "dcf"
                             else:
                                 editor["value"] = "domain"
-                            dic["value"] = dic["value"].encode('hex_codec')
+                            dic["value"] = dic["value"].hex()
                         elif dic["type"] == "BOOLEAN":
                             editor["value"] = "bool"
                             dic["value"] = BoolType[dic["value"]]
@@ -1088,7 +1092,7 @@ class NodeManager:
                             values = result.groups()
                             if values[0] == "UNSIGNED":
                                 try:
-                                    format = "0x%0" + str(int(values[1])/4) + "X"
+                                    format = "0x%0" + str(int(values[1])//4) + "X"
                                     dic["value"] = format%dic["value"]
                                 except:
                                     pass

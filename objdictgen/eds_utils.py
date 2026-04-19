@@ -24,11 +24,6 @@
 
 import node
 from node import nosub, var, array, rec, plurivar, pluriarray, plurirec
-try:
-    set
-except NameError:
-    from sets import Set as set
-from types import *
 from time import *
 import os,re
 
@@ -53,8 +48,8 @@ BOOL_TRANSLATE = {True : "1", False : "0"}
 ACCESS_TRANSLATE = {"RO" : "ro", "WO" : "wo", "RW" : "rw", "RWR" : "rw", "RWW" : "rw", "CONST" : "ro"}
 
 # Function for verifying data values
-is_integer = lambda x: type(x) in (IntType, LongType)
-is_string = lambda x: type(x) in (StringType, UnicodeType)
+is_integer = lambda x: isinstance(x, int)
+is_string = lambda x: isinstance(x, str)
 is_boolean = lambda x: x in (0, 1)
 
 # Define checking of value for each attribute
@@ -123,9 +118,11 @@ def GetDefaultValue(Node, index, subIndex = None):
 
 # List of section names that are not index and subindex and that we can meet in
 # an EDS file
-SECTION_KEYNAMES = ["FILEINFO", "DEVICEINFO", "DUMMYUSAGE", "COMMENTS", 
+SECTION_KEYNAMES = ["FILEINFO", "DEVICEINFO", "DUMMYUSAGE", "COMMENTS",
                     "MANDATORYOBJECTS", "OPTIONALOBJECTS", "MANUFACTUREROBJECTS",
-                    "STANDARDDATATYPES", "SUPPORTEDMODULES"]
+                    "STANDARDDATATYPES", "SUPPORTEDMODULES",
+                    "CANFESTIVALNODE", "CANFESTIVALPARAMS",
+                    "CANFESTIVALUSERMAPPING", "CANFESTIVALDS302"]
 
 
 # Function that extract sections from a file and returns a dictionary of the informations
@@ -174,7 +171,7 @@ def ParseCPJFile(filepath):
                             try:
                                 computed_value = int(value, 16)
                             except:
-                                raise SyntaxError, _("\"%s\" is not a valid value for attribute \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("\"%s\" is not a valid value for attribute \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                         elif value.isdigit() or value.startswith("-") and value[1:].isdigit():
                             # Second case, value is a number and starts with "0" or "-0", then it's an octal value
                             if value.startswith("0") or value.startswith("-0"):
@@ -193,59 +190,59 @@ def ParseCPJFile(filepath):
                         
                         if keyname.upper() == "NETNAME":
                             if not is_string(computed_value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             topology["Name"] = computed_value
                         elif keyname.upper() == "NODES":
                             if not is_integer(computed_value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             topology["Number"] = computed_value
                         elif keyname.upper() == "EDSBASENAME":
                             if not is_string(computed_value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             topology["Path"] = computed_value
                         elif nodepresent_result:
                             if not is_boolean(computed_value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             nodeid = int(nodepresent_result.groups()[0])
                             if nodeid not in topology["Nodes"].keys():
                                 topology["Nodes"][nodeid] = {}
                             topology["Nodes"][nodeid]["Present"] = computed_value
                         elif nodename_result:
                             if not is_string(value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             nodeid = int(nodename_result.groups()[0])
                             if nodeid not in topology["Nodes"].keys():
                                 topology["Nodes"][nodeid] = {}
                             topology["Nodes"][nodeid]["Name"] = computed_value
                         elif nodedcfname_result:
                             if not is_string(computed_value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             nodeid = int(nodedcfname_result.groups()[0])
                             if nodeid not in topology["Nodes"].keys():
                                 topology["Nodes"][nodeid] = {}
                             topology["Nodes"][nodeid]["DCFName"] = computed_value
                         else:
-                            raise SyntaxError, _("Keyname \"%s\" not recognised for section \"[%s]\"")%(keyname, section_name)
+                            raise SyntaxError(_("Keyname \"%s\" not recognised for section \"[%s]\"")%(keyname, section_name))
                         
                 # All lines that are not empty and are neither a comment neither not a valid assignment
                 elif assignment.strip() != "":
-                    raise SyntaxError, _("\"%s\" is not a valid CPJ line")%assignment.strip()
+                    raise SyntaxError(_("\"%s\" is not a valid CPJ line")%assignment.strip())
         
             if "Number" not in topology.keys():
-                raise SyntaxError, _("\"Nodes\" keyname in \"[%s]\" section is missing")%section_name
+                raise SyntaxError(_("\"Nodes\" keyname in \"[%s]\" section is missing")%section_name)
         
             if topology["Number"] != len(topology["Nodes"]):
-                raise SyntaxError, _("\"Nodes\" value not corresponding to number of nodes defined")
+                raise SyntaxError(_("\"Nodes\" value not corresponding to number of nodes defined"))
             
             for nodeid, node in topology["Nodes"].items():
                 if "Present" not in node.keys():
-                    raise SyntaxError, _("\"Node%dPresent\" keyname in \"[%s]\" section is missing")%(nodeid, section_name)
+                    raise SyntaxError(_("\"Node%dPresent\" keyname in \"[%s]\" section is missing")%(nodeid, section_name))
             
             networks.append(topology)
             
         # In other case, there is a syntax problem into CPJ file
         else:
-            raise SyntaxError, _("Section \"[%s]\" is unrecognized")%section_name
+            raise SyntaxError(_("Section \"[%s]\" is unrecognized")%section_name)
     
     return networks
 
@@ -275,7 +272,7 @@ def ParseEDSFile(filepath):
             if section_name.upper() not in eds_dict:
                 eds_dict[section_name.upper()] = values
             else:
-                raise SyntaxError, _("\"[%s]\" section is defined two times")%section_name
+                raise SyntaxError(_("\"[%s]\" section is defined two times")%section_name)
         # Second case, section name is an index name 
         elif index_result:
             # Extract index number
@@ -284,11 +281,11 @@ def ParseEDSFile(filepath):
             if index not in eds_dict:
                 eds_dict[index] = values
                 eds_dict[index]["subindexes"] = {}
-            elif eds_dict[index].keys() == ["subindexes"]:
+            elif list(eds_dict[index].keys()) == ["subindexes"]:
                 values["subindexes"] = eds_dict[index]["subindexes"]
                 eds_dict[index] = values
             else:
-                raise SyntaxError, _("\"[%s]\" section is defined two times")%section_name
+                raise SyntaxError(_("\"[%s]\" section is defined two times")%section_name)
             is_entry = True
         # Third case, section name is a subindex name 
         elif subindex_result:
@@ -301,14 +298,14 @@ def ParseEDSFile(filepath):
             if subindex not in eds_dict[index]["subindexes"]:
                 eds_dict[index]["subindexes"][subindex] = values
             else:
-                raise SyntaxError, _("\"[%s]\" section is defined two times")%section_name
+                raise SyntaxError(_("\"[%s]\" section is defined two times")%section_name)
             is_entry = True
         # Third case, section name is a subindex name 
         elif index_objectlinks_result:
             pass
         # In any other case, there is a syntax problem into EDS file
         else:
-            raise SyntaxError, _("Section \"[%s]\" is unrecognized")%section_name
+            raise SyntaxError(_("Section \"[%s]\" is unrecognized")%section_name)
         
         for assignment in assignments:
             # Escape any comment
@@ -330,13 +327,13 @@ def ParseEDSFile(filepath):
                             test = int(value.upper().replace("$NODEID+", ""), 16)
                             computed_value = "\"%s\""%value
                         except:
-                            raise SyntaxError, _("\"%s\" is not a valid formula for attribute \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                            raise SyntaxError(_("\"%s\" is not a valid formula for attribute \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                     # Second case, value starts with "0x", then it's an hexadecimal value
                     elif value.startswith("0x") or value.startswith("-0x"):
                         try:
                             computed_value = int(value, 16)
                         except:
-                            raise SyntaxError, _("\"%s\" is not a valid value for attribute \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                            raise SyntaxError(_("\"%s\" is not a valid value for attribute \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                     elif value.isdigit() or value.startswith("-") and value[1:].isdigit():
                         # Third case, value is a number and starts with "0", then it's an octal value
                         if value.startswith("0") or value.startswith("-0"):
@@ -354,17 +351,17 @@ def ParseEDSFile(filepath):
                         if is_entry:
                             # Verify that keyname is a possible attribute
                             if keyname.upper() not in ENTRY_ATTRIBUTES:
-                                raise SyntaxError, _("Keyname \"%s\" not recognised for section \"[%s]\"")%(keyname, section_name)
+                                raise SyntaxError(_("Keyname \"%s\" not recognised for section \"[%s]\"")%(keyname, section_name))
                             # Verify that value is valid
                             elif not ENTRY_ATTRIBUTES[keyname.upper()](computed_value):
-                                raise SyntaxError, _("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name)
+                                raise SyntaxError(_("Invalid value \"%s\" for keyname \"%s\" of section \"[%s]\"")%(value, keyname, section_name))
                             else:
                                 values[keyname.upper()] = computed_value
                         else:
                             values[keyname.upper()] = computed_value
             # All lines that are not empty and are neither a comment neither not a valid assignment
             elif assignment.strip() != "":
-                raise SyntaxError, _("\"%s\" is not a valid EDS line")%assignment.strip()
+                raise SyntaxError(_("\"%s\" is not a valid EDS line")%assignment.strip())
         
         # If entry is an index or a subindex
         if is_entry:
@@ -384,7 +381,7 @@ def ParseEDSFile(filepath):
                     attributes = _("Attributes %s are")%_(", ").join(["\"%s\""%attribute for attribute in missing])
                 else:
                     attributes = _("Attribute \"%s\" is")%missing.pop()
-                raise SyntaxError, _("Error on section \"[%s]\":\n%s required for a %s entry")%(section_name, attributes, ENTRY_TYPES[values["OBJECTTYPE"]]["name"])
+                raise SyntaxError(_("Error on section \"[%s]\":\n%s required for a %s entry")%(section_name, attributes, ENTRY_TYPES[values["OBJECTTYPE"]]["name"]))
             # Verify that parameters defined are all in the possible parameters
             if not keys.issubset(possible):
                 unsupported = keys.difference(possible)
@@ -392,7 +389,7 @@ def ParseEDSFile(filepath):
                     attributes = _("Attributes %s are")%_(", ").join(["\"%s\""%attribute for attribute in unsupported])
                 else:
                     attributes = _("Attribute \"%s\" is")%unsupported.pop()
-                raise SyntaxError, _("Error on section \"[%s]\":\n%s unsupported for a %s entry")%(section_name, attributes, ENTRY_TYPES[values["OBJECTTYPE"]]["name"])
+                raise SyntaxError(_("Error on section \"[%s]\":\n%s unsupported for a %s entry")%(section_name, attributes, ENTRY_TYPES[values["OBJECTTYPE"]]["name"]))
             
             VerifyValue(values, section_name, "ParameterValue")
             VerifyValue(values, section_name, "DefaultValue")
@@ -409,10 +406,10 @@ def VerifyValue(values, section_name, param):
             elif values["DATATYPE"] == 0x01:
                 values[param.upper()] = {0 : False, 1 : True}[values[param.upper()]]
             else:
-                if not isinstance(values[param.upper()], (IntType, LongType)) and values[param.upper()].upper().find("$NODEID") == -1:
+                if not isinstance(values[param.upper()], int) and values[param.upper()].upper().find("$NODEID") == -1:
                     raise
         except:
-            raise SyntaxError, _("Error on section \"[%s]\":\n%s incompatible with DataType")%(section_name, param)
+            raise SyntaxError(_("Error on section \"[%s]\":\n%s incompatible with DataType")%(section_name, param))
 
 
 # Function that write an EDS file after generate it's content
@@ -531,7 +528,7 @@ def GenerateFileContent(Node, filepath):
         # Define section name
         text = "\n[%X]\n"%entry
         # If there is only one value, it's a VAR entry
-        if type(values) != ListType:
+        if type(values) != list:
             # Extract the informations of the first subindex
             subentry_infos = Node.GetSubentryInfos(entry, 0)
             # Generate EDS informations for the entry
@@ -636,13 +633,12 @@ def GenerateEDSFile(filepath, node):
         # Write file
         WriteFile(filepath, content)
         return None
-    except ValueError, message:
+    except ValueError as message:
         return _("Unable to generate EDS file\n%s")%message
     
 # Function that generate the CPJ file content for the nodelist
 def GenerateCPJContent(nodelist):
-    nodes = nodelist.SlaveNodes.keys()
-    nodes.sort()
+    nodes = sorted(nodelist.SlaveNodes.keys())
     
     fileContent = "[TOPOLOGY]\n"
     fileContent += "NetName=%s\n"%nodelist.GetNetworkName()
@@ -674,14 +670,18 @@ def GenerateNode(filepath, nodeID = 0):
             if os.path.isfile(ProfilePath):
                 try:
                     # Load Profile
-                    execfile(ProfilePath)
+                    profile_globals = {
+                        "nosub": node.nosub, "var": node.var, "array": node.array, "rec": node.rec,
+                        "plurivar": node.plurivar, "pluriarray": node.pluriarray, "plurirec": node.plurirec,
+                    }
+                    exec(compile(open(ProfilePath).read(), ProfilePath, 'exec'), profile_globals)
                     Node.SetProfileName(ProfileName)
-                    Node.SetProfile(Mapping)
-                    Node.SetSpecificMenu(AddMenuEntries)
+                    Node.SetProfile(profile_globals["Mapping"])
+                    Node.SetSpecificMenu(profile_globals["AddMenuEntries"])
                 except:
                     pass
         # Read all entries in the EDS dictionary 
-        for entry, values in eds_dict.iteritems():
+        for entry, values in eds_dict.items():
             # All sections with a name in keynames are escaped
             if entry in SECTION_KEYNAMES:
                 pass
@@ -696,7 +696,7 @@ def GenerateNode(filepath, nodeID = 0):
                         if values["OBJECTTYPE"] == 2:
                             values["DATATYPE"] = values.get("DATATYPE", 0xF)
                             if values["DATATYPE"] != 0xF:
-                                raise SyntaxError, _("Domain entry 0x%4.4X DataType must be 0xF(DOMAIN) if defined")%entry
+                                raise SyntaxError(_("Domain entry 0x%4.4X DataType must be 0xF(DOMAIN) if defined")%entry)
                         # Add mapping for entry
                         Node.AddMappingEntry(entry, name = values["PARAMETERNAME"], struct = 1)
                         # Add mapping for first subindex
@@ -713,7 +713,7 @@ def GenerateNode(filepath, nodeID = 0):
                         # Add mapping for first subindex
                         Node.AddMappingEntry(entry, 0, values = {"name" : "Number of Entries", "type" : 0x05, "access" : "ro", "pdo" : False})
                         # Add mapping for other subindexes
-                        for subindex in xrange(1, int(max_subindex) + 1):
+                        for subindex in range(1, int(max_subindex) + 1):
                             # if subindex is defined
                             if subindex in values["subindexes"]:
                                 Node.AddMappingEntry(entry, subindex, values = {"name" : values["subindexes"][subindex]["PARAMETERNAME"], 
@@ -727,7 +727,7 @@ def GenerateNode(filepath, nodeID = 0):
 ##                    elif values["OBJECTTYPE"] == 9:
 ##                        # Verify that the first subindex is defined
 ##                        if 0 not in values["subindexes"]:
-##                            raise SyntaxError, "Error on entry 0x%4.4X:\nSubindex 0 must be defined for a RECORD entry"%entry
+##                            raise SyntaxError("Error on entry 0x%4.4X:\nSubindex 0 must be defined for a RECORD entry"%entry)
 ##                        # Add mapping for entry
 ##                        Node.AddMappingEntry(entry, name = values["PARAMETERNAME"], struct = 7)
 ##                        # Add mapping for first subindex
@@ -740,7 +740,7 @@ def GenerateNode(filepath, nodeID = 0):
 ##                                                                     "pdo" : values["subindexes"][1].get("PDOMAPPING", 0) == 1,
 ##                                                                     "nbmax" : 0xFE})
 ##                        else:
-##                            raise SyntaxError, "Error on entry 0x%4.4X:\nA RECORD entry must have at least 2 subindexes"%entry
+##                            raise SyntaxError("Error on entry 0x%4.4X:\nA RECORD entry must have at least 2 subindexes"%entry)
                 
                 # Define entry for the new node
                 
@@ -763,7 +763,7 @@ def GenerateNode(filepath, nodeID = 0):
                         max_subindex = max(values["subindexes"].keys())
                         Node.AddEntry(entry, value = [])
                         # Define value for all subindexes except the first 
-                        for subindex in xrange(1, int(max_subindex) + 1):
+                        for subindex in range(1, int(max_subindex) + 1):
                             # Take default value if it is defined and entry is defined
                             if subindex in values["subindexes"] and "PARAMETERVALUE" in values["subindexes"][subindex]:
                                 value = values["subindexes"][subindex]["PARAMETERVALUE"]
@@ -774,15 +774,222 @@ def GenerateNode(filepath, nodeID = 0):
                                 value = GetDefaultValue(Node, entry, subindex)
                             Node.AddEntry(entry, subindex, value)
                     else:
-                        raise SyntaxError, _("Array or Record entry 0x%4.4X must have a \"SubNumber\" attribute")%entry
+                        raise SyntaxError(_("Array or Record entry 0x%4.4X must have a \"SubNumber\" attribute")%entry)
         return Node
-    except SyntaxError, message:
+    except SyntaxError as message:
         return _("Unable to import EDS file\n%s")%message
+
+#-------------------------------------------------------------------------------
+#                     DCF File Save/Load (CanFestival extended)
+#-------------------------------------------------------------------------------
+
+import json
+
+def GenerateDCFContent(Node, filepath):
+    """Generate DCF file content from a Node object.
+
+    This produces standard DCF (EDS + ParameterValue fields) plus
+    CanFestival extension sections to preserve metadata not in the standard.
+    """
+    # Start with standard EDS content
+    fileContent = GenerateFileContent(Node, filepath)
+
+    # Add CanFestival extension sections
+    fileContent += "\n[CanFestivalNode]\n"
+    fileContent += "NodeName=%s\n" % Node.GetNodeName()
+    fileContent += "NodeType=%s\n" % Node.GetNodeType()
+    fileContent += "NodeID=0x%02X\n" % Node.GetNodeID()
+    fileContent += "Description=%s\n" % Node.GetNodeDescription()
+    fileContent += "ProfileName=%s\n" % Node.GetProfileName()
+    fileContent += "DefaultStringSize=%d\n" % Node.GetDefaultStringSize()
+
+    # Serialize ParamsDictionary
+    if getattr(Node, "ParamsDictionary", None):
+        fileContent += "\n[CanFestivalParams]\n"
+        for index in sorted(Node.ParamsDictionary.keys()):
+            params = Node.ParamsDictionary[index]
+            if isinstance(params, dict):
+                # Check if it has subindex keys (integers) or direct params
+                has_subindexes = any(isinstance(k, int) for k in params.keys())
+                if has_subindexes:
+                    for subindex in sorted(k for k in params.keys() if isinstance(k, int)):
+                        subparams = params[subindex]
+                        comment = subparams.get("comment", "")
+                        save = subparams.get("save", False)
+                        callback = subparams.get("callback", "")
+                        fileContent += "0x%04X,0x%02X=%s\n" % (index, subindex,
+                            json.dumps({"comment": comment, "save": save, "callback": callback}))
+                else:
+                    comment = params.get("comment", "")
+                    save = params.get("save", False)
+                    callback = params.get("callback", "")
+                    fileContent += "0x%04X=%s\n" % (index,
+                        json.dumps({"comment": comment, "save": save, "callback": callback}))
+
+    # Serialize UserMapping
+    if getattr(Node, "UserMapping", None) and len(Node.UserMapping) > 0:
+        fileContent += "\n[CanFestivalUserMapping]\n"
+        fileContent += "UserMapping=%s\n" % json.dumps(
+            {("0x%04X" % k): v for k, v in Node.UserMapping.items()},
+            default=str)
+
+    # Serialize DS302 profile flag
+    if getattr(Node, "DS302", None) and len(Node.DS302) > 0:
+        fileContent += "\n[CanFestivalDS302]\n"
+        fileContent += "Enabled=1\n"
+
+    return fileContent
+
+
+def SaveNodeAsDCF(filepath, Node):
+    """Save a Node object to a DCF file."""
+    try:
+        content = GenerateDCFContent(Node, filepath)
+        WriteFile(filepath, content)
+        return None
+    except ValueError as message:
+        return _("Unable to generate DCF file\n%s") % message
+
+
+def LoadNodeFromDCF(filepath, nodeID=0):
+    """Load a Node object from a DCF file (extended EDS with CanFestival sections)."""
+    # First, use existing EDS parser to build the base node
+    result = GenerateNode(filepath, nodeID)
+    if not isinstance(result, node.Node):
+        return result  # Error message string
+
+    Node = result
+
+    # Now re-parse the file to extract CanFestival extension sections
+    try:
+        eds_file = open(filepath, 'r').read()
+        sections = ExtractSections(eds_file)
+
+        for section_name, assignments in sections:
+            section_upper = section_name.upper()
+
+            if section_upper == "CANFESTIVALNODE":
+                for assignment in assignments:
+                    if assignment.startswith(";") or assignment.strip() == "":
+                        continue
+                    if "=" in assignment:
+                        keyname, value = assignment.split("=", 1)
+                        keyname = keyname.strip().upper()
+                        value = value.strip()
+                        if keyname == "NODENAME":
+                            Node.SetNodeName(value)
+                        elif keyname == "NODETYPE":
+                            Node.SetNodeType(value)
+                        elif keyname == "NODEID":
+                            Node.SetNodeID(int(value, 16) if value.startswith("0x") else int(value))
+                        elif keyname == "DESCRIPTION":
+                            Node.SetNodeDescription(value)
+                        elif keyname == "PROFILENAME":
+                            if value != "DS-301" and value != "None":
+                                ProfilePath = os.path.join(os.path.split(__file__)[0], "config/%s.prf" % value)
+                                if os.path.isfile(ProfilePath):
+                                    try:
+                                        profile_globals = {
+                        "nosub": node.nosub, "var": node.var, "array": node.array, "rec": node.rec,
+                        "plurivar": node.plurivar, "pluriarray": node.pluriarray, "plurirec": node.plurirec,
+                    }
+                                        exec(compile(open(ProfilePath).read(), ProfilePath, 'exec'), profile_globals)
+                                        Node.SetProfileName(value)
+                                        Node.SetProfile(profile_globals["Mapping"])
+                                        Node.SetSpecificMenu(profile_globals["AddMenuEntries"])
+                                    except:
+                                        pass
+                                else:
+                                    Node.SetProfileName(value)
+                            else:
+                                Node.SetProfileName(value)
+                        elif keyname == "DEFAULTSTRINGSIZE":
+                            Node.SetDefaultStringSize(int(value))
+
+            elif section_upper == "CANFESTIVALPARAMS":
+                if not getattr(Node, "ParamsDictionary", None):
+                    Node.ParamsDictionary = {}
+                for assignment in assignments:
+                    if assignment.startswith(";") or assignment.strip() == "":
+                        continue
+                    if "=" in assignment:
+                        key, value = assignment.split("=", 1)
+                        key = key.strip()
+                        value = value.strip()
+                        try:
+                            params = json.loads(value)
+                            if "," in key:
+                                # Format: 0xINDEX,0xSUBINDEX
+                                parts = key.split(",")
+                                index = int(parts[0], 16)
+                                subindex = int(parts[1], 16)
+                                if index not in Node.ParamsDictionary:
+                                    Node.ParamsDictionary[index] = {}
+                                Node.ParamsDictionary[index][subindex] = {}
+                                if params.get("comment", ""):
+                                    Node.ParamsDictionary[index][subindex]["comment"] = params["comment"]
+                                if params.get("save", False):
+                                    Node.ParamsDictionary[index][subindex]["save"] = params["save"]
+                                if params.get("callback", ""):
+                                    Node.ParamsDictionary[index][subindex]["callback"] = params["callback"]
+                            else:
+                                # Format: 0xINDEX
+                                index = int(key, 16)
+                                if index not in Node.ParamsDictionary:
+                                    Node.ParamsDictionary[index] = {}
+                                if params.get("comment", ""):
+                                    Node.ParamsDictionary[index]["comment"] = params["comment"]
+                                if params.get("save", False):
+                                    Node.ParamsDictionary[index]["save"] = params["save"]
+                                if params.get("callback", ""):
+                                    Node.ParamsDictionary[index]["callback"] = params["callback"]
+                        except (json.JSONDecodeError, ValueError):
+                            pass
+
+            elif section_upper == "CANFESTIVALUSERMAPPING":
+                for assignment in assignments:
+                    if assignment.startswith(";") or assignment.strip() == "":
+                        continue
+                    if "=" in assignment:
+                        keyname, value = assignment.split("=", 1)
+                        if keyname.strip().upper() == "USERMAPPING":
+                            try:
+                                raw = json.loads(value.strip())
+                                for hex_index, mapping in raw.items():
+                                    index = int(hex_index, 16)
+                                    Node.UserMapping[index] = mapping
+                            except (json.JSONDecodeError, ValueError):
+                                pass
+
+            elif section_upper == "CANFESTIVALDS302":
+                for assignment in assignments:
+                    if assignment.startswith(";") or assignment.strip() == "":
+                        continue
+                    if "=" in assignment:
+                        keyname, value = assignment.split("=", 1)
+                        if keyname.strip().upper() == "ENABLED" and value.strip() == "1":
+                            DS302Path = os.path.join(os.path.split(__file__)[0], "config/DS-302.prf")
+                            if os.path.isfile(DS302Path):
+                                try:
+                                    profile_globals = {
+                        "nosub": node.nosub, "var": node.var, "array": node.array, "rec": node.rec,
+                        "plurivar": node.plurivar, "pluriarray": node.pluriarray, "plurirec": node.plurirec,
+                    }
+                                    exec(compile(open(DS302Path).read(), DS302Path, 'exec'), profile_globals)
+                                    Node.SetDS302Profile(profile_globals["Mapping"])
+                                    Node.ExtendSpecificMenu(profile_globals["AddMenuEntries"])
+                                except:
+                                    pass
+
+        return Node
+    except Exception as e:
+        return _("Unable to load DCF file\n%s") % str(e)
+
 
 #-------------------------------------------------------------------------------
 #                             Main Function
 #-------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    print ParseEDSFile("examples/PEAK MicroMod.eds")
+    print(ParseEDSFile("examples/PEAK MicroMod.eds"))
 

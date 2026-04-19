@@ -1,5 +1,3 @@
-from types import *
-
 import wx
 
 from node import OD_Subindex, OD_MultipleSubindexes, OD_IdenticalSubindexes, OD_IdenticalIndexes
@@ -83,10 +81,10 @@ class NodeEditorTemplate:
                 text = _("%s: %s entry of struct %s%s.")%(name,category,struct,number)
                 self.Frame.HelpBar.SetStatusText(text, 2)
             else:
-                for i in xrange(3):
+                for i in range(3):
                     self.Frame.HelpBar.SetStatusText("", i)
         else:
-            for i in xrange(3):
+            for i in range(3):
                 self.Frame.HelpBar.SetStatusText("", i)
     
     def RefreshProfileMenu(self):
@@ -95,19 +93,19 @@ class NodeEditorTemplate:
             edititem = self.Frame.EditMenu.FindItemById(self.EDITMENU_ID)
             if edititem:
                 length = self.Frame.AddMenu.GetMenuItemCount()
-                for i in xrange(length-6):
+                for i in range(length-6):
                     additem = self.Frame.AddMenu.FindItemByPosition(6)
                     self.Frame.AddMenu.Delete(additem.GetId())
                 if profile not in ("None", "DS-301"):
-                    edititem.SetText(_("%s Profile")%profile)
+                    edititem.SetItemLabel(_("%s Profile")%profile)
                     edititem.Enable(True)
                     self.Frame.AddMenu.AppendSeparator()
                     for text, indexes in self.Manager.GetCurrentSpecificMenu():
-                        new_id = wx.NewId()
-                        self.Frame.AddMenu.Append(help='', id=new_id, kind=wx.ITEM_NORMAL, text=text)
+                        new_id = wx.NewIdRef()
+                        self.Frame.AddMenu.Append(helpString='', id=new_id, kind=wx.ITEM_NORMAL, item=text)
                         self.Frame.Bind(wx.EVT_MENU, self.GetProfileCallBack(text), id=new_id)
                 else:
-                    edititem.SetText(_("Other Profile"))
+                    edititem.SetItemLabel(_("Other Profile"))
                     edititem.Enable(False)
         
 #-------------------------------------------------------------------------------
@@ -201,7 +199,7 @@ class NodeEditorTemplate:
             dialog.SetIndex(index)
             if dialog.ShowModal() == wx.ID_OK:
                 result = self.Manager.AddMapVariableToCurrent(*dialog.GetValues())
-                if not isinstance(result, (StringType, UnicodeType)):
+                if not isinstance(result, str):
                     self.RefreshBufferState()
                     self.RefreshCurrentIndexList()
                 else:
@@ -215,7 +213,7 @@ class NodeEditorTemplate:
         dialog.SetTypeList(self.Manager.GetCustomisableTypes())
         if dialog.ShowModal() == wx.ID_OK:
             result = self.Manager.AddUserTypeToCurrent(*dialog.GetValues())
-            if not isinstance(result, (StringType, UnicodeType)):
+            if not isinstance(result, str):
                 self.RefreshBufferState()
                 self.RefreshCurrentIndexList()
             else:

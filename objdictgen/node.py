@@ -21,8 +21,7 @@
 #License along with this library; if not, write to the Free Software
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-import cPickle
-from types import *
+import pickle
 import re
 
 """
@@ -238,7 +237,7 @@ Return the index of the typename given by searching in mappingdictionary
 """
 def FindTypeIndex(typename, mappingdictionary):
     testdic = {}
-    for index, values in mappingdictionary.iteritems():
+    for index, values in mappingdictionary.items():
         if index < 0x1000:
             testdic[values["name"]] = index
     if typename in testdic:
@@ -279,20 +278,20 @@ def FindEntryName(index, mappingdictionary, compute=True):
     if base_index:
         infos = mappingdictionary[base_index]
         if infos["struct"] & OD_IdenticalIndexes and compute:
-            return StringFormat(infos["name"], (index - base_index) / infos["incr"] + 1, 0)
+            return StringFormat(infos["name"], (index - base_index) // infos["incr"] + 1, 0)
         else:
             return infos["name"]
     return None
 
 """
-Return the informations of one entry by searching in mappingdictionary 
+Return the informations of one entry by searching in mappingdictionary
 """
 def FindEntryInfos(index, mappingdictionary, compute=True):
     base_index = FindIndex(index, mappingdictionary)
     if base_index:
         copy = mappingdictionary[base_index].copy()
         if copy["struct"] & OD_IdenticalIndexes and compute:
-            copy["name"] = StringFormat(copy["name"], (index - base_index) / copy["incr"] + 1, 0)
+            copy["name"] = StringFormat(copy["name"], (index - base_index) // copy["incr"] + 1, 0)
         copy.pop("values")
         return copy
     return None
@@ -331,7 +330,7 @@ def FindSubentryInfos(index, subIndex, mappingdictionary, compute=True):
             elif subIndex == 0:
                 infos = mappingdictionary[base_index]["values"][0].copy()
             if infos is not None and compute:
-                infos["name"] = StringFormat(infos["name"], (index - base_index) / incr + 1, subIndex)
+                infos["name"] = StringFormat(infos["name"], (index - base_index) // incr + 1, subIndex)
             return infos
     return None
 
@@ -340,7 +339,7 @@ Return the list of variables that can be mapped defined in mappingdictionary
 """
 def FindMapVariableList(mappingdictionary, Node, compute=True):
     list = []
-    for index in mappingdictionary.iterkeys():
+    for index in mappingdictionary:
         if Node.IsEntry(index):
             for subIndex, values in enumerate(mappingdictionary[index]["values"]):
                 if mappingdictionary[index]["values"][subIndex]["pdo"]:
@@ -348,7 +347,7 @@ def FindMapVariableList(mappingdictionary, Node, compute=True):
                     name = mappingdictionary[index]["values"][subIndex]["name"]
                     if mappingdictionary[index]["struct"] & OD_IdenticalSubindexes:
                         values = Node.GetEntry(index)
-                        for i in xrange(len(values) - 1):
+                        for i in range(len(values) - 1):
                             computed_name = name
                             if compute:
                                 computed_name = StringFormat(computed_name, 1, i + 1)
@@ -365,7 +364,7 @@ Return the list of mandatory indexes defined in mappingdictionary
 """
 def FindMandatoryIndexes(mappingdictionary):
     list = []
-    for index in mappingdictionary.iterkeys():
+    for index in mappingdictionary:
         if index >= 0x1000 and mappingdictionary[index]["need"]:
             list.append(index)
     return list
@@ -391,7 +390,7 @@ def FindIndex(index, mappingdictionary):
 #                           Formating Name of an Entry
 #-------------------------------------------------------------------------------
 
-name_model = re.compile('(.*)\[(.*)\]')
+name_model = re.compile(r'(.*)\[(.*)\]')
 
 """
 Format the text given with the index and subindex defined
@@ -568,7 +567,7 @@ class Node:
             elif subIndex == 1:
                 self.Dictionary[index] = [value]
                 return True
-        elif subIndex > 0 and type(self.Dictionary[index]) == ListType and subIndex == len(self.Dictionary[index]) + 1:
+        elif subIndex > 0 and type(self.Dictionary[index]) == list and subIndex == len(self.Dictionary[index]) + 1:
             self.Dictionary[index].append(value)
             return True
         return False
@@ -582,7 +581,7 @@ class Node:
                 if value != None:
                     self.Dictionary[index] = value
                 return True
-            elif type(self.Dictionary[index]) == ListType and 0 < subIndex <= len(self.Dictionary[index]):
+            elif type(self.Dictionary[index]) == list and 0 < subIndex <= len(self.Dictionary[index]):
                 if value != None:
                     self.Dictionary[index][subIndex - 1] = value
                 return True
@@ -594,7 +593,7 @@ class Node:
         if index in self.Dictionary:
             if (comment != None or save != None or callback != None) and index not in self.ParamsDictionary:
                 self.ParamsDictionary[index] = {}
-            if subIndex == None or type(self.Dictionary[index]) != ListType and subIndex == 0:
+            if subIndex == None or type(self.Dictionary[index]) != list and subIndex == 0:
                 if comment != None:
                     self.ParamsDictionary[index]["comment"] = comment
                 if save != None:
@@ -602,7 +601,7 @@ class Node:
                 if callback != None:
                     self.ParamsDictionary[index]["callback"] = callback
                 return True
-            elif type(self.Dictionary[index]) == ListType and 0 <= subIndex <= len(self.Dictionary[index]):
+            elif type(self.Dictionary[index]) == list and 0 <= subIndex <= len(self.Dictionary[index]):
                 if (comment != None or save != None or callback != None) and subIndex not in self.ParamsDictionary[index]:
                     self.ParamsDictionary[index][subIndex] = {}
                 if comment != None:
@@ -626,7 +625,7 @@ class Node:
                 if index in self.ParamsDictionary:
                     self.ParamsDictionary.pop(index)
                 return True
-            elif type(self.Dictionary[index]) == ListType and subIndex == len(self.Dictionary[index]):
+            elif type(self.Dictionary[index]) == list and subIndex == len(self.Dictionary[index]):
                 self.Dictionary[index].pop(subIndex - 1)
                 if index in self.ParamsDictionary:
                     if subIndex in self.ParamsDictionary[index]:
@@ -657,7 +656,7 @@ class Node:
     def GetEntry(self, index, subIndex = None, compute = True):
         if index in self.Dictionary:
             if subIndex == None:
-                if type(self.Dictionary[index]) == ListType:
+                if type(self.Dictionary[index]) == list:
                     values = [len(self.Dictionary[index])]
                     for value in self.Dictionary[index]:
                         values.append(self.CompileValue(value, index, compute))
@@ -665,11 +664,11 @@ class Node:
                 else:
                     return self.CompileValue(self.Dictionary[index], index, compute)
             elif subIndex == 0:
-                if type(self.Dictionary[index]) == ListType:
+                if type(self.Dictionary[index]) == list:
                     return len(self.Dictionary[index])
                 else:
                     return self.CompileValue(self.Dictionary[index], index, compute)
-            elif type(self.Dictionary[index]) == ListType and 0 < subIndex <= len(self.Dictionary[index]):
+            elif type(self.Dictionary[index]) == list and 0 < subIndex <= len(self.Dictionary[index]):
                 return self.CompileValue(self.Dictionary[index][subIndex - 1], index, compute)
         return None
 
@@ -682,28 +681,28 @@ class Node:
             self.ParamsDictionary = {}
         if index in self.Dictionary:
             if subIndex == None:
-                if type(self.Dictionary[index]) == ListType:
+                if type(self.Dictionary[index]) == list:
                     if index in self.ParamsDictionary:
                         result = []
-                        for i in xrange(len(self.Dictionary[index]) + 1):
+                        for i in range(len(self.Dictionary[index]) + 1):
                             line = DefaultParams.copy()
                             if i in self.ParamsDictionary[index]:
                                 line.update(self.ParamsDictionary[index][i])
                             result.append(line)
                         return result
                     else:
-                        return [DefaultParams.copy() for i in xrange(len(self.Dictionary[index]) + 1)]
+                        return [DefaultParams.copy() for i in range(len(self.Dictionary[index]) + 1)]
                 else:
                     result = DefaultParams.copy()
                     if index in self.ParamsDictionary:
                         result.update(self.ParamsDictionary[index])
                     return result
-            elif subIndex == 0 and type(self.Dictionary[index]) != ListType:
+            elif subIndex == 0 and type(self.Dictionary[index]) != list:
                 result = DefaultParams.copy()
                 if index in self.ParamsDictionary:
                     result.update(self.ParamsDictionary[index])
                 return result
-            elif type(self.Dictionary[index]) == ListType and 0 <= subIndex <= len(self.Dictionary[index]):
+            elif type(self.Dictionary[index]) == list and 0 <= subIndex <= len(self.Dictionary[index]):
                 result = DefaultParams.copy()
                 if index in self.ParamsDictionary and subIndex in self.ParamsDictionary[index]:
                     result.update(self.ParamsDictionary[index][subIndex])
@@ -780,23 +779,23 @@ class Node:
                     if self.UserMapping[index]["struct"] & OD_IdenticalSubindexes:
                         if self.IsStringType(self.UserMapping[index]["values"][subIndex]["type"]):
                             if self.IsRealType(values["type"]):
-                                for i in xrange(len(self.Dictionary[index])):
+                                for i in range(len(self.Dictionary[index])):
                                     self.SetEntry(index, i + 1, 0.)
                             elif not self.IsStringType(values["type"]):
-                                for i in xrange(len(self.Dictionary[index])):
+                                for i in range(len(self.Dictionary[index])):
                                     self.SetEntry(index, i + 1, 0)
                         elif self.IsRealType(self.UserMapping[index]["values"][subIndex]["type"]):
                             if self.IsStringType(values["type"]):
-                                for i in xrange(len(self.Dictionary[index])):
+                                for i in range(len(self.Dictionary[index])):
                                     self.SetEntry(index, i + 1, "")
                             elif not self.IsRealType(values["type"]):
-                                for i in xrange(len(self.Dictionary[index])):
+                                for i in range(len(self.Dictionary[index])):
                                     self.SetEntry(index, i + 1, 0)
                         elif self.IsStringType(values["type"]):
-                            for i in xrange(len(self.Dictionary[index])):
+                            for i in range(len(self.Dictionary[index])):
                                 self.SetEntry(index, i + 1, "")
                         elif self.IsRealType(values["type"]):
-                            for i in xrange(len(self.Dictionary[index])):
+                            for i in range(len(self.Dictionary[index])):
                                 self.SetEntry(index, i + 1, 0.)                        
                     else:
                         if self.IsStringType(self.UserMapping[index]["values"][subIndex]["type"]):
@@ -838,7 +837,7 @@ class Node:
         if subIndex:
             model += subIndex << 8
             mask += 0xFF << 8
-        for i in self.Dictionary.iterkeys():
+        for i in self.Dictionary:
             if 0x1600 <= i <= 0x17FF or 0x1A00 <= i <= 0x1BFF:
                 for j,value in enumerate(self.Dictionary[i]):
                     if (value & mask) == model:
@@ -850,7 +849,7 @@ class Node:
         if subIndex:
             model += subIndex << 8
             mask = 0xFF << 8
-        for i in self.Dictionary.iterkeys():
+        for i in self.Dictionary:
             if 0x1600 <= i <= 0x17FF or 0x1A00 <= i <= 0x1BFF:
                 for j,value in enumerate(self.Dictionary[i]):
                     if (value & mask) == model:
@@ -876,30 +875,26 @@ class Node:
     Return a copy of the node
     """
     def Copy(self):
-        return cPickle.loads(cPickle.dumps(self))
+        return pickle.loads(pickle.dumps(self))
 
     """
     Return a sorted list of indexes in Object Dictionary
     """
     def GetIndexes(self):
-        listindex = self.Dictionary.keys()
-        listindex.sort()
-        return listindex
+        return sorted(self.Dictionary.keys())
 
     """
     Print the Dictionary values
     """
     def Print(self):
-        print self.PrintString()
+        print(self.PrintString())
     
     def PrintString(self):
         result = ""
-        listindex = self.Dictionary.keys()
-        listindex.sort()
-        for index in listindex:
+        for index in sorted(self.Dictionary.keys()):
             name = self.GetEntryName(index)
             values = self.Dictionary[index]
-            if isinstance(values, ListType):
+            if isinstance(values, list):
                 result += "%04X (%s):\n"%(index, name)
                 for subidx, value in enumerate(values):
                     subentry_infos = self.GetSubentryInfos(index, subidx + 1)
@@ -918,17 +913,17 @@ class Node:
                             value += (" %0"+"%d"%(size * 2)+"X")%BE_to_LE(data[i+7:i+7+size])
                             i += 7 + size
                             count += 1
-                    elif isinstance(value, IntType):
+                    elif isinstance(value, int):
                         value = "%X"%value
                     result += "%04X %02X (%s): %s\n"%(index, subidx+1, subentry_infos["name"], value)
             else:
-                if isinstance(values, IntType):
+                if isinstance(values, int):
                     values = "%X"%values
                 result += "%04X (%s): %s\n"%(index, name, values)
         return result
             
     def CompileValue(self, value, index, compute = True):
-        if isinstance(value, (StringType, UnicodeType)) and value.upper().find("$NODEID") != -1:
+        if isinstance(value, str) and value.upper().find("$NODEID") != -1:
             base = self.GetBaseIndex(index)
             try:
                 raw = eval(value)
@@ -948,10 +943,10 @@ class Node:
         for mapping in self.GetMappings():
             result = FindIndex(index, mapping)
             if result != None:
-                return (index - result) / mapping[result].get("incr", 1)
+                return (index - result) // mapping[result].get("incr", 1)
         result = FindIndex(index, MappingDictionary)
         if result != None:
-            return (index - result) / MappingDictionary[result].get("incr", 1)
+            return (index - result) // MappingDictionary[result].get("incr", 1)
         return 0
 
     def GetCustomisedTypeValues(self, index):
@@ -1134,26 +1129,23 @@ class Node:
 
 def BE_to_LE(value):
     """
-    Convert Big Endian to Little Endian 
+    Convert Big Endian to Little Endian
     @param value: value expressed in Big Endian
-    @param size: number of bytes generated
-    @return: a string containing the value converted
+    @return: integer value converted
     """
-    
-    data = [char for char in value]
+    data = list(value)
     data.reverse()
-    return int("".join(["%2.2X"%ord(char) for char in data]), 16)
+    return int("".join(["%2.2X" % (b if isinstance(b, int) else ord(b)) for b in data]), 16)
 
 def LE_to_BE(value, size):
     """
     Convert Little Endian to Big Endian
     @param value: value expressed in integer
     @param size: number of bytes generated
-    @return: a string containing the value converted
+    @return: a bytes object containing the value converted
     """
-    
     data = ("%" + str(size * 2) + "." + str(size * 2) + "X") % value
-    list_car = [data[i:i+2] for i in xrange(0, len(data), 2)]
+    list_car = [data[i:i+2] for i in range(0, len(data), 2)]
     list_car.reverse()
-    return "".join([chr(int(car, 16)) for car in list_car])
+    return bytes([int(car, 16) for car in list_car])
 

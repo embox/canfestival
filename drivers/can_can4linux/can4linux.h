@@ -75,9 +75,7 @@ extern "C" {
 
 #define CAN4LINUXVERSION 0x0301 /*(Version 3.1)*/
 
-#ifndef __KERNEL__
 #include <sys/time.h>
-#endif
  /*---------- the can message structure */
 
 #define CAN_MSG_LENGTH 8		/**< maximum length of a CAN frame */

@@ -172,22 +172,17 @@ Simplified directory structure.
 ./drivers/unix Linux and Cygwin OS interface
 ./drivers/win32 Native Win32 OS interface
 ./drivers/timers_xeno Xenomai timers/threads (Linux only)
-./drivers/timers_rtai Rtai timers/threads (Linux only)
-./drivers/timers_kernel Linux kernel timer/threads
 ./drivers/timers_unix Posix timers/threads (Linux, Cygwin)
-./drivers/can_virtual_kernel Fake CAN network (kernel space)
 ./drivers/can_serial Serial point to point and PTY hub (*nix only)
 ./drivers/can_peak_linux PeakSystem CAN library interface
 ./drivers/can_peak_win32 PeakSystem PCAN-Light interface
 ./drivers/can_uvccm_win32 Acacetus's RS232 CAN-uVCCM interface
 ./drivers/can_virtual Fake CAN network (Linux, Cygwin)
 ./drivers/can_vcom VScom VSCAN interface
-./drivers/hcs12 HCS12 full target interface
 ./examples Examples
 ./examples/TestMasterSlave 2 nodes, NMT SYNC SDO PDO, win32+unix
 ./examples/TestMasterSlaveLSS 3 nodes, NMT SYNC SDO PDO LSS, win32+unix
 ./examples/TestMasterMicroMod 1 node, control Peak I/O Module, unix
-./examples/gene_SYNC_HCS12 Just send periodic SYNC on HCS12
 ./examples/win32test Ask some DS301 infos to a node (win32)
 ./objdictgen Object Dictionary editor GUI
 ./objdictgen/config Pre-defined OD profiles
@@ -316,29 +311,13 @@ With Xenomai :
 \begin{verbatim}
 	./configure --timers=xeno
 \end{verbatim}
-With Rtai :
-\begin{verbatim}
-	./configure --timers=rtai
-\end{verbatim}
 
 To do a \canopen node running on PC -Linux, you need :
 
 \begin{enumerate}
-\item A working Linux distribution patched with XENOMAI (2.1 or greater) or RTAI (3.6). 
-\item One or more Peak system PC CAN interface and the last Peak Real Time
-Linux driver installed. 
+\item A working Linux distribution. 
+\item One or more CAN interface and the Linux driver installed. 
 \end{enumerate}
-
-\subsubsection{Linux kernel node}
-
-To do a CANopen node running on PC-Linux in kernel space, you need:
-
-
-\begin{enumerate}
-\item A working Linux distribution with pre-built 2.6.x.x kernel sources
-\item A CAN card driver compatible with CanFestival
-\end{enumerate}
-
 
 \subsubsection{CAN devices}
 Currently supported CAN devices and corresponding configure switch:
@@ -379,13 +358,11 @@ Note that only the serial driver is supported at this time.  The hub uses ptys
 \paragraph{Virtual CAN interfaces (for test/debug)}
 \begin{verbatim}
 	./configure --can=virtual
-		or, for kernel space:
-	./configure --can=kernel_virtual
 \end{verbatim}
 Virtual CAN interface use Unix pipes to emulate a virtual CAN network.
 Each message issued from a node is repeat to all other nodes. Currently
 only works with nodes running in the same process, and does not support
-work with Xenomai or RTAI.
+work with Xenomai.
 
 \paragraph{VScom}
 \begin{verbatim}
@@ -431,21 +408,6 @@ CAN ports. Another example using Peak{\textquotesingle}s dual PCMCIA
 \end{verbatim}
 
 If the LSS services are enabled the sample provided in /example/TestMasterSlaveLSS will be also installed. It behaves the same as TestMasterSlave except that there are 2 slave nodes without a valid nodeID so the the initializations is done via  the LSS services. If FastScan optional service is enabled the example will use it. 
-
-\subsubsection{Kernel space}
-
-
-\begin{verbatim}
-	example/kerneltest
-\end{verbatim}
-
-
-It's based on TestMasterSlave example
-and has the same functionality. Uses virtual can driver as default
-too. After successful installation you can insert the module by typing:
-modprobe canf\_ktest Module control is done by simple console 'canf\_ktest\_console'
-which is used to start/stop sending data.
-
 
 \section{Windows Targets}
 
@@ -750,81 +712,6 @@ card. Don't forget 120ohms terminator.
 Messages are then exchanged between master and slave node, both inside
 TestMasterSlave's process.
 
-\section{Motorola HCS12}
-
-The examples have been tested on a MC9S12DG255 mounted on a Elektronikladen
-HCS12 T -board.
-
-Beware that there are few differences in the MSCAN module of the 68HC12
-and HCS12 microcontroller. For a HC12, you must adapt the driver that
-we provide for \ the HCS12.
-
-For the difference MSCAN HC12/HCS12, see the Motorola application
-note AN2011/D.
-
-Configure switch:
-
-\begin{verbatim}
-	--target=hcs12
-\end{verbatim}
-
-To do a \canopen node running on a microncontroller Motorola MC9S12DP256,
-you need :
-
-\begin{enumerate}
-\item The compiler GNU gcc for HC11, HC12, HCS12 : m6811 -elf. \\
- Download the \textbf{release 3.1} at : \href{http://m68hc11.serveftp.org/m68hc11_pkg_rpm.php}{http://m68hc11.serveftp.org/m68hc11\_pkg\_rpm.php} 
-\item A board with this chip. We are using the T -board from Electronikladen. 
-\item At least about 40 kBytes of program memory. 
-\item A tool to flash the memory. (We are using the high cost Lauterbach
-debugger). 
-\end{enumerate}
-
-\subsection{Running a HCS12 node}
-
-
-\subsubsection{Compiling Canfestival:}
-
-\begin{verbatim}
-	./configure --target=hcs12
-\end{verbatim}
-
-
-\subsubsection{Compiling and building an example}
-
-Enter in the folder of an HCS12 example,
-
-\begin{verbatim}
-	make all
-\end{verbatim}
-
-
-\subsubsection{Flashing the memory :}
-
-Use your preferred loader ! If you are using a debugger Lauterbach,
-you can load the bash file : trace32\_flash\_programmer.cmm. It loads
-directly the elf file.
-
-
-\subsubsection{Connecting to a serial RS232 console :}
-
-Connect the portS(TxD0) of the HCS12 to a console configured at 19200
-bauds 8N1, via a Max232 chip to adapt the electrical levels. On Linux,
-you can use minicom. Connecting to a console is useful to read the
-messages, but not required.
-
-
-\subsubsection{Connecting to the CAN network :}
-
-Connect the port CAN0 (pin PM0, PM1) to the network via a CAN controller.
-On our board, the CAN controller is a PCA82C250 chip.
-
-
-\subsubsection{starting the node :}
-
-Press the reset of your HCS12 board.
-
-
 \section{Example and test program:}
 
 The {}``examples'' directory contains some test program you can
@@ -972,38 +859,7 @@ The slave node is configured just before the Master entering
 in Pre\_operational state.
 
 
-\subsection{gene\_SYNC\_HCS12 :}
-
-This is a simple \canopen node that only send cyclic SYNC message.
-It demonstrate implementation on HCS12 based board.
-
 \bigskip{}
-
-
-
-\subsection{kerneltest :}
-
-Example based on TestMasterSlave slightly modified to suit kernel
-space requisites. It will do the same as TestMasterSlave but in kernel
-space sending kernel messages (displayed by dmesg for example). It
-is designed as external kernel module implemented as character device.
-There is a shell script called 'insert.sh', which will insert the
-module and create a new device file /dev/canf\_ktest (used to sending
-commands to module). To actual sending commands you can use simple
-console named 'canf\_ktest\_console'. The module is dependent on a
-another separate module 'canfestival.ko' implementing CanOpen stack
-which exports requisite functions. Canfestival.ko module is then dependent
-on CAN card driver module, by default CAN virtual driver will be loaded.
-After installing modules (make install), all dependencies are solved
-automatically by kernel. To run the example type: 
-\begin{verbatim}
-	sh run.sh
-\end{verbatim}
-It will insert required modules, start console, and after quitting
-console it'll remove modules from kernel.
-
-\bigskip{}
-
 
 
 \subsection{TestMasterMicroMod }
@@ -1380,10 +1236,6 @@ have been defined as 64 bits integers. You will need to replace sizeof(TYPE)
 operators to sizeof\_TYPE definitions in generated code, i.e. replace
 sizeof(UNS40) with sizeof\_UNS40.
 
-
-\subsection{HCS12}
-
-
 \subsubsection{Which board are you using ?}
 
 A T -board from elektronikladen with a MC9S12DP256 or MC9S12DG256.
@@ -1444,121 +1296,6 @@ from Philippe Foureys. :
  }
 \end{verbatim}
 
-
-\subparagraph{Code for CodeWarrior}
-
-
-\begin{verbatim}
-void unlock (void)
-	{
-	  __asm("cli");
-	}
-	void lock (void)
-	{
-	  unsigned short mask;
-	  __asm
-	 {
-	  tpa:tsei:"=d"(mask);
-	 }
-	}
-\end{verbatim}
-
-
-\paragraph{Initialize function}
-
-
-\subparagraph{Code for GCC}
-
-
-\begin{verbatim}
-void initCanHCS12 (void)
-{  
-  //Init the HCS12 microcontroler for CanOpen 
-  initHCS12();
-   // Init the HCS12  CAN driver
-  const canBusInit bi0 = {
-    0,    /* no low power                 */ 
-    0,    /* no time stamp                */
-    1,    /* enable MSCAN                 */
-    0,    /* clock source : oscillator (In fact, it is not used)   */
-    0,    /* no loop back                 */
-    0,    /* no listen only               */
-    0,    /* no low pass filter for wk up */
-  CAN_Baudrates[CAN_BAUDRATE_250K],
-    {
-      0x00,    /* Filter on 16 bits.
-                  See Motorola Block Guide V02.14 fig 4-3 */
-      0x00, 0xFF, /* filter 0 hight accept all msg      */
-      0x00, 0xFF, /* filter 0 low accept all msg        */
-      0x00, 0xFF, /* filter 1 hight filter all of  msg  */
-      0x00, 0xFF, /* filter 1 low filter all of  msg    */
-      0x00, 0xFF, /* filter 2 hight filter most of  msg */
-      0x00, 0xFF, /* filter 2 low filter most of  msg   */
-      0x00, 0xFF, /* filter 3 hight filter most of  msg */
-      0x00, 0xFF, /* filter 3 low filter most of  msg   */
-    }
-};
-\end{verbatim}
-
-
-\subparagraph{Code for CodeWarrior
-}
-
-
-\begin{verbatim}
-void initCanHCS12 (void)
-{  
-  //Init the HCS12 microcontroler for CanOpen 
-  initHCS12();
-   // Init the HCS12  CAN driver
-  const canBusInit bi0 = {
-    0,    /* no low power                 */ 
-    0,    /* no time stamp                */
-    1,    /* enable MSCAN                 */
-    0,    /* clock source : oscillator (In fact, it is not used)   */
-    0,    /* no loop back                 */
-    0,    /* no listen only               */
-    0,    /* no low pass filter for wk up */
-    {
-     1, /* clksrc */
-     3, /* brp    */
-     0, /* sjw    */
-     0, /* samp   */
-     1, /* tseg2  */
-     12,/* tseg1  */
-    },
-    {
-      0x00,    /* Filter on 16 bits.
-                 See Motorola Block Guide V02.14 fig 4-3 */
-      0x00, 0xFF, /* filter 0 hight accept all msg      */
-      0x00, 0xFF, /* filter 0 low accept all msg        */
-      0x00, 0xFF, /* filter 1 hight filter all of  msg  */
-      0x00, 0xFF, /* filter 1 low filter all of  msg    */
-      0x00, 0xFF, /* filter 2 hight filter most of  msg */
-      0x00, 0xFF, /* filter 2 low filter most of  msg   */
-      0x00, 0xFF, /* filter 3 hight filter most of  msg */
-      0x00, 0xFF, /* filter 3 low filter most of  msg   */
-    }
-};
-\end{verbatim}
-
-
-\subsubsection{Does the code works in banked memory ?}
-
-No. Today it seems that the port of gcc is bogged for using the banked
-memory. So, unfortunately, we are limited to 48 Kbytes of memory code.
-
-
-\subsubsection{What GCC version are you using ?}
-
-We are using the stable RPM release 2.2 :
-
-\begin{enumerate}
-\item GNU Gcc 3.0.4. Build 20030501 
-\item Newlib 1.10.0 Build 20030421 
-\item GNU Binutils 2.12.1 Build 20030427 
-\end{enumerate}
-
 \section{Documentation resources}
 
 
@@ -1571,27 +1308,6 @@ We are using the stable RPM release 2.2 :
 }
 
 \href{http://www.esacademy.com/}{http://www.esacademy.com}
-
-
-\subsection{Elektronikladen HCS12 T -board }
-
-\href{http://www.elektronikladen.de/en_hcs12tb.html}{http://www.elektronikladen.de/en\_hcs12tb.html}
-
-
-\subsection{Gnu gcc compiler for HC12 }
-
-\href{http://m68hc11.serveftp.org/m68hc11_port.php}{http://m68hc11.serveftp.org/m68hc11\_port.php}
-
-
-\subsection{Motorola documentation on HC12 }
-
-\href{http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MC9S12DP256}{http://www.freescale.com/webapp/sps/site/prod\_summary.jsp?code=MC9S12DP256}
-
-
-\subsection{Lauterbach debugger for HC12 }
-
-\href{http://www.lauterbach.com/}{http://www.lauterbach.com}
-
 
 \subsection{Python language }
 

@@ -22,13 +22,12 @@
 #Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 from node import *
-from types import *
 
 import re, os
 
 word_model = re.compile('([a-zA-Z_0-9]*)')
-type_model = re.compile('([\_A-Z]*)([0-9]*)')
-range_model = re.compile('([\_A-Z]*)([0-9]*)\[([\-0-9]*)-([\-0-9]*)\]')
+type_model = re.compile(r'([\_A-Z]*)([0-9]*)')
+range_model = re.compile(r'([\_A-Z]*)([0-9]*)\[([\-0-9]*)-([\-0-9]*)\]')
 
 categories = [("SDO_SVR", 0x1200, 0x127F), ("SDO_CLT", 0x1280, 0x12FF),
               ("PDO_RCV", 0x1400, 0x15FF), ("PDO_RCV_MAP", 0x1600, 0x17FF),
@@ -61,9 +60,9 @@ def GetValidTypeInfos(typename, items=[]):
         result = type_model.match(typename)
         if result:
             values = result.groups()
-            if values[0] == "UNSIGNED" and int(values[1]) in [i * 8 for i in xrange(1, 9)]:
+            if values[0] == "UNSIGNED" and int(values[1]) in [i * 8 for i in range(1, 9)]:
                 typeinfos = ("UNS%s"%values[1], None, "uint%s"%values[1], True)
-            elif values[0] == "INTEGER" and int(values[1]) in [i * 8 for i in xrange(1, 9)]:
+            elif values[0] == "INTEGER" and int(values[1]) in [i * 8 for i in range(1, 9)]:
                 typeinfos = ("INTEGER%s"%values[1], None, "int%s"%values[1], False)
             elif values[0] == "REAL" and int(values[1]) in (32, 64):
                 typeinfos = ("%s%s"%(values[0], values[1]), None, "real%s"%values[1], False)
@@ -82,11 +81,11 @@ def GetValidTypeInfos(typename, items=[]):
             elif values[0] == "BOOLEAN":
                 typeinfos = ("UNS8", None, "boolean", False)
             else:
-                raise ValueError, _("""!!! %s isn't a valid type for CanFestival.""")%typename
+                raise ValueError(_("""!!! %s isn't a valid type for CanFestival.""")%typename)
             if typeinfos[2] not in ["visible_string", "domain"]:
                 internal_types[typename] = typeinfos
         else:
-            raise ValueError, _("""!!! %s isn't a valid type for CanFestival.""")%typename
+            raise ValueError(_("""!!! %s isn't a valid type for CanFestival.""")%typename)
     return typeinfos
 
 def ComputeValue(type, value):
@@ -107,7 +106,7 @@ def WriteFile(filepath, content):
 def GetTypeName(Node, typenumber):
     typename = Node.GetTypeName(typenumber)
     if typename is None:
-        raise ValueError, _("""!!! Datatype with value "0x%4.4X" isn't defined in CanFestival.""")%typenumber
+        raise ValueError(_("""!!! Datatype with value "0x%4.4X" isn't defined in CanFestival.""")%typenumber)
     return typename
 
 def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
@@ -189,7 +188,7 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
         texts["index"] = index
         strIndex = ""
         entry_infos = Node.GetEntryInfos(index)
-        texts["EntryName"] = entry_infos["name"].encode('ascii','replace')
+        texts["EntryName"] = entry_infos["name"].encode('ascii','replace').decode('ascii')
         values = Node.GetEntry(index)
         callbacks = Node.HasEntryCallbacks(index)
         if index in variablelist:
@@ -198,13 +197,13 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
             strIndex += "\n/* index 0x%(index)04X :   %(EntryName)s. */\n"%texts
         
         # Entry type is VAR
-        if not isinstance(values, ListType):
+        if not isinstance(values, list):
             subentry_infos = Node.GetSubentryInfos(index, 0)
             typename = GetTypeName(Node, subentry_infos["type"])
             typeinfos = GetValidTypeInfos(typename, [values])
-            if typename is "DOMAIN" and index in variablelist:
+            if typename == "DOMAIN" and index in variablelist:
                 if not typeinfos[1]:
-                    raise ValueError, _("\nDomain variable not initialized\nindex : 0x%04X\nsubindex : 0x00")%index
+                    raise ValueError(_("\nDomain variable not initialized\nindex : 0x%04X\nsubindex : 0x00")%index)
             texts["subIndexType"] = typeinfos[0]
             if typeinfos[1] is not None:
                 texts["suffixe"] = "[%d]"%typeinfos[1]
@@ -253,7 +252,7 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
                             if subIndex == len(values)-1:
                                 sep = ""
                             value, comment = ComputeValue(typeinfos[2], value)
-                            if len(value) is 2 and typename is "DOMAIN":
+                            if len(value) == 2 and typename == "DOMAIN":
                                 raise ValueError("\nDomain variable not initialized\nindex : 0x%04X\nsubindex : 0x%02X"%(index, subIndex))
                             mappedVariableContent += "    %s%s%s\n"%(value, sep, comment)
                     mappedVariableContent += "  };\n"
@@ -298,14 +297,14 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
                 name = "%(NodeName)s_Index%(index)04X"%texts
             name=UnDigitName(name);
             strIndex += "                    ODCallback_t %s_callbacks[] = \n                     {\n"%name
-            for subIndex in xrange(len(values)):
+            for subIndex in range(len(values)):
                 strIndex += "                       NULL,\n"
             strIndex += "                     };\n"
             indexCallbacks[index] = "*callbacks = %s_callbacks; "%name
         else:
             indexCallbacks[index] = ""
         strIndex += "                    subindex %(NodeName)s_Index%(index)04X[] = \n                     {\n"%texts
-        for subIndex in xrange(len(values)):
+        for subIndex in range(len(values)):
             subentry_infos = Node.GetSubentryInfos(index, subIndex)
             if subIndex < len(values) - 1:
                 sep = ","
@@ -514,8 +513,7 @@ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 */
 """%texts
-    contentlist = indexContents.keys()
-    contentlist.sort()
+    contentlist = sorted(indexContents.keys())
     for index in contentlist:
         fileContent += indexContents[index]
 
@@ -600,6 +598,6 @@ def GenerateFile(filepath, node, pointers_dict = {}):
         WriteFile(filepath, content)
         WriteFile(headerfilepath, header)
         return None
-    except ValueError, message:
+    except ValueError as message:
         return _("Unable to Generate C File\n%s")%message
 

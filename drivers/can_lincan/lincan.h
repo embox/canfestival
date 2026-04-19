@@ -10,19 +10,9 @@
 #ifndef _CAN_DRVAPI_T_H
 #define _CAN_DRVAPI_T_H
 
-#ifdef __KERNEL__
-
-#include <linux/time.h>
-#include <linux/types.h>
-#include <linux/ioctl.h>
-
-#else /* __KERNEL__ */
-
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/ioctl.h>
-
-#endif /* __KERNEL__ */
 
 #include "./canmsg.h"
 
