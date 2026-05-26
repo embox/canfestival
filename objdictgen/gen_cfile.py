@@ -92,7 +92,8 @@ def ComputeValue(type, value):
     if type == "visible_string":
         return "(UNS8*)\"%s\""%value, ""
     elif type == "domain":
-        return "(UNS8*)\"%s\""%''.join(["\\x%2.2x"%ord(char) for char in value]), ""
+        # value may be bytes (each item already an int) or a legacy str
+        return "(UNS8*)\"%s\""%''.join(["\\x%2.2x"%(char if isinstance(char, int) else ord(char)) for char in value]), ""
     elif type.startswith("real"):
         return "%f"%value, ""
     else:
