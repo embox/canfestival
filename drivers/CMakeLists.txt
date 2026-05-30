@@ -22,10 +22,21 @@ if(CF_TIMERS_DRIVER)
 endif()
 
 # ---------------------------------------------------------------------------
-#  CAN driver (SHARED or OBJECT depending on CF_ENABLE_DLL_DRIVERS)
+#  CAN driver(s) (SHARED or OBJECT depending on CF_ENABLE_DLL_DRIVERS)
+#
+#  CF_CAN_DRIVER may name several drivers (e.g. "virtual;socket"); one shared
+#  library is built per driver, so a single build can ship more than one CAN
+#  backend. Static (non-DLL) builds link the driver into the platform library
+#  and therefore support a single driver only.
 # ---------------------------------------------------------------------------
-if(CF_CAN_DRIVER)
-    set(CAN_DIR can_${CF_CAN_DRIVER})
+list(LENGTH CF_CAN_DRIVER _can_driver_count)
+if(NOT CF_ENABLE_DLL_DRIVERS AND _can_driver_count GREATER 1)
+    message(FATAL_ERROR
+        "CF_ENABLE_DLL_DRIVERS=OFF supports a single CF_CAN_DRIVER, got: ${CF_CAN_DRIVER}")
+endif()
+
+foreach(_can_driver IN LISTS CF_CAN_DRIVER)
+    set(CAN_DIR can_${_can_driver})
 
     # Find the source file (naming varies)
     file(GLOB CAN_SRC_FILES ${CAN_DIR}/*.c)
@@ -47,13 +58,13 @@ if(CF_CAN_DRIVER)
             ${CMAKE_BINARY_DIR}/include)
 
         # Driver-specific link libraries
-        if(CF_CAN_DRIVER STREQUAL "peak_linux")
+        if(_can_driver STREQUAL "peak_linux")
             target_link_libraries(canfestival_${CAN_DIR} PRIVATE pcan)
-        elseif(CF_CAN_DRIVER STREQUAL "anagate_linux")
+        elseif(_can_driver STREQUAL "anagate_linux")
             target_link_libraries(canfestival_${CAN_DIR} PRIVATE AnaGateAPIDLL AnaCommon)
-        elseif(CF_CAN_DRIVER STREQUAL "kvaser")
+        elseif(_can_driver STREQUAL "kvaser")
             target_link_libraries(canfestival_${CAN_DIR} PRIVATE canlib)
-        elseif(CF_CAN_DRIVER STREQUAL "socket")
+        elseif(_can_driver STREQUAL "socket")
             # socket CAN uses standard socket API, no extra libs needed
         endif()
 
@@ -61,7 +72,7 @@ if(CF_CAN_DRIVER)
             install(TARGETS canfestival_${CAN_DIR} LIBRARY DESTINATION lib)
         endif()
     endif()
-endif()
+endforeach()
 
 # ---------------------------------------------------------------------------
 #  Platform driver (STATIC library combining platform + timers)
