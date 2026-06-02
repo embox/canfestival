@@ -1,0 +1,59 @@
+# CanFestival CANopen stack - Zephyr module configuration
+#
+# Written by Edouard TISSERANT
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+config ZEPHYR_CANFESTIVAL_MODULE
+	bool
+
+config CANFESTIVAL
+	bool "CanFestival CANopen stack"
+	depends on ZEPHYR_CANFESTIVAL_MODULE
+	depends on CAN && !CAN_FD_MODE
+	help
+	  Enable the CanFestival CANopen stack, using the Zephyr CAN and timer
+	  drivers. The CAN controller is selected through the devicetree
+	  "zephyr,canbus" chosen node. This is an alternative to the canopennode
+	  module.
+
+if CANFESTIVAL
+
+config CANFESTIVAL_RX_THREAD_PRIO
+	int "CanFestival CAN receive thread priority"
+	default 5
+	help
+	  Priority of the per-port thread blocking on received CAN frames and
+	  dispatching them into the CANopen stack.
+
+config CANFESTIVAL_RX_MSGQ_DEPTH
+	int "CanFestival RX message queue depth (frames)"
+	default 16
+	help
+	  Number of CAN frames that can be buffered between the CAN interrupt
+	  and the receive thread. Size it for the worst-case burst; on overflow
+	  incoming frames are dropped.
+
+config CANFESTIVAL_TX_TIMEOUT_MS
+	int "CanFestival CAN send timeout (ms)"
+	default 100
+
+config CANFESTIVAL_TIMER_THREAD_PRIO
+	int "CanFestival timer dispatch thread priority"
+	default 4
+	help
+	  Priority of the thread running TimeDispatch() on timer expiry. Should
+	  be at least as high as the receive thread priority.
+
+config CANFESTIVAL_TIMER_STACK_SIZE
+	int "CanFestival timer dispatch thread stack size"
+	default 1024
+
+config CANFESTIVAL_RX_STACK_SIZE
+	int "CanFestival receive thread stack size"
+	default 2048
+
+config CANFESTIVAL_ENABLE_LSS
+	bool "Enable CanFestival LSS services"
+	default n
+
+endif # CANFESTIVAL
