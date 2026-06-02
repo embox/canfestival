@@ -25,7 +25,14 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
 #include <stdio.h>
+#ifdef _WIN32
+#include <io.h>
+#include <fcntl.h>
+/* mingw-w64 has no POSIX pipe(); map it to _pipe(). read/write/close come from <io.h>. */
+#define pipe(fds) _pipe(fds, 4096, _O_BINARY)
+#else
 #include <unistd.h>
+#endif
 
 #define NEED_PRINT_MESSAGE
 #include "can_driver.h"
