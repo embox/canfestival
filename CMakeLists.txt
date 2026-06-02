@@ -4,7 +4,7 @@ project(CanFestival VERSION 3.0 LANGUAGES C)
 # ---------------------------------------------------------------------------
 #  Build options
 # ---------------------------------------------------------------------------
-set(CF_TARGET "unix" CACHE STRING "Target platform (unix, win32)")
+set(CF_TARGET "unix" CACHE STRING "Target platform (unix, windows)")
 set(CF_CAN_DRIVER "virtual" CACHE STRING "CAN driver(s) to build; semicolon-separated list, e.g. \"virtual;socket\"")
 set(CF_TIMERS_DRIVER "unix" CACHE STRING "Timer driver to build")
 

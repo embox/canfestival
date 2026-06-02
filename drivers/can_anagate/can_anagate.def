@@ -1,5 +1,5 @@
-LIBRARY	can_peak_win32
-	
+LIBRARY	can_anagate
+
 EXPORTS
    canReceive_driver
    canSend_driver

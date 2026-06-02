@@ -16,9 +16,9 @@ make
 
 | Option | Default | Description |
 |--------|---------|-------------|
-| `CF_TARGET` | `unix` | Target platform (`unix`, `win32`) |
-| `CF_CAN_DRIVER` | `virtual` | CAN driver (`virtual`, `socket`, `peak_linux`, `kvaser`, ...) |
-| `CF_TIMERS_DRIVER` | `unix` | Timer driver (`unix`, `win32`, `xeno`) |
+| `CF_TARGET` | `unix` | Target platform (`unix`, `windows`) |
+| `CF_CAN_DRIVER` | `virtual` | CAN driver (`virtual`, `socket`, `peak`, `kvaser`, ...) |
+| `CF_TIMERS_DRIVER` | `unix` | Timer driver (`unix`, `windows`, `xeno`) |
 | `CF_ENABLE_LSS` | `OFF` | Enable LSS (Layer Setting Services) |
 | `CF_ENABLE_LSS_FS` | `OFF` | Enable LSS FastScan |
 | `CF_ENABLE_DLL_DRIVERS` | `ON` | Build CAN drivers as shared libraries |
@@ -74,15 +74,15 @@ Object dictionaries are stored as DCF (Device Configuration File) -- an INI-styl
 
 | Driver | Platform | Description |
 |--------|----------|-------------|
-| `virtual` | All | Pipe-based virtual CAN for testing |
-| `socket` | Linux | SocketCAN |
-| `peak_linux` | Linux | PEAK PCAN |
-| `peak_win32` | Windows | PEAK PCANLight |
-| `kvaser` | Linux/Windows | Kvaser CANlib |
-| `anagate_linux` | Linux | AnaGate CAN |
-| `serial` | All | CAN over serial |
-| `lincan` | Linux | LinCAN |
-| `can4linux` | Linux | can4linux |
+| `virtual` | All | Pipe-based in-process virtual CAN for testing purpose |
+| `socket` | Linux | SocketCAN, all Linux CAN interfaces |
+| `peak` | ⚠️ Windows | PEAK PCAN |
+| `kvaser` | ⚠️ Windows | Kvaser CANlib |
+| `anagate` | ⚠️ Windows | AnaGate CAN |
+| `ixxat` | ⚠️ Windows | IXXAT VCI |
+| `vscom` | ⚠️ Windows | VSCom VSCAN |
+
+⚠️: Windows drivers are outdated and haven't been tested with new Cmake build-system. They probably won't build as-is. Build system needs to be extended to support corresponding manufacturer's drivers and libraries again.
 
 ## Project structure
 

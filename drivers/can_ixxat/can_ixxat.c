@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 /*
 	Wrapper Layer for CANFestival to interact with IXXAT VCI V3.X.X Drivers (vcisdk.lib)
-	Provides external references for win32 library see win32.c (CanFestival-3)
+	Provides external references for windows library see windows.c (CanFestival-3)
 
 	http://www.ixxat.com/download_vci_v3_en.html
 
@@ -54,7 +54,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **    
 **************************************************************************
 **
-**    File: can_ixxat_win32.c
+**    File: can_ixxat_windows.c
 **    Summary: Wrapper to encapsulate handling of VCI3
 **	  Include vcisdk.lib	
 **

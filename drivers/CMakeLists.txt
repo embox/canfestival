@@ -40,8 +40,6 @@ foreach(_can_driver IN LISTS CF_CAN_DRIVER)
 
     # Find the source file (naming varies)
     file(GLOB CAN_SRC_FILES ${CAN_DIR}/*.c)
-    # Exclude hub utility if present (can_serial has can_serial_hub.c)
-    list(FILTER CAN_SRC_FILES EXCLUDE REGEX "_hub\\.c$")
 
     if(CAN_SRC_FILES)
         if(CF_ENABLE_DLL_DRIVERS)
@@ -58,14 +56,10 @@ foreach(_can_driver IN LISTS CF_CAN_DRIVER)
             ${CMAKE_BINARY_DIR}/include)
 
         # Driver-specific link libraries
-        if(_can_driver STREQUAL "peak_linux")
+        if(_can_driver STREQUAL "peak")
             target_link_libraries(canfestival_${CAN_DIR} PRIVATE pcan)
-        elseif(_can_driver STREQUAL "anagate_linux")
-            target_link_libraries(canfestival_${CAN_DIR} PRIVATE AnaGateAPIDLL AnaCommon)
         elseif(_can_driver STREQUAL "kvaser")
             target_link_libraries(canfestival_${CAN_DIR} PRIVATE canlib)
-        elseif(_can_driver STREQUAL "socket")
-            # socket CAN uses standard socket API, no extra libs needed
         endif()
 
         if(CF_ENABLE_DLL_DRIVERS)
