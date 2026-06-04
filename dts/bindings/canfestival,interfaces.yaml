@@ -1,0 +1,27 @@
+# Copyright (C): Edouard TISSERANT
+# SPDX-License-Identifier: LGPL-2.1-or-later
+
+description: |
+  List of CAN controllers usable by the CanFestival CANopen stack.
+
+  Declared in a board overlay, e.g.:
+
+      / {
+          canfestival {
+              compatible = "canfestival,interfaces";
+              interfaces = <&fdcan1 &fdcan2>;
+          };
+      };
+
+  CanFestival selects a controller from this list using the s_BOARD busname:
+  an all-digit busname picks the Nth interface (0-based, declaration order),
+  otherwise the busname is matched against the controllers' devicetree node
+  labels (e.g. "fdcan2").
+
+compatible: "canfestival,interfaces"
+
+properties:
+  interfaces:
+    type: phandles
+    required: true
+    description: CAN controllers, in CanFestival bus-index order.

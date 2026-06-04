@@ -6,13 +6,20 @@ See COPYING file for copyrights details.
 
 /* CanFestival CAN driver binding the Zephyr CAN subsystem.
  *
- * The CAN controller is selected through the devicetree "zephyr,canbus"
- * chosen node (same convention as the canopennode module). Received frames
- * are delivered to a per-handle message queue by the CAN subsystem (the
- * filter callback runs in interrupt context, where k_msgq_put is allowed);
- * canReceive_driver() simply blocks on that queue. Only classic CAN with
- * 11-bit identifiers is used, as required by CANopen / CanFestival. 
+ * The CAN controllers usable by CanFestival are listed in a devicetree node
+ * with compatible "canfestival,interfaces" (declared in a board overlay, see
+ * dts/bindings/canfestival,interfaces.yaml). canOpen_driver() selects one of
+ * them from the s_BOARD busname, mirroring can_socket.c: an all-digit busname
+ * picks the Nth interface, otherwise the busname is matched against each
+ * controller's devicetree node label.
+ *
+ * Received frames are delivered to a per-handle message queue by the CAN
+ * subsystem (the filter callback runs in interrupt context, where k_msgq_put
+ * is allowed); canReceive_driver() simply blocks on that queue. Only classic
+ * CAN with 11-bit identifiers is used, as required by CANopen / CanFestival.
  */
+
+#include <stdlib.h>
 
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
@@ -21,6 +28,14 @@ See COPYING file for copyrights details.
 #include "applicfg.h"
 #include "can_driver.h"
 #include "config.h"
+
+/* Devicetree node listing the CAN controllers usable by CanFestival. */
+#define CF_IFACES_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(canfestival_interfaces)
+#if DT_NODE_EXISTS(CF_IFACES_NODE)
+#define CF_NUM_IFACES DT_PROP_LEN(CF_IFACES_NODE, interfaces)
+#else
+#define CF_NUM_IFACES 1
+#endif
 
 #ifndef CONFIG_CANFESTIVAL_RX_MSGQ_DEPTH
 #define CONFIG_CANFESTIVAL_RX_MSGQ_DEPTH 16
@@ -31,7 +46,7 @@ See COPYING file for copyrights details.
 #endif
 
 /* Internal handle: what CAN_HANDLE actually points to. One static slot per
- * CAN bus (MAX_CAN_BUS_ID comes from the generated config.h). */
+ * declared CAN interface. */
 struct cf_can_dev {
 	char used;
 	const struct device *dev;
@@ -41,7 +56,64 @@ struct cf_can_dev {
 	atomic_t closing;
 };
 
-static struct cf_can_dev cf_can_devs[MAX_CAN_BUS_ID];
+static struct cf_can_dev cf_can_devs[CF_NUM_IFACES];
+
+/* Return true if s is a non-empty string of decimal digits only. */
+static bool cf_all_digits(const char *s)
+{
+	if (s == NULL || *s == '\0') {
+		return false;
+	}
+	for (; *s; ++s) {
+		if (*s < '0' || *s > '9') {
+			return false;
+		}
+	}
+	return true;
+}
+
+/* Select a CAN controller from the "canfestival,interfaces" list, the same way
+ * can_socket.c interprets busname: an all-digit busname picks the Nth declared
+ * interface, otherwise busname is matched against each controller's node label.
+ * When no such list node exists, fall back to the single controller from the
+ * "zephyr,canbus" chosen node (busname is then ignored). */
+static const struct device *cf_select_can(const char *busname)
+{
+#if DT_NODE_EXISTS(CF_IFACES_NODE)
+	if (busname == NULL) {
+		return NULL;
+	}
+	if (cf_all_digits(busname)) {
+		switch (atoi(busname)) {
+#define CF_IDX_CASE(node, prop, idx) \
+		case idx: return DEVICE_DT_GET(DT_PHANDLE_BY_IDX(node, prop, idx));
+		DT_FOREACH_PROP_ELEM(CF_IFACES_NODE, interfaces, CF_IDX_CASE)
+#undef CF_IDX_CASE
+		default: return NULL;
+		}
+	}
+#define CF_NAME_CASE(node, prop, idx)                                          \
+	{                                                                      \
+		static const char *const _lbl[] =                              \
+			DT_NODELABEL_STRING_ARRAY(DT_PHANDLE_BY_IDX(node, prop, idx)); \
+		for (int _i = 0; _i < (int)ARRAY_SIZE(_lbl); _i++) {           \
+			if (strcmp(busname, _lbl[_i]) == 0) {                  \
+				return DEVICE_DT_GET(DT_PHANDLE_BY_IDX(node, prop, idx)); \
+			}                                                      \
+		}                                                              \
+	}
+	DT_FOREACH_PROP_ELEM(CF_IFACES_NODE, interfaces, CF_NAME_CASE)
+#undef CF_NAME_CASE
+	return NULL;
+#elif DT_HAS_CHOSEN(zephyr_canbus)
+	/* No interface list: use the single "zephyr,canbus" chosen controller. */
+	ARG_UNUSED(busname);
+	return DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
+#else
+	ARG_UNUSED(busname);
+	return NULL;
+#endif
+}
 
 /* Translate a CanFestival baudrate string into a bitrate in bit/s. */
 static UNS32 cf_parse_baudrate(const char *baud)
@@ -129,18 +201,24 @@ UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m)
 
 CAN_HANDLE canOpen_driver(s_BOARD *board)
 {
-	const struct device *dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_canbus));
+	const struct device *dev = cf_select_can(board->busname);
 	struct cf_can_dev *h = NULL;
 	struct can_filter filter;
 	UNS32 bitrate;
 	int i;
+
+	if (dev == NULL) {
+		MSG("canOpen_driver: no CAN interface matching busname '%s'\n",
+		    board->busname ? board->busname : "(null)");
+		return NULL;
+	}
 
 	if (!device_is_ready(dev)) {
 		MSG("canOpen_driver: CAN device not ready\n");
 		return NULL;
 	}
 
-	for (i = 0; i < MAX_CAN_BUS_ID; i++) {
+	for (i = 0; i < CF_NUM_IFACES; i++) {
 		if (!cf_can_devs[i].used) {
 			h = &cf_can_devs[i];
 			break;

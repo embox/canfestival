@@ -2,3 +2,5 @@ name: canfestival
 build:
   cmake: ./zephyr
   kconfig: ./zephyr/Kconfig
+  settings:
+    dts_root: .

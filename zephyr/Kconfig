@@ -12,9 +12,11 @@ config CANFESTIVAL
 	depends on CAN && !CAN_FD_MODE
 	help
 	  Enable the CanFestival CANopen stack, using the Zephyr CAN and timer
-	  drivers. The CAN controller is selected through the devicetree
-	  "zephyr,canbus" chosen node. This is an alternative to the canopennode
-	  module.
+	  drivers. The CAN controllers usable by CanFestival are listed in a
+	  devicetree node with compatible "canfestival,interfaces" (board overlay),
+	  selected by busname; if no such node is given, the single controller from
+	  the "zephyr,canbus" chosen node is used. This is an alternative to the
+	  canopennode module.
 
 if CANFESTIVAL
 
@@ -52,8 +54,52 @@ config CANFESTIVAL_RX_STACK_SIZE
 	int "CanFestival receive thread stack size"
 	default 2048
 
+# --- CANopen stack sizing (substituted into the generated config.h) ---------
+# The number of CAN buses (MAX_CAN_BUS_ID) is NOT configured here: it is
+# deduced from the "canfestival,interfaces" devicetree node count.
+
+config CANFESTIVAL_SDO_MAX_LENGTH_TRANSFER
+	int "Maximum SDO transfer length (bytes)"
+	default 32
+
+config CANFESTIVAL_SDO_BLOCK_SIZE
+	int "SDO block transfer size"
+	default 16
+
+config CANFESTIVAL_SDO_MAX_SIMULTANEOUS_TRANSFERS
+	int "Maximum simultaneous SDO transfers"
+	default 4
+
+config CANFESTIVAL_SDO_TIMEOUT_MS
+	int "SDO timeout (ms)"
+	default 3000
+
+config CANFESTIVAL_NMT_MAX_NODE_ID
+	int "Maximum NMT node ID"
+	default 128
+
+config CANFESTIVAL_MAX_NB_TIMER
+	int "Maximum number of CANopen timers"
+	default 32
+
+config CANFESTIVAL_EMCY_MAX_ERRORS
+	int "Maximum number of emergency errors"
+	default 8
+
 config CANFESTIVAL_ENABLE_LSS
 	bool "Enable CanFestival LSS services"
 	default n
+
+if CANFESTIVAL_ENABLE_LSS
+
+config CANFESTIVAL_LSS_TIMEOUT_MS
+	int "LSS timeout (ms)"
+	default 1000
+
+config CANFESTIVAL_LSS_FS_TIMEOUT_MS
+	int "LSS FastScan timeout (ms)"
+	default 100
+
+endif # CANFESTIVAL_ENABLE_LSS
 
 endif # CANFESTIVAL

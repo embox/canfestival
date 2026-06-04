@@ -10,16 +10,33 @@ if(CONFIG_CANFESTIVAL)
   # ---------------------------------------------------------------------------
   #  Stack constants (mirror the defaults of the top-level CMakeLists.txt)
   # ---------------------------------------------------------------------------
-  set(CF_MAX_CAN_BUS_ID 1)
-  set(CF_SDO_MAX_LENGTH_TRANSFER 32)
-  set(CF_SDO_BLOCK_SIZE 16)
-  set(CF_SDO_MAX_SIMULTANEOUS_TRANSFERS 4)
-  set(CF_NMT_MAX_NODE_ID 128)
-  set(CF_SDO_TIMEOUT_MS 3000)
-  set(CF_MAX_NB_TIMER 32)
-  set(CF_EMCY_MAX_ERRORS 8)
-  set(CF_LSS_TIMEOUT_MS 1000)
-  set(CF_LSS_FS_TIMEOUT_MS 100)
+  # Number of CAN buses = number of interfaces declared in the
+  # "canfestival,interfaces" devicetree node (board overlay), defaulting to 1.
+  dt_comp_path(cf_ifaces_node COMPATIBLE "canfestival,interfaces" INDEX 0)
+  if(cf_ifaces_node)
+    dt_prop(cf_ifaces PATH "${cf_ifaces_node}" PROPERTY "interfaces")
+    list(LENGTH cf_ifaces CF_MAX_CAN_BUS_ID)
+  endif()
+  if(NOT CF_MAX_CAN_BUS_ID OR CF_MAX_CAN_BUS_ID LESS 1)
+    set(CF_MAX_CAN_BUS_ID 1)
+  endif()
+  # Remaining stack constants are tunable through Kconfig.
+  set(CF_SDO_MAX_LENGTH_TRANSFER ${CONFIG_CANFESTIVAL_SDO_MAX_LENGTH_TRANSFER})
+  set(CF_SDO_BLOCK_SIZE ${CONFIG_CANFESTIVAL_SDO_BLOCK_SIZE})
+  set(CF_SDO_MAX_SIMULTANEOUS_TRANSFERS ${CONFIG_CANFESTIVAL_SDO_MAX_SIMULTANEOUS_TRANSFERS})
+  set(CF_NMT_MAX_NODE_ID ${CONFIG_CANFESTIVAL_NMT_MAX_NODE_ID})
+  set(CF_SDO_TIMEOUT_MS ${CONFIG_CANFESTIVAL_SDO_TIMEOUT_MS})
+  set(CF_MAX_NB_TIMER ${CONFIG_CANFESTIVAL_MAX_NB_TIMER})
+  set(CF_EMCY_MAX_ERRORS ${CONFIG_CANFESTIVAL_EMCY_MAX_ERRORS})
+  # LSS timeouts only exist as Kconfig symbols when LSS is enabled; the values
+  # still feed config.h unconditionally, so fall back to defaults otherwise.
+  if(CONFIG_CANFESTIVAL_ENABLE_LSS)
+    set(CF_LSS_TIMEOUT_MS ${CONFIG_CANFESTIVAL_LSS_TIMEOUT_MS})
+    set(CF_LSS_FS_TIMEOUT_MS ${CONFIG_CANFESTIVAL_LSS_FS_TIMEOUT_MS})
+  else()
+    set(CF_LSS_TIMEOUT_MS 1000)
+    set(CF_LSS_FS_TIMEOUT_MS 100)
+  endif()
 
   # TIMEVAL / TIMEVAL_MAX are provided by include/timers_zephyr/timerscfg.h,
   # so they are intentionally left unset here (config.h #undef-s them).
