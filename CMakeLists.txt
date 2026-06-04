@@ -12,6 +12,7 @@ option(CF_ENABLE_LSS "Enable LSS services" OFF)
 option(CF_ENABLE_LSS_FS "Enable LSS FastScan" OFF)
 option(CF_ENABLE_DLL_DRIVERS "Build CAN drivers as shared libraries" ON)
 option(CF_BUILD_EXAMPLES "Build example applications" OFF)
+option(CF_SDO_DYNAMIC_BUFFER_ALLOCATION "Use dynamic (heap) buffers for large SDO transfers" OFF)
 
 # Stack constants
 set(CF_MAX_CAN_BUS_ID 1 CACHE STRING "Number of CAN buses")
@@ -24,6 +25,14 @@ set(CF_MAX_NB_TIMER 32 CACHE STRING "Max timers")
 set(CF_EMCY_MAX_ERRORS 8 CACHE STRING "Max emergency errors")
 set(CF_LSS_TIMEOUT_MS 1000 CACHE STRING "LSS timeout in ms")
 set(CF_LSS_FS_TIMEOUT_MS 100 CACHE STRING "LSS FastScan timeout in ms")
+set(CF_SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE 512 CACHE STRING "Max dynamic SDO buffer size in bytes")
+
+# Dynamic (heap) SDO buffers. The variable names match the config.h.in
+# cmakedefine guards; left unset (feature off) otherwise.
+if(CF_SDO_DYNAMIC_BUFFER_ALLOCATION)
+    set(SDO_DYNAMIC_BUFFER_ALLOCATION 1)
+    set(SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE ${CF_SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE})
+endif()
 
 # ---------------------------------------------------------------------------
 #  Endianness detection
