@@ -86,6 +86,19 @@ config CANFESTIVAL_EMCY_MAX_ERRORS
 	int "Maximum number of emergency errors"
 	default 8
 
+config CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION
+	bool "Use dynamic (heap) buffers for large SDO transfers"
+	help
+	  When enabled, an SDO transfer larger than the static per-transfer buffer
+	  (SDO_MAX_LENGTH_TRANSFER) allocates a temporary heap buffer of up to
+	  SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE bytes via malloc()/realloc(). Requires
+	  a libc heap (CONFIG_HEAP_MEM_POOL_SIZE). Disabled by default.
+
+config CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE
+	int "Maximum dynamic SDO buffer size (bytes)"
+	depends on CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION
+	default 512
+
 config CANFESTIVAL_ENABLE_LSS
 	bool "Enable CanFestival LSS services"
 	default n

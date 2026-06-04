@@ -37,6 +37,12 @@ if(CONFIG_CANFESTIVAL)
     set(CF_LSS_TIMEOUT_MS 1000)
     set(CF_LSS_FS_TIMEOUT_MS 100)
   endif()
+  # Dynamic (heap) SDO buffers. The variable names match the config.h.in
+  # cmakedefine guards; left unset (feature off) otherwise.
+  if(CONFIG_CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION)
+    set(SDO_DYNAMIC_BUFFER_ALLOCATION 1)
+    set(SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE ${CONFIG_CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE})
+  endif()
 
   # TIMEVAL / TIMEVAL_MAX are provided by include/timers_zephyr/timerscfg.h,
   # so they are intentionally left unset here (config.h #undef-s them).
