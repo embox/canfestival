@@ -8,12 +8,19 @@ See COPYING file for copyrights details.
  *
  * Mirrors drivers/unix/unix.c but without dynamic loading: the module is
  * always built with NOT_USE_DYNAMIC_LOADING, so DLL_CALL(f) resolves directly
- * to the statically linked f##_driver symbol of the can_zephyr driver. */
+ * to the statically linked f##_driver symbol of the can_zephyr driver.
+ *
+ * This TU registers the "canfestival" Zephyr log module used by the MSG macros;
+ * CANFESTIVAL_LOG_MODULE_REGISTER tells applicfg.h not to LOG_MODULE_DECLARE it
+ * here (a TU cannot both register and declare the same module). */
+#define CANFESTIVAL_LOG_MODULE_REGISTER
 
 #include "data.h"
 #include "canfestival.h"
 #include "timers_driver.h"
 #include "config.h"
+
+LOG_MODULE_REGISTER(canfestival, CONFIG_CANFESTIVAL_LOG_LEVEL);
 
 /* One CAN port per CAN bus; each port statically owns its receive task control
  * block and stack through the embedded TASK_HANDLE. */

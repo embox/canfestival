@@ -115,4 +115,10 @@ config CANFESTIVAL_LSS_FS_TIMEOUT_MS
 
 endif # CANFESTIVAL_ENABLE_LSS
 
+# CanFestival log module (defines CONFIG_CANFESTIVAL_LOG_LEVEL), used by the
+# MSG/MSG_ERR/MSG_WAR macros routed through Zephyr logging.
+module = CANFESTIVAL
+module-str = CanFestival
+source "subsys/logging/Kconfig.template.log_config"
+
 endif # CANFESTIVAL

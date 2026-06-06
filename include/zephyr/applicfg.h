@@ -9,7 +9,19 @@ See COPYING file for copyrights details.
 
 #include <stdint.h>
 #include <string.h>
-#include <zephyr/sys/printk.h>
+#include <zephyr/logging/log.h>
+
+/* CanFestival messages go to the Zephyr "canfestival" log module, registered
+ * once in drivers/zephyr/zephyr.c. Every other translation unit references it
+ * through this declaration. The registering TU defines
+ * CANFESTIVAL_LOG_MODULE_REGISTER before including this header to suppress the
+ * declaration (LOG_MODULE_REGISTER and LOG_MODULE_DECLARE cannot coexist). */
+#ifndef CONFIG_CANFESTIVAL_LOG_LEVEL
+#define CONFIG_CANFESTIVAL_LOG_LEVEL 0 /* LOG_LEVEL_NONE when not configured */
+#endif
+#ifndef CANFESTIVAL_LOG_MODULE_REGISTER
+LOG_MODULE_DECLARE(canfestival, CONFIG_CANFESTIVAL_LOG_LEVEL);
+#endif
 
 /*  Define the architecture : little_endian or big_endian
  -----------------------------------------------------
@@ -43,7 +55,7 @@ See COPYING file for copyrights details.
 
 /* Definition of error and warning macros */
 /* -------------------------------------- */
-#define MSG(...) printk(__VA_ARGS__)
+#define MSG(...) LOG_INF(__VA_ARGS__)
 
 /* Definition of MSG_ERR */
 /* --------------------- */
