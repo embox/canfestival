@@ -20,18 +20,37 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef __APPLICFG_NONE__
-#define __APPLICFG_NONE__
+#ifndef __cantypes_h__
+#define __cantypes_h__
 
-#include <string.h>
+#include <stdint.h>
 
-#include "cantypes.h"
+/* Integers */
+#define INTEGER8  int8_t
+#define INTEGER16 int16_t
+#define INTEGER24 int32_t
+#define INTEGER32 int32_t
+#define INTEGER40 int64_t
+#define INTEGER48 int64_t
+#define INTEGER56 int64_t
+#define INTEGER64 int64_t
 
-/* No dynamic loading: LoadCanDriver is a no-op stub so applications that call
- * it still build. USE_DYNAMIC_CAN_DRIVER_LOADING stays undefined, so
- * canfestival.h declares neither LoadCanDriver nor UnLoadCanDriver. */
-typedef void* LIB_HANDLE;
+/* Unsigned integers */
+#define UNS8   uint8_t
+#define UNS16  uint16_t
+#define UNS24  uint32_t
+#define UNS32  uint32_t
+#define UNS40  uint64_t
+#define UNS48  uint64_t
+#define UNS56  uint64_t
+#define UNS64  uint64_t
 
-#define LoadCanDriver(driver_name) 1
+/* Reals */
+#define REAL32 float
+#define REAL64 double
 
-#endif /* __APPLICFG_NONE__ */
+typedef void* CAN_HANDLE;
+
+typedef void* CAN_PORT;
+
+#endif /* __cantypes_h__ */

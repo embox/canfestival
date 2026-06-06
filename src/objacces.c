@@ -39,6 +39,7 @@
 
 
 #include "data.h"
+#include "sysdep.h"
 
 //We need the function implementation for linking
 //Only a placeholder with a define isnt enough!

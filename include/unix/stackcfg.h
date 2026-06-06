@@ -2,7 +2,6 @@
 This file is part of CanFestival, a library implementing CanOpen Stack.
 
 Copyright (C): Edouard TISSERANT and Francis DUPIN
-Win32 Port Leonid Tochinski
 
 See COPYING file for copyrights details.
 
@@ -20,22 +19,32 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#ifndef CANFESTIVAL_H_
-#define CANFESTIVAL_H_
 
-#include "timerscfg.h"
-#include "can_driver.h"
-#include "data.h"
-#include "timers_driver.h"
+#ifndef __stackcfg_h__
+#define __stackcfg_h__
 
-#include <windows.h>
-typedef HINSTANCE LIB_HANDLE;
+#include <stdio.h>
 
-UNS8 UnLoadCanDriver(LIB_HANDLE handle);
-LIB_HANDLE LoadCanDriver(LPCSTR driver_name);
-UNS8 canSend(CAN_PORT port, Message *m);
-CAN_PORT canOpen(s_BOARD *board, CO_Data * d);
-int canClose(CO_Data * d);
-UNS8 canChangeBaudRate(CAN_PORT port, char* baud);
+/* Definition of error and warning macros */
+/* -------------------------------------- */
+#define MSG(...) printf (__VA_ARGS__)
 
-#endif /*CANFESTIVAL_H_*/
+/* Definition of MSG_ERR */
+/* --------------------- */
+#ifdef DEBUG_ERR_CONSOLE_ON
+#    define MSG_ERR(num, str, val)            \
+          MSG("%s,%d : 0X%x %s 0X%x \n",__FILE__, __LINE__,num, str, val);
+#else
+#    define MSG_ERR(num, str, val)
+#endif
+
+/* Definition of MSG_WAR */
+/* --------------------- */
+#ifdef DEBUG_WAR_CONSOLE_ON
+#    define MSG_WAR(num, str, val)          \
+          MSG("%s,%d : 0X%x %s 0X%x \n",__FILE__, __LINE__,num, str, val);
+#else
+#    define MSG_WAR(num, str, val)
+#endif
+
+#endif /* __stackcfg_h__ */

@@ -111,7 +111,7 @@ if(CONFIG_CANFESTIVAL)
 
   set(CF_INCLUDE_DIRS
     ${CF_ROOT}/include
-    ${CF_ROOT}/include/zephyr          # applicfg.h, canfestival.h
+    ${CF_ROOT}/include/zephyr          # applicfg.h, stackcfg.h
     ${CF_ROOT}/include/timers_zephyr   # timerscfg.h
     ${CF_ROOT}/drivers/zephyr
     ${CMAKE_CURRENT_BINARY_DIR}/include # generated config.h

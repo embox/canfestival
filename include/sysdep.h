@@ -2,6 +2,7 @@
 #define __sysdep_h__
 
 #include "config.h"
+#include "stackcfg.h"
 
 #ifdef CANOPEN_BIG_ENDIAN
 

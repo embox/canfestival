@@ -20,18 +20,19 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef __APPLICFG_NONE__
-#define __APPLICFG_NONE__
+#ifndef __stackcfg_h__
+#define __stackcfg_h__
 
-#include <string.h>
+/* Definition of error and warning macros */
+/* -------------------------------------- */
+#define MSG(...)
 
-#include "cantypes.h"
+/* Definition of MSG_ERR */
+/* --------------------- */
+#define MSG_ERR(num, str, val)
 
-/* No dynamic loading: LoadCanDriver is a no-op stub so applications that call
- * it still build. USE_DYNAMIC_CAN_DRIVER_LOADING stays undefined, so
- * canfestival.h declares neither LoadCanDriver nor UnLoadCanDriver. */
-typedef void* LIB_HANDLE;
+/* Definition of MSG_WAR */
+/* --------------------- */
+#define MSG_WAR(num, str, val)
 
-#define LoadCanDriver(driver_name) 1
-
-#endif /* __APPLICFG_NONE__ */
+#endif /* __stackcfg_h__ */
