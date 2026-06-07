@@ -251,7 +251,7 @@ struct struct_CO_Data {
 	NODE_PREFIX ## _objdict,             /* objdict  */\
 	NODE_PREFIX ## _PDO_status,          /* PDO_status */\
 	NULL,                                /* RxPDO_EventTimers */\
-	_RxPDO_EventTimers_Handler,          /* RxPDO_EventTimers_Handler */\
+	NULL,                                /* RxPDO_EventTimers_Handler (NULL -> _RxPDO_EventTimers_Handler at call site) */\
 	& NODE_PREFIX ## _firstIndex,        /* firstIndex */\
 	& NODE_PREFIX ## _lastIndex,         /* lastIndex */\
 	& NODE_PREFIX ## _ObjdictSize,       /* ObjdictSize */\
@@ -275,10 +275,10 @@ struct struct_CO_Data {
 		0,           /* csPDO */\
 		0           /* csLSS */\
 	},\
-	_initialisation,     /* initialisation */\
-	_preOperational,     /* preOperational */\
-	_operational,        /* operational */\
-	_stopped,            /* stopped */\
+	NULL,                /* initialisation (NULL -> _initialisation at call site) */\
+	NULL,                /* preOperational (NULL -> _preOperational at call site) */\
+	NULL,                /* operational    (NULL -> _operational at call site)    */\
+	NULL,                /* stopped        (NULL -> _stopped at call site)        */\
 	NULL,                /* NMT node reset callback */\
 	NULL,                /* NMT communications reset callback */\
 	\
@@ -288,7 +288,7 @@ struct struct_CO_Data {
 	NODE_PREFIX ## _heartBeatTimers,           /* ConsumerHeartBeatTimers  */\
 	& NODE_PREFIX ## _obj1017,                 /* ProducerHeartBeatTime */\
 	TIMER_NONE,                                /* ProducerHeartBeatTimer */\
-	_heartbeatError,           /* heartbeatError */\
+	NULL,                      /* heartbeatError (NULL -> _heartbeatError at call site) */\
 	\
 	{REPEAT_NMT_MAX_NODE_ID_TIMES(NMTable_Initializer)},\
                                                    /* is  well initialized at "Unknown_state". Is it ok ? (FD)*/\
@@ -296,7 +296,7 @@ struct struct_CO_Data {
 	/* NMT-nodeguarding */\
 	TIMER_NONE,                                /* GuardTimeTimer */\
 	TIMER_NONE,                                /* LifeTimeTimer */\
-	_nodeguardError,           /* nodeguardError */\
+	NULL,                      /* nodeguardError (NULL -> _nodeguardError at call site) */\
 	& NODE_PREFIX ## _obj100C,                 /* GuardTime */\
 	& NODE_PREFIX ## _obj100D,                 /* LifeTimeFactor */\
 	{REPEAT_NMT_MAX_NODE_ID_TIMES(nodeGuardStatus_Initializer)},\
@@ -306,16 +306,16 @@ struct struct_CO_Data {
 	& NODE_PREFIX ## _obj1005,                 /* COB_ID_Sync */\
 	& NODE_PREFIX ## _obj1006,                 /* Sync_Cycle_Period */\
 	/*& NODE_PREFIX ## _obj1007, */            /* Sync_window_length */\
-	_post_sync,                 /* post_sync */\
-	_post_TPDO,                 /* post_TPDO */\
-	_post_SlaveBootup,			/* post_SlaveBootup */\
-  _post_SlaveStateChange,			/* post_SlaveStateChange */\
+	NULL,                       /* post_sync (NULL -> _post_sync at call site) */\
+	NULL,                       /* post_TPDO (NULL -> _post_TPDO at call site) */\
+	NULL,			/* post_SlaveBootup (NULL -> _post_SlaveBootup at call site) */\
+	NULL,			/* post_SlaveStateChange (NULL -> _post_SlaveStateChange at call site) */\
 	\
 	/* General */\
 	0,                                         /* toggle */\
 	NULL,                   /* canSend */\
 	NODE_PREFIX ## _scanIndexOD,                /* scanIndexOD */\
-	_storeODSubIndex,                /* storeODSubIndex */\
+	NULL,                            /* storeODSubIndex (NULL -> _storeODSubIndex at call site) */\
     /* DCF concise */\
     NULL,       /*dcf_odentry*/\
 	NULL,		/*dcf_cursor*/\
@@ -335,7 +335,7 @@ struct struct_CO_Data {
 	{\
 	REPEAT_EMCY_MAX_ERRORS_TIMES(ERROR_DATA_INITIALIZER)\
 	},\
-	_post_emcy,              /* post_emcy */\
+	NULL,                    /* post_emcy (NULL -> _post_emcy at call site) */\
 	/* LSS */\
 	lss_Initializer\
 }

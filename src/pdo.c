@@ -297,7 +297,8 @@ proceedPDO (CO_Data * d, Message * m)
                     TIMEVAL EventTimerDuration = *(UNS16 *)d->objdict[offsetObjdict].pSubindex[5].pObject;
                     if(EventTimerDuration){
                         DelAlarm (d->RxPDO_EventTimers[numPdo]);
-                        d->RxPDO_EventTimers[numPdo] = SetAlarm (d, numPdo, d->RxPDO_EventTimers_Handler,
+                        d->RxPDO_EventTimers[numPdo] = SetAlarm (d, numPdo,
+                        d->RxPDO_EventTimers_Handler ? d->RxPDO_EventTimers_Handler : _RxPDO_EventTimers_Handler,
                         MS_TO_TIMEVAL (EventTimerDuration), 0);
                     }
                 }

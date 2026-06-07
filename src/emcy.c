@@ -254,7 +254,7 @@ void proceedEMCY(CO_Data* d, Message* m)
 	nodeID = m->cob_id & 0x7F;
 	errCode = m->Data[0] | ((UNS16)m->Data[1] << 8);
 	errReg = m->Data[2];
-	(*d->post_emcy)(d, nodeID, errCode, errReg);
+	(d->post_emcy ? d->post_emcy : _post_emcy)(d, nodeID, errCode, errReg);
 }
 
 void _post_emcy(CO_Data* d, UNS8 nodeID, UNS16 errCode, UNS8 errReg){}

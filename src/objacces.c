@@ -253,7 +253,7 @@ UNS32 _setODentry( CO_Data* d,
 
       /* TODO : Store dans NVRAM */
       if (ptrTable->pSubindex[bSubindex].bAccessType & TO_BE_SAVE){
-        (*d->storeODSubIndex)(d, wIndex, bSubindex);
+        (d->storeODSubIndex ? d->storeODSubIndex : _storeODSubIndex)(d, wIndex, bSubindex);
       }
       return OD_SUCCESSFUL;
     }else{

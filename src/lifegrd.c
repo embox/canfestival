@@ -76,7 +76,7 @@ void ConsumerHeartbeatAlarm(CO_Data* d, UNS32 id)
   /* set node state */
   d->NMTable[nodeId] = Disconnected;
   /*! call heartbeat error with NodeId */
-  (*d->heartbeatError)(d, nodeId);
+  (d->heartbeatError ? d->heartbeatError : _heartbeatError)(d, nodeId);
 }
 
 void proceedNODE_GUARD(CO_Data* d, Message* m )
@@ -128,7 +128,7 @@ void proceedNODE_GUARD(CO_Data* d, Message* m )
 
       if (d->NMTable[nodeId] != newNodeState)
       {
-        (*d->post_SlaveStateChange)(d, nodeId, newNodeState);
+        (d->post_SlaveStateChange ? d->post_SlaveStateChange : _post_SlaveStateChange)(d, nodeId, newNodeState);
         /* the slave's state receievd is stored in the NMTable */
         d->NMTable[nodeId] = newNodeState;
       }
@@ -143,7 +143,7 @@ void proceedNODE_GUARD(CO_Data* d, Message* m )
           */
           MSG_WAR(0x3100, "The NMT is a bootup from node : ", nodeId);
           /* call post SlaveBootup with NodeId */
-		  (*d->post_SlaveBootup)(d, nodeId);
+		  (d->post_SlaveBootup ? d->post_SlaveBootup : _post_SlaveBootup)(d, nodeId);
       }
 
       if( d->NMTable[nodeId] != Unknown_state ) {
@@ -228,9 +228,7 @@ void GuardTimeAlarm(CO_Data* d, UNS32 id)
           MSG_WAR(0x00, "Node Guard alarm for nodeId : ", i);
 
           // Call error-callback function
-          if (*d->nodeguardError) {
-            (*d->nodeguardError)(d, i);
-          }
+          (d->nodeguardError ? d->nodeguardError : _nodeguardError)(d, i);
 
           // Mark node as disconnected
           d->NMTable[i] = Disconnected;

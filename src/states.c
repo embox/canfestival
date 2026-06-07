@@ -167,7 +167,7 @@ UNS8 setState(CO_Data* d, e_nodeState newState)
 				switchCommunicationState(d, &newCommunicationState);
 				/* call user app init callback now. */
 				/* d->initialisation MUST NOT CALL SetState */
-				(*d->initialisation)(d);				
+				(d->initialisation ? d->initialisation : _initialisation)(d);
 			}
 
 			/* Automatic transition - No break statement ! */
@@ -181,7 +181,7 @@ UNS8 setState(CO_Data* d, e_nodeState newState)
 				s_state_communication newCommunicationState = {0, 1, 1, 1, 1, 0, 1};
 				d->nodeState = Pre_operational;
 				switchCommunicationState(d, &newCommunicationState);
-                (*d->preOperational)(d);
+                (d->preOperational ? d->preOperational : _preOperational)(d);
 			}
 			break;
 								
@@ -192,7 +192,7 @@ UNS8 setState(CO_Data* d, e_nodeState newState)
 				d->nodeState = Operational;
 				newState = Operational;
 				switchCommunicationState(d, &newCommunicationState);
-				(*d->operational)(d);
+				(d->operational ? d->operational : _operational)(d);
 			}
 			break;
 						
@@ -203,7 +203,7 @@ UNS8 setState(CO_Data* d, e_nodeState newState)
 				d->nodeState = Stopped;
 				newState = Stopped;
 				switchCommunicationState(d, &newCommunicationState);
-				(*d->stopped)(d);
+				(d->stopped ? d->stopped : _stopped)(d);
 			}
 			break;
 			default:
