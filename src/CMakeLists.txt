@@ -36,8 +36,4 @@ if(NOT CF_ENABLE_DLL_DRIVERS)
     target_compile_definitions(canfestival PUBLIC NOT_USE_DYNAMIC_LOADING)
 endif()
 
-if(CMAKE_SYSTEM_PROCESSOR MATCHES "x86_64|amd64")
-    set_target_properties(canfestival PROPERTIES POSITION_INDEPENDENT_CODE ON)
-endif()
-
 install(TARGETS canfestival ARCHIVE DESTINATION lib)
