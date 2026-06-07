@@ -21,7 +21,6 @@ add_library(canfestival STATIC ${CF_CORE_SOURCES})
 target_include_directories(canfestival PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/${CF_TARGET}>
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/timers_${CF_TIMERS_DRIVER}>
     $<BUILD_INTERFACE:${CMAKE_BINARY_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/drivers/${CF_TARGET}>
 )

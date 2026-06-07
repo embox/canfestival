@@ -7,7 +7,25 @@ See COPYING file for copyrights details.
 #ifndef __stackcfg_h__
 #define __stackcfg_h__
 
+#include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
+
+#if defined(CONFIG_CANFESTIVAL_RX_STACK_SIZE)
+#define CANFESTIVAL_RX_STACK_SIZE CONFIG_CANFESTIVAL_RX_STACK_SIZE
+#elif !defined(CANFESTIVAL_RX_STACK_SIZE)
+#define CANFESTIVAL_RX_STACK_SIZE 2048
+#endif
+
+/* The receive task handle bundles the Zephyr thread control block together
+ * with its stack, so that whoever embeds a TASK_HANDLE (the canports[] array
+ * in the platform driver) statically owns the memory - no dynamic allocation. */
+struct canfestival_task {
+	struct k_thread thread;
+	K_KERNEL_STACK_MEMBER(stack, CANFESTIVAL_RX_STACK_SIZE);
+	k_tid_t tid;
+};
+
+#define TASK_HANDLE struct canfestival_task
 
 /* CanFestival messages go to the Zephyr "canfestival" log module, registered
  * once in drivers/zephyr/zephyr.c. Every other translation unit references it

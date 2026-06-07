@@ -1,5 +1,5 @@
 /*
-This file is part of CanFestival, a library implementing CanOpen Stack. 
+This file is part of CanFestival, a library implementing CanOpen Stack.
 
 Copyright (C): Edouard TISSERANT and Francis DUPIN
 
@@ -20,18 +20,35 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef __TIMERSCFG_H__
-#define __TIMERSCFG_H__
+#ifndef __stackcfg_h__
+#define __stackcfg_h__
 
+#include <stdio.h>
 #include <pthread.h>
 
-/* Time unit : us */
-/* Time resolution : 64bit (~584942 years) */
-#define TIMEVAL unsigned long long
-#define TIMEVAL_MAX ~(TIMEVAL)0
-#define MS_TO_TIMEVAL(ms) ms*1000L
-#define US_TO_TIMEVAL(us) us
-
+/* Receive/timer task handle */
 #define TASK_HANDLE pthread_t
 
+/* Definition of error and warning macros */
+/* -------------------------------------- */
+#define MSG(...) printf (__VA_ARGS__)
+
+/* Definition of MSG_ERR */
+/* --------------------- */
+#ifdef DEBUG_ERR_CONSOLE_ON
+#    define MSG_ERR(num, str, val)            \
+          MSG("%s,%d : 0X%x %s 0X%x \n",__FILE__, __LINE__,num, str, val);
+#else
+#    define MSG_ERR(num, str, val)
 #endif
+
+/* Definition of MSG_WAR */
+/* --------------------- */
+#ifdef DEBUG_WAR_CONSOLE_ON
+#    define MSG_WAR(num, str, val)          \
+          MSG("%s,%d : 0X%x %s 0X%x \n",__FILE__, __LINE__,num, str, val);
+#else
+#    define MSG_WAR(num, str, val)
+#endif
+
+#endif /* __stackcfg_h__ */

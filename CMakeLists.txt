@@ -4,9 +4,8 @@ project(CanFestival VERSION 3.0 LANGUAGES C)
 # ---------------------------------------------------------------------------
 #  Build options
 # ---------------------------------------------------------------------------
-set(CF_TARGET "unix" CACHE STRING "Target platform (unix, windows)")
+set(CF_TARGET "unix" CACHE STRING "Target platform (unix, xeno, windows, none)")
 set(CF_CAN_DRIVER "virtual" CACHE STRING "CAN driver(s) to build; semicolon-separated list, e.g. \"virtual;socket\"")
-set(CF_TIMERS_DRIVER "unix" CACHE STRING "Timer driver to build")
 
 option(CF_ENABLE_LSS "Enable LSS services" OFF)
 option(CF_ENABLE_LSS_FS "Enable LSS FastScan" OFF)
@@ -70,7 +69,7 @@ configure_file(include/config.h.in ${CMAKE_BINARY_DIR}/include/config.h @ONLY)
 # ---------------------------------------------------------------------------
 #  Platform-specific flags
 # ---------------------------------------------------------------------------
-if(CF_TIMERS_DRIVER STREQUAL "xeno")
+if(CF_TARGET STREQUAL "xeno")
     find_program(XENO_CONFIG xeno-config)
     if(XENO_CONFIG)
         execute_process(COMMAND ${XENO_CONFIG} --skin=alchemy --skin=rtdm --cflags

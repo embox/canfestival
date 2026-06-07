@@ -28,6 +28,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "cantypes.h"
 
+/* Timer base type. Time unit : 1 ms */
+#define TIMEVAL DWORD
+#define TIMEVAL_MAX ~(TIMEVAL)0
+#define MS_TO_TIMEVAL(ms) ms
+#define US_TO_TIMEVAL(us) (us / 1000)
+
 /* CAN driver is loaded dynamically at runtime (see drivers/windows/windows.c). */
 #define USE_DYNAMIC_CAN_DRIVER_LOADING
 

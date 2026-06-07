@@ -27,6 +27,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "cantypes.h"
 
+/* Timer base type. Time unit : ns, 64-bit resolution (~585 years) */
+#define TIMEVAL unsigned long long
+#define TIMEVAL_MAX ~(TIMEVAL)0
+#define MS_TO_TIMEVAL(ms) ms*1000000L
+#define US_TO_TIMEVAL(us) us*1000L
+
 /* No dynamic loading: LoadCanDriver is a no-op stub so applications that call
  * it still build. USE_DYNAMIC_CAN_DRIVER_LOADING stays undefined, so
  * canfestival.h declares neither LoadCanDriver nor UnLoadCanDriver. */

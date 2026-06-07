@@ -24,6 +24,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __stackcfg_h__
 
 #include <stdio.h>
+#include <pthread.h>
+
+/* Receive/timer task handle */
+#define TASK_HANDLE pthread_t
 
 /* Definition of error and warning macros */
 /* -------------------------------------- */

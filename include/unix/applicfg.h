@@ -27,6 +27,12 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include "cantypes.h"
 
+/* Timer base type. Time unit : us, 64-bit resolution (~584942 years) */
+#define TIMEVAL unsigned long long
+#define TIMEVAL_MAX ~(TIMEVAL)0
+#define MS_TO_TIMEVAL(ms) ms*1000L
+#define US_TO_TIMEVAL(us) us
+
 /* CAN driver is loaded dynamically at runtime (see drivers/unix/unix.c). */
 #define USE_DYNAMIC_CAN_DRIVER_LOADING
 

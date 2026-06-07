@@ -23,7 +23,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __timers_h__
 #define __timers_h__
 
-#include <timerscfg.h>
+/* TIMEVAL and its MS_TO_TIMEVAL/US_TO_TIMEVAL helpers come from applicfg.h. */
 #include <applicfg.h>
 
 #define TIMER_HANDLE INTEGER16

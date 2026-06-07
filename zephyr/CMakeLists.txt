@@ -44,8 +44,8 @@ if(CONFIG_CANFESTIVAL)
     set(SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE ${CONFIG_CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE})
   endif()
 
-  # TIMEVAL / TIMEVAL_MAX are provided by include/timers_zephyr/timerscfg.h,
-  # so they are intentionally left unset here (config.h #undef-s them).
+  # TIMEVAL / TIMEVAL_MAX are provided by include/zephyr/applicfg.h, so they
+  # are not part of the generated config.h at all.
 
   # ---------------------------------------------------------------------------
   #  Endianness detection
@@ -99,10 +99,10 @@ if(CONFIG_CANFESTIVAL)
     ${CF_ROOT}/src/states.c
     ${CF_ROOT}/src/sync.c
     ${CF_ROOT}/src/timer.c
-    # Zephyr platform wrapper + drivers (linked directly, no dynamic loading)
+    # Zephyr platform wrapper (incl. timer driver) + CAN driver, linked
+    # directly (no dynamic loading)
     ${CF_ROOT}/drivers/zephyr/zephyr.c
     ${CF_ROOT}/drivers/can_zephyr/can_zephyr.c
-    ${CF_ROOT}/drivers/timers_zephyr/timers_zephyr.c
   )
   zephyr_library_sources_ifdef(CONFIG_CANFESTIVAL_ENABLE_LSS ${CF_ROOT}/src/lss.c)
 
@@ -112,7 +112,6 @@ if(CONFIG_CANFESTIVAL)
   set(CF_INCLUDE_DIRS
     ${CF_ROOT}/include
     ${CF_ROOT}/include/zephyr          # applicfg.h, stackcfg.h
-    ${CF_ROOT}/include/timers_zephyr   # timerscfg.h
     ${CF_ROOT}/drivers/zephyr
     ${CMAKE_CURRENT_BINARY_DIR}/include # generated config.h
   )

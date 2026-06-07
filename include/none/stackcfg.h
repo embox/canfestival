@@ -23,6 +23,9 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __stackcfg_h__
 #define __stackcfg_h__
 
+/* Receive/timer task handle */
+#define TASK_HANDLE void*
+
 /* Definition of error and warning macros */
 /* -------------------------------------- */
 #define MSG(...)

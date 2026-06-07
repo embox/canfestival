@@ -69,7 +69,7 @@ void TestMaster_initialisation(CO_Data* d)
 
 // Step counts number of times ConfigureSlaveNode is called
 // There is one per each slave
-static init_step[] ={0,0};
+static int init_step[] ={0,0};
 
 /*Forward declaration*/
 static void ConfigureSlaveNode(CO_Data* d, UNS8 nodeId);

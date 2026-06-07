@@ -1,27 +1,4 @@
 # ---------------------------------------------------------------------------
-#  Timer driver (OBJECT library, linked into platform driver)
-# ---------------------------------------------------------------------------
-if(CF_TIMERS_DRIVER)
-    set(TIMERS_DIR timers_${CF_TIMERS_DRIVER})
-    set(TIMERS_SRC ${TIMERS_DIR}/${TIMERS_DIR}.c)
-
-    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${TIMERS_SRC})
-        add_library(canfestival_timers OBJECT ${TIMERS_SRC})
-        target_include_directories(canfestival_timers PRIVATE
-            ${CMAKE_SOURCE_DIR}/include
-            ${CMAKE_SOURCE_DIR}/include/${CF_TARGET}
-            ${CMAKE_SOURCE_DIR}/include/${TIMERS_DIR}
-            ${CMAKE_SOURCE_DIR}/drivers/${CF_TARGET}
-            ${CMAKE_BINARY_DIR}/include)
-
-        if(CF_TIMERS_DRIVER STREQUAL "xeno" AND XENO_CFLAGS)
-            target_compile_options(canfestival_timers PRIVATE ${XENO_CFLAGS})
-            target_compile_definitions(canfestival_timers PRIVATE USE_XENO)
-        endif()
-    endif()
-endif()
-
-# ---------------------------------------------------------------------------
 #  CAN driver(s) (SHARED or OBJECT depending on CF_ENABLE_DLL_DRIVERS)
 #
 #  CF_CAN_DRIVER may name several drivers (e.g. "virtual;socket"); one shared
@@ -51,7 +28,6 @@ foreach(_can_driver IN LISTS CF_CAN_DRIVER)
         target_include_directories(canfestival_${CAN_DIR} PRIVATE
             ${CMAKE_SOURCE_DIR}/include
             ${CMAKE_SOURCE_DIR}/include/${CF_TARGET}
-            ${CMAKE_SOURCE_DIR}/include/timers_${CF_TIMERS_DRIVER}
             ${CMAKE_SOURCE_DIR}/drivers/${CF_TARGET}
             ${CMAKE_BINARY_DIR}/include)
 
@@ -69,7 +45,8 @@ foreach(_can_driver IN LISTS CF_CAN_DRIVER)
 endforeach()
 
 # ---------------------------------------------------------------------------
-#  Platform driver (STATIC library combining platform + timers)
+#  Platform driver (STATIC library; the platform .c now also carries the timer
+#  driver, formerly the separate timers_<target> source).
 # ---------------------------------------------------------------------------
 if(CF_TARGET AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${CF_TARGET}/${CF_TARGET}.c)
     set(PLATFORM_SOURCES ${CF_TARGET}/${CF_TARGET}.c)
@@ -79,22 +56,16 @@ if(CF_TARGET AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${CF_TARGET}/${CF_TARGET}.c)
     target_include_directories(canfestival_${CF_TARGET} PRIVATE
         ${CMAKE_SOURCE_DIR}/include
         ${CMAKE_SOURCE_DIR}/include/${CF_TARGET}
-        ${CMAKE_SOURCE_DIR}/include/timers_${CF_TIMERS_DRIVER}
         ${CMAKE_SOURCE_DIR}/drivers/${CF_TARGET}
         ${CMAKE_BINARY_DIR}/include)
-
-    # Link timers object into platform library
-    if(TARGET canfestival_timers)
-        target_sources(canfestival_${CF_TARGET} PRIVATE $<TARGET_OBJECTS:canfestival_timers>)
-    endif()
 
     # Link CAN driver object into platform library when not using DLL
     if(NOT CF_ENABLE_DLL_DRIVERS AND TARGET canfestival_${CAN_DIR})
         target_sources(canfestival_${CF_TARGET} PRIVATE $<TARGET_OBJECTS:canfestival_${CAN_DIR}>)
     endif()
 
-    # Platform-specific link flags
-    if(CF_TARGET STREQUAL "unix")
+    # Platform-specific link flags (xeno mirrors unix: pthread + rt + dl)
+    if(CF_TARGET STREQUAL "unix" OR CF_TARGET STREQUAL "xeno")
         find_package(Threads REQUIRED)
         target_link_libraries(canfestival_${CF_TARGET} PUBLIC Threads::Threads)
         if(NOT CMAKE_SYSTEM_NAME STREQUAL "CYGWIN")
@@ -105,8 +76,16 @@ if(CF_TARGET AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${CF_TARGET}/${CF_TARGET}.c)
         endif()
     endif()
 
-    if(CF_TIMERS_DRIVER STREQUAL "xeno" AND XENO_LDFLAGS)
-        target_link_options(canfestival_${CF_TARGET} PUBLIC ${XENO_LDFLAGS})
+    # Xenomai: the timer code lives in the platform library now, so its compile
+    # and link flags apply here rather than to a separate timers object.
+    if(CF_TARGET STREQUAL "xeno")
+        if(XENO_CFLAGS)
+            target_compile_options(canfestival_${CF_TARGET} PRIVATE ${XENO_CFLAGS})
+            target_compile_definitions(canfestival_${CF_TARGET} PRIVATE USE_XENO)
+        endif()
+        if(XENO_LDFLAGS)
+            target_link_options(canfestival_${CF_TARGET} PUBLIC ${XENO_LDFLAGS})
+        endif()
     endif()
 
     install(TARGETS canfestival_${CF_TARGET} ARCHIVE DESTINATION lib)

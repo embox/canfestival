@@ -2,7 +2,6 @@
 This file is part of CanFestival, a library implementing CanOpen Stack.
 
 Copyright (C): Edouard TISSERANT and Francis DUPIN
-Win32 port by Leonid Tochinski
 
 See COPYING file for copyrights details.
 
@@ -21,18 +20,22 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-#ifndef __TIMERSCFG_H__
-#define __TIMERSCFG_H__
+#ifndef __APPLICFG_XENO__
+#define __APPLICFG_XENO__
 
-#include <windows.h>
+#include <string.h>
 
-// Time unit : 1msec
-#define TIMEVAL DWORD
+#include "cantypes.h"
+
+/* Timer base type. Time unit : ns, 64-bit resolution (~584 years) */
+#define TIMEVAL unsigned long long
 #define TIMEVAL_MAX ~(TIMEVAL)0
+#define MS_TO_TIMEVAL(ms) ms*1000000LL
+#define US_TO_TIMEVAL(us) us*1000LL
 
-#define MS_TO_TIMEVAL(ms) ms
-#define US_TO_TIMEVAL(us) (us / 1000)
+/* CAN driver is loaded dynamically at runtime (see drivers/xeno/xeno.c). */
+#define USE_DYNAMIC_CAN_DRIVER_LOADING
 
-#define TASK_HANDLE HANDLE
+typedef void* LIB_HANDLE;
 
-#endif
+#endif /* __APPLICFG_XENO__ */
