@@ -29,7 +29,7 @@ if(CONFIG_CANFESTIVAL)
   set(CF_MAX_NB_TIMER ${CONFIG_CANFESTIVAL_MAX_NB_TIMER})
   set(CF_EMCY_MAX_ERRORS ${CONFIG_CANFESTIVAL_EMCY_MAX_ERRORS})
   # LSS timeouts only exist as Kconfig symbols when LSS is enabled; the values
-  # still feed config.h unconditionally, so fall back to defaults otherwise.
+  # still feed canfestival_config.h unconditionally, so fall back to defaults otherwise.
   if(CONFIG_CANFESTIVAL_ENABLE_LSS)
     set(CF_LSS_TIMEOUT_MS ${CONFIG_CANFESTIVAL_LSS_TIMEOUT_MS})
     set(CF_LSS_FS_TIMEOUT_MS ${CONFIG_CANFESTIVAL_LSS_FS_TIMEOUT_MS})
@@ -37,7 +37,7 @@ if(CONFIG_CANFESTIVAL)
     set(CF_LSS_TIMEOUT_MS 1000)
     set(CF_LSS_FS_TIMEOUT_MS 100)
   endif()
-  # Dynamic (heap) SDO buffers. The variable names match the config.h.in
+  # Dynamic (heap) SDO buffers. The variable names match the canfestival_config.h.in
   # cmakedefine guards; left unset (feature off) otherwise.
   if(CONFIG_CANFESTIVAL_SDO_DYNAMIC_BUFFER_ALLOCATION)
     set(SDO_DYNAMIC_BUFFER_ALLOCATION 1)
@@ -45,7 +45,7 @@ if(CONFIG_CANFESTIVAL)
   endif()
 
   # TIMEVAL / TIMEVAL_MAX are provided by include/zephyr/applicfg.h, so they
-  # are not part of the generated config.h at all.
+  # are not part of the generated canfestival_config.h at all.
 
   # ---------------------------------------------------------------------------
   #  Endianness detection
@@ -76,10 +76,10 @@ if(CONFIG_CANFESTIVAL)
   set(CF_REPEAT_MACROS "${REPEAT_SDO}\n${REPEAT_NMT}\n${REPEAT_EMCY}")
 
   # ---------------------------------------------------------------------------
-  #  Generate config.h from the shared template
+  #  Generate canfestival_config.h from the shared template
   # ---------------------------------------------------------------------------
-  configure_file(${CF_ROOT}/include/config.h.in
-                 ${CMAKE_CURRENT_BINARY_DIR}/include/config.h @ONLY)
+  configure_file(${CF_ROOT}/include/canfestival_config.h.in
+                 ${CMAKE_CURRENT_BINARY_DIR}/include/canfestival_config.h @ONLY)
 
   # ---------------------------------------------------------------------------
   #  CanFestival library
@@ -113,7 +113,7 @@ if(CONFIG_CANFESTIVAL)
     ${CF_ROOT}/include
     ${CF_ROOT}/include/zephyr          # applicfg.h, stackcfg.h
     ${CF_ROOT}/drivers/zephyr
-    ${CMAKE_CURRENT_BINARY_DIR}/include # generated config.h
+    ${CMAKE_CURRENT_BINARY_DIR}/include # generated canfestival_config.h
   )
 
   # Make the headers visible to the CanFestival sources and to the application

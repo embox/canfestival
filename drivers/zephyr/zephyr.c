@@ -18,7 +18,7 @@ See COPYING file for copyrights details.
 #include "data.h"
 #include "canfestival.h"
 #include "timers_driver.h"
-#include "config.h"
+#include "canfestival_config.h"
 
 LOG_MODULE_REGISTER(canfestival, CONFIG_CANFESTIVAL_LOG_LEVEL);
 

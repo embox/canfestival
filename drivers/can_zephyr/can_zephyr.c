@@ -27,7 +27,7 @@ See COPYING file for copyrights details.
 
 #include "applicfg.h"
 #include "can_driver.h"
-#include "config.h"
+#include "canfestival_config.h"
 
 /* Devicetree node listing the CAN controllers usable by CanFestival. */
 #define CF_IFACES_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(canfestival_interfaces)

@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include <stddef.h>		/* for NULL */
 #include <errno.h>
 
-#include "config.h"
+#include "canfestival_config.h"
 
 #ifdef RTCAN_SOCKET
 #include "rtdm/can.h"

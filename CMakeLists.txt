@@ -26,7 +26,7 @@ set(CF_LSS_TIMEOUT_MS 1000 CACHE STRING "LSS timeout in ms")
 set(CF_LSS_FS_TIMEOUT_MS 100 CACHE STRING "LSS FastScan timeout in ms")
 set(CF_SDO_DYNAMIC_BUFFER_ALLOCATION_SIZE 512 CACHE STRING "Max dynamic SDO buffer size in bytes")
 
-# Dynamic (heap) SDO buffers. The variable names match the config.h.in
+# Dynamic (heap) SDO buffers. The variable names match the canfestival_config.h.in
 # cmakedefine guards; left unset (feature off) otherwise.
 if(CF_SDO_DYNAMIC_BUFFER_ALLOCATION)
     set(SDO_DYNAMIC_BUFFER_ALLOCATION 1)
@@ -62,9 +62,9 @@ generate_repeat_macro("EMCY_MAX_ERRORS" ${CF_EMCY_MAX_ERRORS} REPEAT_EMCY)
 set(CF_REPEAT_MACROS "${REPEAT_SDO}\n${REPEAT_NMT}\n${REPEAT_EMCY}")
 
 # ---------------------------------------------------------------------------
-#  Generate config.h
+#  Generate canfestival_config.h
 # ---------------------------------------------------------------------------
-configure_file(include/config.h.in ${CMAKE_BINARY_DIR}/include/config.h @ONLY)
+configure_file(include/canfestival_config.h.in ${CMAKE_BINARY_DIR}/include/canfestival_config.h @ONLY)
 
 # ---------------------------------------------------------------------------
 #  Platform-specific flags
@@ -95,8 +95,8 @@ endif()
 # ---------------------------------------------------------------------------
 install(DIRECTORY include/ DESTINATION include/canfestival
         FILES_MATCHING PATTERN "*.h"
-        PATTERN "config.h.in" EXCLUDE)
-install(FILES ${CMAKE_BINARY_DIR}/include/config.h
+        PATTERN "canfestival_config.h.in" EXCLUDE)
+install(FILES ${CMAKE_BINARY_DIR}/include/canfestival_config.h
         DESTINATION include/canfestival)
 install(DIRECTORY objdictgen/ DESTINATION share/canfestival/objdictgen
         FILES_MATCHING
