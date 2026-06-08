@@ -38,7 +38,7 @@
 /* #define DEBUG_ERR_CONSOLE_ON */
 
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 #include "sysdep.h"
 
 //We need the function implementation for linking

@@ -36,8 +36,6 @@ void pause(void)
 #endif
 
 #include "canfestival.h"
-//#include <can_driver.h>
-//#include <timers_driver.h>
 
 #include "Master.h"
 #include "Slave.h"

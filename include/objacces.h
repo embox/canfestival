@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __objacces_h__
 #define __objacces_h__
 
-#include <applicfg.h>
+#include "applicfg.h"
 
 
 #ifdef __cplusplus
@@ -65,7 +65,7 @@ void _storeODSubIndex (CO_Data* d, UNS16 wIndex, UNS8 bSubindex);
  * @param subIndex
  * @param sizeDataDict Size of the data defined in the dictionary
  * @param sizeDataGiven Size data given by the user.
- * @param code error code to print. (SDO abort code. See file def.h)
+ * @param code error code to print. (SDO abort code.)
  * @return
  */ 
 UNS8 accessDictionaryError(UNS16 index, UNS8 subIndex, 
@@ -101,7 +101,7 @@ UNS8 accessDictionaryError(UNS16 index, UNS8 subIndex,
  *                   the value of this object dictionary entry should be copied
  * @param pExpectedSize This function writes the size of the copied value (in Byte)
  *                      into this variable.
- * @param *pDataType Pointer to the type of the data. See objdictdef.h
+ * @param *pDataType Pointer to the type of the data. See canfestival_datatypes.h
  * @param CheckAccess if other than 0, do not read if the data is Write Only
  *                    [Not used today. Put always 0].
  * @param Endianize  When not 0, data is endianized into network byte order
@@ -109,7 +109,7 @@ UNS8 accessDictionaryError(UNS16 index, UNS8 subIndex,
  *                   endianness 
  * @return 
  * - OD_SUCCESSFUL is returned upon success. 
- * - SDO abort code is returned if error occurs . (See file def.h)
+ * - SDO abort code is returned if error occurs.
  */
 UNS32 _getODentry( CO_Data* d,
                    UNS16 wIndex,
@@ -134,12 +134,12 @@ UNS32 _getODentry( CO_Data* d,
  *                   the value of this object dictionary entry should be copied
  * @param pExpectedSize This function writes the size of the copied value (in Byte)
  *                      into this variable.
- * @param *pDataType Pointer to the type of the data. See objdictdef.h
+ * @param *pDataType Pointer to the type of the data. See canfestival_datatypes.h
  * @param checkAccess Flag that indicate if a check rights must be perfomed (0 : no , other than 0 : yes)
  * @param endianize  Set to 1 : endianized into network byte order 
  * @return 
  * - OD_SUCCESSFUL is returned upon success. 
- * - SDO abort code is returned if error occurs . (See file def.h)
+ * - SDO abort code is returned if error occurs.
  */
 #define getODentry( OD, wIndex, bSubindex, pDestData, pExpectedSize, \
 		          pDataType,  checkAccess)                         \
@@ -162,14 +162,14 @@ UNS32 _getODentry( CO_Data* d,
  *                   the value of this object dictionary entry should be copied
  * @param pExpectedSize This function writes the size of the copied value (in Byte)
  *                      into this variable.
- * @param *pDataType Pointer to the type of the data. See objdictdef.h
+ * @param *pDataType Pointer to the type of the data. See canfestival_datatypes.h
  * @param checkAccess if other than 0, do not read if the data is Write Only
  *                    [Not used today. Put always 0].
  * @param endianize Set to 0, data is not endianized and copied in machine native
  *                  endianness 
  * @return 
  * - OD_SUCCESSFUL is returned upon success. 
- * - SDO abort code is returned if error occurs . (See file def.h)
+ * - SDO abort code is returned if error occurs.
  */
 #define readLocalDict( OD, wIndex, bSubindex, pDestData, pExpectedSize, \
 		          pDataType,  checkAccess)                         \
@@ -193,7 +193,7 @@ UNS32 _getODentry( CO_Data* d,
  *                  endianness   
  * @return 
  * - OD_SUCCESSFUL is returned upon success. 
- * - SDO abort code is returned if error occurs . (See file def.h)
+ * - SDO abort code is returned if error occurs.
  */
 UNS32 _setODentry( CO_Data* d,
                    UNS16 wIndex,
@@ -228,7 +228,7 @@ UNS32 _setODentry( CO_Data* d,
  * @param endianize Set to 1 : endianized into network byte order
  * @return 
  * - OD_SUCCESSFUL is returned upon success. 
- * - SDO abort code is returned if error occurs . (See file def.h)
+ * - SDO abort code is returned if error occurs.
  */
 #define setODentry( d, wIndex, bSubindex, pSourceData, pExpectedSize, \
                   checkAccess) \
@@ -253,7 +253,7 @@ UNS32 _setODentry( CO_Data* d,
  * @param endianize Data is not endianized and copied in machine native endianness 
  * @return 
  * - OD_SUCCESSFUL is returned upon success. 
- * - SDO abort code is returned if error occurs . (See file def.h)
+ * - SDO abort code is returned if error occurs.
  * \n\n
  * @code
  * // Example usage:
@@ -272,7 +272,7 @@ UNS32 _setODentry( CO_Data* d,
  * @brief Scan the index of object dictionary. Used only by setODentry and getODentry.
  * @param *d Pointer to a CAN object data structure
  * @param wIndex
- * @param *errorCode :  OD_SUCCESSFUL if index foundor SDO abort code. (See file def.h)
+ * @param *errorCode :  OD_SUCCESSFUL if index foundor SDO abort code.
  * @param **Callback
  * @return NULL if index not found. Else : return the table part of the object dictionary.
  */

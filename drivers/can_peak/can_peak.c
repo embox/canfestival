@@ -13,12 +13,9 @@
 #include <fcntl.h>
 #endif
 
-
-#include "cancfg.h"
 #include "can_driver.h"
-#include "def.h"
 
-UNS8 LIBAPI canSend_driver(CAN_HANDLE fd0, Message const *m);
+UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m);
 
 #define Data data  /* temporary fix */
 
@@ -158,7 +155,7 @@ int ret = 0;
 
 
 /********* functions which permit to communicate with the board ****************/
-UNS8 LIBAPI canReceive_driver(CAN_HANDLE fd0, Message *m)
+UNS8 canReceive_driver(CAN_HANDLE fd0, Message *m)
 {
 static int HeavyCounter = 0;
 int ret=0;
@@ -315,7 +312,7 @@ CONTINUE:
 /***************************************************************************/
 
 /* return 0 - OK; 1 - failure */
-UNS8 LIBAPI canSend_driver(CAN_HANDLE fd0, Message const *m)
+UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m)
 {
 UNS8 data;
 TPCANMsg peakMsg;
@@ -379,7 +376,7 @@ int MaxLoops = 100;
 
 
 /***************************************************************************/
-UNS8 LIBAPI canChangeBaudRate_driver(CAN_HANDLE fd, char* baud)
+UNS8 canChangeBaudRate_driver(CAN_HANDLE fd, char* baud)
 {
     printf("canChangeBaudRate not yet supported by this driver\n");
     return 0;
@@ -387,7 +384,7 @@ UNS8 LIBAPI canChangeBaudRate_driver(CAN_HANDLE fd, char* baud)
 
 
 /***************************************************************************/
-CAN_HANDLE LIBAPI canOpen_driver(s_BOARD * board)
+CAN_HANDLE canOpen_driver(s_BOARD * board)
 {
 int ret;
 int i;
@@ -421,7 +418,7 @@ int i;
 
 
 /***************************************************************************/
-int LIBAPI canClose_driver(CAN_HANDLE fd0)
+int canClose_driver(CAN_HANDLE fd0)
 {
 s_BOARD *x_board = NULL;
 int ActiveBoards = 0;

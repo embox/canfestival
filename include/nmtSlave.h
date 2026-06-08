@@ -28,8 +28,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __nmtSlave_h__
 #define __nmtSlave_h__
 
-#include <applicfg.h>
-#include "data.h"
+#include "applicfg.h"
+#include "canfestival_datatypes.h"
 
 /** 
  * @brief Threat the reception of a NMT message from the master.

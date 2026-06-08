@@ -1,6 +1,8 @@
 #ifndef __sysdep_h__
 #define __sysdep_h__
 
+#include <string.h>  /* memcpy/memset used throughout the stack sources */
+
 #include "canfestival_config.h"
 #include "stackcfg.h"
 

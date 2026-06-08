@@ -32,11 +32,10 @@
 **
 */
 
-#include <data.h>
-#include "lifegrd.h"
 #include "canfestival.h"
 #include "dcf.h"
 #include "sysdep.h"
+#include "nmtMaster.h"
 
 
 void ConsumerHeartbeatAlarm(CO_Data* d, UNS32 id);

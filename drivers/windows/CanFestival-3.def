@@ -120,7 +120,7 @@ EXPORTS
         EMCY_errorRecovered
         _post_emcy
         
-        ; timers.h
+        ; canfestival_timer.h
         SetAlarm
         DelAlarm
         TimeDispatch

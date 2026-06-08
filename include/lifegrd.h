@@ -53,7 +53,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __lifegrd_h__
 
 
-#include <applicfg.h>
+#include "applicfg.h"
 
 typedef void (*heartbeatError_t)(CO_Data*, UNS8);
 void _heartbeatError(CO_Data* d, UNS8 heartbeatID);
@@ -67,7 +67,7 @@ void _post_SlaveStateChange(CO_Data* d, UNS8 nodeId, e_nodeState newNodeState);
 typedef void (*nodeguardError_t)(CO_Data*, UNS8);
 void _nodeguardError(CO_Data* d, UNS8 id);
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 /*************************************************************************
  * Functions

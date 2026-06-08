@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __states_h__
 #define __states_h__
 
-#include <applicfg.h>
+#include "applicfg.h"
 
 /* The nodes states 
  * -----------------
@@ -97,7 +97,7 @@ void _operational(CO_Data* d);
  */
 void _stopped(CO_Data* d);
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 /************************* prototypes ******************************/
 

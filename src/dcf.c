@@ -34,9 +34,10 @@
 */
 
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 #include "sysdep.h"
 #include "dcf.h"
+#include "nmtMaster.h"
 
 typedef struct {
     UNS16 Index;

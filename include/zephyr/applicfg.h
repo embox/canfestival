@@ -7,10 +7,6 @@ See COPYING file for copyrights details.
 #ifndef __APPLICFG_ZEPHYR__
 #define __APPLICFG_ZEPHYR__
 
-#include <string.h>
-
-#include "cantypes.h"
-
 /* Timer base type. Time unit : us, 64-bit resolution (~584942 years) */
 #define TIMEVAL unsigned long long
 #define TIMEVAL_MAX ~(TIMEVAL)0

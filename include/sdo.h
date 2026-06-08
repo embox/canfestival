@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 struct struct_s_transfer;
 
-#include "timers.h"
+#include "canfestival_timers.h"
 
 /* Block mode : Data consumer receive step 
  * - set to RXSTEP_STARTED when client receive initiate upload response 
@@ -50,7 +50,7 @@ typedef void (*SDOCallback_t)(CO_Data* d, UNS8 nodeId);
 Used to store the different segments of
  - a SDO received before writing in the dictionary
  - the reading of the dictionary to put on a SDO to transmit
-WARNING : after a change in this structure check the macro s_transfer_Initializer in data.h
+WARNING : after a change in this structure check the macro s_transfer_Initializer in canfestival_datatypes.h
 */
 
 struct struct_s_transfer {
@@ -87,7 +87,7 @@ struct struct_s_transfer {
   rxStep_t       rxstep;            /**< data consumer receive step - set to true when last segment of a block received */
   UNS8           tmpData[8];        /**< temporary segment storage */
 
-  UNS8           dataType;   /**< Defined in objdictdef.h Value is visible_string
+  UNS8           dataType;   /**< Defined in canfestival_datatypes.h Value is visible_string
                               * if it is a string, any other value if it is not a string,
                               * like 0. In fact, it is used only if client.
                               */
@@ -102,7 +102,7 @@ struct struct_s_transfer {
 typedef struct struct_s_transfer s_transfer;
 
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 /** 
  * @brief Reset of a SDO exchange on timeout.
@@ -301,7 +301,7 @@ UNS8 proceedSDO (CO_Data* d, Message *m);
  * @param index At index indicated
  * @param subIndex At subIndex indicated
  * @param count number of bytes to write in the dictionnary.
- * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+ * @param dataType (defined in canfestival_datatypes.h) : put "visible_string" for strings, 0 for integers or reals or other value.
  * @param *data Pointer to data
  * @return 
  * - 0 is returned upon success.
@@ -321,7 +321,7 @@ UNS8 writeNetworkDict (CO_Data* d, UNS8 nodeId, UNS16 index,
  * @param index At index indicated
  * @param subIndex At subIndex indicated
  * @param count number of bytes to write in the dictionnary.
- * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+ * @param dataType (defined in canfestival_datatypes.h) : put "visible_string" for strings, 0 for integers or reals or other value.
  * @param *data Pointer to data
  * @param Callback Callback function
  * @return 
@@ -343,7 +343,7 @@ UNS8 writeNetworkDictCallBack (CO_Data* d, UNS8 nodeId, UNS16 index,
  * @param index At index indicated
  * @param subIndex At subIndex indicated
  * @param count number of bytes to write in the dictionnary.
- * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+ * @param dataType (defined in canfestival_datatypes.h) : put "visible_string" for strings, 0 for integers or reals or other value.
  * @param *data Pointer to data
  * @param Callback Callback function
  * @param endianize When not 0, data is endianized into network byte order
@@ -363,7 +363,7 @@ UNS8 writeNetworkDictCallBackAI (CO_Data* d, UNS8 nodeId, UNS16 index,
  * @param nodeId Node Id of the slave
  * @param index At index indicated
  * @param subIndex At subIndex indicated
- * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+ * @param dataType (defined in canfestival_datatypes.h) : put "visible_string" for strings, 0 for integers or reals or other value.
  * @return 
  * - 0 is returned upon success.
  * - 0xFE is returned when no sdo client to communicate with node.
@@ -380,7 +380,7 @@ UNS8 readNetworkDict (CO_Data* d, UNS8 nodeId, UNS16 index, UNS8 subIndex, UNS8 
  * @param nodeId Node Id of the slave
  * @param index At index indicated
  * @param subIndex At subIndex indicated
- * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+ * @param dataType (defined in canfestival_datatypes.h) : put "visible_string" for strings, 0 for integers or reals or other value.
  * @param Callback Callback function
  * @return 
  * - 0 is returned upon success.
@@ -399,7 +399,7 @@ UNS8 readNetworkDictCallback (CO_Data* d, UNS8 nodeId, UNS16 index, UNS8 subInde
  * @param nodeId Node Id of the slave
  * @param index At index indicated
  * @param subIndex At subIndex indicated
- * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+ * @param dataType (defined in canfestival_datatypes.h) : put "visible_string" for strings, 0 for integers or reals or other value.
  * @param Callback Callback function
  * @return 
  * - 0 is returned upon success.

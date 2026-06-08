@@ -4,7 +4,7 @@
 #ifndef TESTSLAVE_H
 #define TESTSLAVE_H
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 /* Prototypes of function provided by object dictionnary */
 UNS32 TestSlave_valueRangeTest (UNS8 typeValue, void * value);

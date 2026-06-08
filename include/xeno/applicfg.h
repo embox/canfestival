@@ -23,10 +23,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __APPLICFG_XENO__
 #define __APPLICFG_XENO__
 
-#include <string.h>
-
-#include "cantypes.h"
-
 /* Timer base type. Time unit : ns, 64-bit resolution (~584 years) */
 #define TIMEVAL unsigned long long
 #define TIMEVAL_MAX ~(TIMEVAL)0

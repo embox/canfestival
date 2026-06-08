@@ -36,7 +36,6 @@ extern "C" {
 #endif
 
 #include "canfestival.h"
-#include "timers.h"
 #include "timers_driver.h"
 
 #ifdef __cplusplus

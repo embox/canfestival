@@ -4,7 +4,7 @@
 #ifndef TESTMASTER_H
 #define TESTMASTER_H
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 /* Prototypes of function provided by object dictionnary */
 UNS32 TestMaster_valueRangeTest (UNS8 typeValue, void * value);

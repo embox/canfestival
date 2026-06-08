@@ -39,7 +39,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __emcy_h__
 
 
-#include <applicfg.h>
+#include "applicfg.h"
 
 /* The error states 
  * ----------------- */
@@ -54,7 +54,7 @@ typedef struct {
 	UNS8 active;
 } s_errors;
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 
 typedef void (*post_emcy_t)(CO_Data* d, UNS8 nodeID, UNS16 errCode, UNS8 errReg);

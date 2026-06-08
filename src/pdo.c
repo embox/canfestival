@@ -21,9 +21,10 @@
   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307
   USA
 */
-#include "pdo.h"
-#include "objacces.h"
+/* canfestival.h (the canfestival_datatypes.h aggregator) must come first: the
+ * API sub-headers below depend on the foundational types it defines. */
 #include "canfestival.h"
+#include "objacces.h"
 #include "sysdep.h"
 
 /*!

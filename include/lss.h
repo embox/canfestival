@@ -83,15 +83,8 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 typedef void (*LSSCallback_t)(CO_Data* d, UNS8 command); 
 
 typedef void (*lss_StoreConfiguration_t)(CO_Data* d,UNS8*,UNS8*);
-//void _lss_StoreConfiguration(UNS8 *error, UNS8 *spec_error);
-
-//typedef void (*lss_ChangeBaudRate_t)(CO_Data* d,char*);
-//void _lss_ChangeBaudRate(char *BaudRate);
-
 
 struct struct_lss_transfer;
-
-//#include "timers.h"
 
 #ifdef CO_ENABLE_LSS_FS
 struct struct_lss_fs_transfer {

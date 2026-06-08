@@ -71,7 +71,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #include <stdio.h> 
 #include "can_driver.h"
-#include "def.h"
 #include "winuser.h"
 
 //  Include a path to the following header files provided with VCI V3.X.X

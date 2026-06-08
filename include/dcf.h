@@ -19,7 +19,7 @@ You should have received a copy of the GNU Lesser General Public
 License along with this library; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 #define DCF_STATUS_INIT         0
 #define DCF_STATUS_READ_CHECK   1

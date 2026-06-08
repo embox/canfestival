@@ -29,8 +29,10 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 **
 */
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 #include "sysdep.h"
+#include "nmtSlave.h"
+#include "nmtMaster.h"
 
 /** Prototypes for internals functions */
 /*!                                                                                                

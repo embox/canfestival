@@ -36,7 +36,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 #define NEED_PRINT_MESSAGE
 #include "can_driver.h"
-#include "def.h"
 
 #define MAX_NB_CAN_PIPES 16
 

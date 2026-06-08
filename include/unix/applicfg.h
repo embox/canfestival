@@ -23,10 +23,6 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef __APPLICFG_LINUX__
 #define __APPLICFG_LINUX__
 
-#include <string.h>
-
-#include "cantypes.h"
-
 /* Timer base type. Time unit : us, 64-bit resolution (~584942 years) */
 #define TIMEVAL unsigned long long
 #define TIMEVAL_MAX ~(TIMEVAL)0

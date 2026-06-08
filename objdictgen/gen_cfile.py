@@ -573,7 +573,7 @@ CO_Data %(NodeName)s_Data = CANOPEN_NODE_DATA_INITIALIZER(%(NodeName)s);
 #ifndef %(file_include_name)s
 #define %(file_include_name)s
 
-#include "data.h"
+#include "canfestival_datatypes.h"
 
 /* Prototypes of function provided by object dictionnary */
 UNS32 %(NodeName)s_valueRangeTest (UNS8 typeValue, void * value);

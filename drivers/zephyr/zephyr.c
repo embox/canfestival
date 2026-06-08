@@ -15,10 +15,9 @@ See COPYING file for copyrights details.
  * here (a TU cannot both register and declare the same module). */
 #define CANFESTIVAL_LOG_MODULE_REGISTER
 
-#include "data.h"
 #include "canfestival.h"
-#include "timers_driver.h"
 #include "canfestival_config.h"
+#include "timers_driver.h"
 
 LOG_MODULE_REGISTER(canfestival, CONFIG_CANFESTIVAL_LOG_LEVEL);
 

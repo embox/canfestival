@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #define __timer_driver_h__
 
 #include "stackcfg.h"   /* TASK_HANDLE */
-#include "timers.h"
+#include "canfestival_timers.h"
 
 // For use from CAN driver
 

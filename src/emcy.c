@@ -33,8 +33,6 @@
 **
 */
 
-#include <data.h>
-#include "emcy.h"
 #include "canfestival.h"
 #include "sysdep.h"
 
