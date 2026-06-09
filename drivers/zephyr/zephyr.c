@@ -6,9 +6,7 @@ See COPYING file for copyrights details.
 
 /* CanFestival platform wrapper for Zephyr.
  *
- * Mirrors drivers/unix/unix.c but without dynamic loading: the module is
- * always built with NOT_USE_DYNAMIC_LOADING, so DLL_CALL(f) resolves directly
- * to the statically linked f##_driver symbol of the can_zephyr driver.
+ * Mirrors drivers/unix/unix.c but without dynamic loading.
  *
  * This TU registers the "canfestival" Zephyr log module used by the MSG macros;
  * CANFESTIVAL_LOG_MODULE_REGISTER tells applicfg.h not to LOG_MODULE_DECLARE it
@@ -47,7 +45,7 @@ UNS8 canSend(CAN_PORT port, Message *m)
 {
 	if(port){
 		UNS8 res;
-		res = DLL_CALL(canSend)(((CANPort*)port)->fd, m);
+		res = canSend_driver(((CANPort*)port)->fd, m);
 		return res; // OK
 	}
 	return 1; // NOT OK
@@ -62,7 +60,7 @@ void canReceiveLoop(CAN_PORT port)
        Message m;
 
        while (((CANPort*)port)->used) {
-               if (DLL_CALL(canReceive)(((CANPort*)port)->fd, &m) != 0)
+               if (canReceive_driver(((CANPort*)port)->fd, &m) != 0)
                        break;
 
                EnterMutex();
@@ -91,7 +89,7 @@ CAN_PORT canOpen(s_BOARD *board, CO_Data * d)
 		return NULL;
 	}
 
-	CAN_HANDLE fd0 = DLL_CALL(canOpen)(board);
+	CAN_HANDLE fd0 = canOpen_driver(board);
 	if(fd0){
 		canports[i].used = 1;
 		canports[i].fd = fd0;
@@ -118,7 +116,7 @@ int canClose(CO_Data * d)
     if(port){
         ((CANPort*)d->canHandle)->used = 0;
 
-        res = DLL_CALL(canClose)(port->fd);
+        res = canClose_driver(port->fd);
 
         WaitReceiveTaskEnd(&port->receiveTask);
 
@@ -139,7 +137,7 @@ UNS8 canChangeBaudRate(CAN_PORT port, char* baud)
 {
    if(port){
 		UNS8 res;
-		res = DLL_CALL(canChangeBaudRate)(((CANPort*)port)->fd, baud);
+		res = canChangeBaudRate_driver(((CANPort*)port)->fd, baud);
 		return res; // OK
 	}
 	return 1; // NOT OK
