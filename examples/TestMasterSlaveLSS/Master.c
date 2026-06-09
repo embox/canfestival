@@ -53,7 +53,7 @@ void TestMaster_initialisation(CO_Data* d)
 			0x01, /*UNS8 subind*/ 
 			&PDO1_COBID, /*void * pSourceData,*/ 
 			&size, /* UNS8 * pExpectedSize*/
-			RW);  /* UNS8 checkAccess */
+			CF_RW);  /* UNS8 checkAccess */
 			
 	/*****************************************
 	 * Define RPDO to match slave ID=3 TPDO1*
@@ -63,7 +63,7 @@ void TestMaster_initialisation(CO_Data* d)
 			0x01, /*UNS8 subind*/ 
 			&PDO2_COBID, /*void * pSourceData,*/ 
 			&size, /* UNS8 * pExpectedSize*/
-			RW);  /* UNS8 checkAccess */
+			CF_RW);  /* UNS8 checkAccess */
 
 }
 
@@ -153,7 +153,7 @@ static void ConfigureSlaveNode(CO_Data* d, UNS8 nodeId)
 				nodeId-1, /*UNS8 subind*/ 
 				&Master_Cons_Heartbeat_T, /*void * pSourceData,*/ 
 				&size, /* UNS8 * pExpectedSize*/
-				RW);  /* UNS8 checkAccess */
+				CF_RW);  /* UNS8 checkAccess */
 		}		
 		break;
 		case 3: 
@@ -235,7 +235,7 @@ static void CheckLSSAndContinue(CO_Data* d, UNS8 command)
 					0x00, /*UNS8 subind*/ 
 					&SINC_cicle, /*void * pSourceData,*/ 
 					&size, /* UNS8 * pExpectedSize*/
-					RW);  /* UNS8 checkAccess */
+					CF_RW);  /* UNS8 checkAccess */
 					
 				return;
 			}

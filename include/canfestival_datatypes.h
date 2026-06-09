@@ -96,26 +96,11 @@ typedef struct struct_CO_Data CO_Data;
 #define SDOABT_LOCAL_CTRL_ERROR      0x08000021 
 
 /******************** CONSTANTS ****************/
-
-/** Constantes which permit to define if a PDO frame
-   is a request one or a data one
+/** PDO request or a data status
 */
-/* Should not be modified */
 #define REQUEST 1
 #define NOT_A_REQUEST 0
 
-/* Misc constants */
-/* -------------- */
-/* Should not be modified */
-#define Rx 0
-#define Tx 1
-#ifndef TRUE
-#define TRUE  1
-#endif
-#ifndef FALSE
-#define FALSE 0
-#endif
-    
 /** Status of the SDO transmission
  */
 #define SDO_RESET                0x0      /* Transmission not started. Init state. */
@@ -294,11 +279,11 @@ typedef UNS8 (*canSend_t)(Message *);
 /** Each entry of the object dictionary can be READONLY (RO), READ/WRITE (RW),
  *  WRITE-ONLY (WO)
  */
-#define RW     0x00  
-#define WO     0x01
-#define RO     0x02
+#define CF_RW     0x00  
+#define CF_WO     0x01
+#define CF_RO     0x02
 
-#define TO_BE_SAVE  0x04
+#define TO_BE_SAVED  0x04
 #define DCF_TO_SEND 0x08
 
 /************************ STRUCTURES ****************************/

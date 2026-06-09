@@ -68,7 +68,7 @@ void TestMaster_initialisation(CO_Data* d)
 			0x01, /*UNS8 subind*/ 
 			&PDO1_COBID, /*void * pSourceData,*/ 
 			&size, /* UNS8 * pExpectedSize*/
-			RW);  /* UNS8 checkAccess */
+			CF_RW);  /* UNS8 checkAccess */
 			
 
 	/*****************************************
@@ -79,7 +79,7 @@ void TestMaster_initialisation(CO_Data* d)
 			0x01, /*UNS8 subind*/ 
 			&PDO2_COBID, /*void * pSourceData,*/ 
 			&size, /* UNS8 * pExpectedSize*/
-			RW);  /* UNS8 checkAccess */
+			CF_RW);  /* UNS8 checkAccess */
 }
 
 static int init_step = 0;

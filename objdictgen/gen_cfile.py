@@ -343,10 +343,10 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
                 sizeof = "sizeof (%s)"%typeinfos[0]
             params = Node.GetParamsEntry(index, subIndex)
             if params["save"]:
-                save = "|TO_BE_SAVE"
+                save = "|TO_BE_SAVED"
             else:
                 save = ""
-            strIndex += "                       { %s%s, %s, %s, (void*)&%s }%s\n"%(subentry_infos["access"].upper(),save,typeinfos[2],sizeof,UnDigitName(name),sep)
+            strIndex += "                       { CF_%s%s, %s, %s, (void*)&%s }%s\n"%(subentry_infos["access"].upper(),save,typeinfos[2],sizeof,UnDigitName(name),sep)
             pointer_name = pointers_dict.get((index, subIndex), None)
             if pointer_name is not None:
                 pointedVariableContent += "%s* %s = &%s;\n"%(typeinfos[0], pointer_name, name)
@@ -373,8 +373,8 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
                      };
                     subindex %(NodeName)s_Index1003[] = 
                      {
-                       { RW, valueRange_EMC, sizeof (UNS8), (void*)&%(NodeName)s_highestSubIndex_obj1003 },
-                       { RO, uint32, sizeof (UNS32), (void*)&%(NodeName)s_obj1003[0] }
+                       { CF_RW, valueRange_EMC, sizeof (UNS8), (void*)&%(NodeName)s_highestSubIndex_obj1003 },
+                       { CF_RO, uint32, sizeof (UNS32), (void*)&%(NodeName)s_obj1003[0] }
                      };
 """%texts
 

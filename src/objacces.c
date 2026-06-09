@@ -105,7 +105,7 @@ UNS32 _getODentry( CO_Data* d,
     return OD_NO_SUCH_SUBINDEX;
   }
 
-  if (checkAccess && (ptrTable->pSubindex[bSubindex].bAccessType & WO)) {
+  if (checkAccess && (ptrTable->pSubindex[bSubindex].bAccessType & CF_WO)) {
     MSG_WAR(0x2B30, "Access Type : ", ptrTable->pSubindex[bSubindex].bAccessType);
     accessDictionaryError(wIndex, bSubindex, 0, 0, OD_READ_NOT_ALLOWED);
     return OD_READ_NOT_ALLOWED;
@@ -193,7 +193,7 @@ UNS32 _setODentry( CO_Data* d,
     accessDictionaryError(wIndex, bSubindex, 0, *pExpectedSize, OD_NO_SUCH_SUBINDEX);
     return OD_NO_SUCH_SUBINDEX;
   }
-  if (checkAccess && (ptrTable->pSubindex[bSubindex].bAccessType == RO)) {
+  if (checkAccess && (ptrTable->pSubindex[bSubindex].bAccessType == CF_RO)) {
     MSG_WAR(0x2B25, "Access Type : ", ptrTable->pSubindex[bSubindex].bAccessType);
     accessDictionaryError(wIndex, bSubindex, 0, *pExpectedSize, OD_WRITE_NOT_ALLOWED);
     return OD_WRITE_NOT_ALLOWED;
@@ -252,7 +252,7 @@ UNS32 _setODentry( CO_Data* d,
        }
 
       /* TODO : Store dans NVRAM */
-      if (ptrTable->pSubindex[bSubindex].bAccessType & TO_BE_SAVE){
+      if (ptrTable->pSubindex[bSubindex].bAccessType & TO_BE_SAVED){
         (d->storeODSubIndex ? d->storeODSubIndex : _storeODSubIndex)(d, wIndex, bSubindex);
       }
       return OD_SUCCESSFUL;
