@@ -143,8 +143,8 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
 #-------------------------------------------------------------------------------    
     
     valueRangeContent = ""
-    strDefine = "\n#define valueRange_EMC 0x9F /* Type for index 0x1003 subindex 0x00 (only set of value 0 is possible) */"
-    strSwitch = """    case valueRange_EMC:
+    strDefine = "\n#define cf_valueRange_EMC 0x9F /* Type for index 0x1003 subindex 0x00 (only set of value 0 is possible) */"
+    strSwitch = """    case cf_valueRange_EMC:
       if (*(UNS8*)value != (UNS8)0) return OD_VALUE_RANGE_EXCEEDED;
       break;\n"""
     internal_types["valueRange_EMC"] = ("UNS8", "", "valueRange_EMC", True)
@@ -160,8 +160,8 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
             internal_types[rangename] = (typeinfos[0], typeinfos[1], "valueRange_%d"%num)
             minvalue = Node.GetEntry(index, 2)
             maxvalue = Node.GetEntry(index, 3)
-            strDefine += "\n#define valueRange_%d 0x%02X /* Type %s, %s < value < %s */"%(num,index,typeinfos[0],str(minvalue),str(maxvalue))
-            strSwitch += "    case valueRange_%d:\n"%(num)
+            strDefine += "\n#define cf_valueRange_%d 0x%02X /* Type %s, %s < value < %s */"%(num,index,typeinfos[0],str(minvalue),str(maxvalue))
+            strSwitch += "    case cf_valueRange_%d:\n"%(num)
             if typeinfos[3] and minvalue <= 0:
                 strSwitch += "      /* Negative or null low limit ignored because of unsigned type */;\n"
             else:
@@ -346,7 +346,7 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
                 save = "|TO_BE_SAVED"
             else:
                 save = ""
-            strIndex += "                       { CF_%s%s, %s, %s, (void*)&%s }%s\n"%(subentry_infos["access"].upper(),save,typeinfos[2],sizeof,UnDigitName(name),sep)
+            strIndex += "                       { CF_%s%s, cf_%s, %s, (void*)&%s }%s\n"%(subentry_infos["access"].upper(),save,typeinfos[2],sizeof,UnDigitName(name),sep)
             pointer_name = pointers_dict.get((index, subIndex), None)
             if pointer_name is not None:
                 pointedVariableContent += "%s* %s = &%s;\n"%(typeinfos[0], pointer_name, name)
@@ -373,8 +373,8 @@ def GenerateFileContent(Node, headerfilepath, pointers_dict = {}):
                      };
                     subindex %(NodeName)s_Index1003[] = 
                      {
-                       { CF_RW, valueRange_EMC, sizeof (UNS8), (void*)&%(NodeName)s_highestSubIndex_obj1003 },
-                       { CF_RO, uint32, sizeof (UNS32), (void*)&%(NodeName)s_obj1003[0] }
+                       { CF_RW, cf_valueRange_EMC, sizeof (UNS8), (void*)&%(NodeName)s_highestSubIndex_obj1003 },
+                       { CF_RO, cf_uint32, sizeof (UNS32), (void*)&%(NodeName)s_obj1003[0] }
                      };
 """%texts
 

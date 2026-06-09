@@ -126,13 +126,13 @@ UNS32 _getODentry( CO_Data* d,
   szData = ptrTable->pSubindex[bSubindex].size;
 
 #  ifdef CANOPEN_BIG_ENDIAN
-  if(endianize && *pDataType > boolean && !(
-         *pDataType >= visible_string &&
-         *pDataType <= domain)) {
+  if(endianize && *pDataType > cf_boolean && !(
+         *pDataType >= cf_visible_string &&
+         *pDataType <= cf_domain)) {
     /* data must be transmited with low byte first */
     UNS8 i, j = 0;
-    MSG_WAR(boolean, "data type ", *pDataType);
-    MSG_WAR(visible_string, "data type ", *pDataType);
+    MSG_WAR(cf_boolean, "data type ", *pDataType);
+    MSG_WAR(cf_visible_string, "data type ", *pDataType);
     for ( i = szData ; i > 0 ; i--) {
       MSG_WAR(i," ", j);
       ((UNS8*)pDestData)[j++] =
@@ -143,7 +143,7 @@ UNS32 _getODentry( CO_Data* d,
   else /* no endianisation change */
 #  endif
 
-  if(*pDataType != visible_string) {
+  if(*pDataType != cf_visible_string) {
       memcpy(pDestData, ptrTable->pSubindex[bSubindex].pObject,szData);
       *pExpectedSize = szData;
   }else{
@@ -206,13 +206,13 @@ UNS32 _setODentry( CO_Data* d,
   if( *pExpectedSize == 0 ||
       *pExpectedSize == szData ||
       /* allow to store a shorter string than entry size */
-      (dataType == visible_string && *pExpectedSize < szData))
+      (dataType == cf_visible_string && *pExpectedSize < szData))
     {
 #ifdef CANOPEN_BIG_ENDIAN
       /* re-endianize do not occur for bool, strings time and domains */
-      if(endianize && dataType > boolean && !(
-            dataType >= visible_string && 
-            dataType <= domain))
+      if(endianize && dataType > cf_boolean && !(
+            dataType >= cf_visible_string && 
+            dataType <= cf_domain))
         {
           /* we invert the data source directly. This let us do range
             testing without */
@@ -237,7 +237,7 @@ UNS32 _setODentry( CO_Data* d,
       *  - store string size in td_subindex 
       * */
       /* terminate visible_string with '\0' */
-      if(dataType == visible_string && *pExpectedSize < szData)
+      if(dataType == cf_visible_string && *pExpectedSize < szData)
         ((UNS8*)ptrTable->pSubindex[bSubindex].pObject)[*pExpectedSize] = 0;
       
       *pExpectedSize = szData;

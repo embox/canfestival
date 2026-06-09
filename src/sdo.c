@@ -2305,7 +2305,7 @@ UNS8 getReadResultNetworkDict (CO_Data* d, UNS8 nodeId, void* data, UNS32 *size,
 		}
 		for  ( i = 0 ; i < *size ; i++) {
 # ifdef CANOPEN_BIG_ENDIAN
-			if (d->transfers[line].dataType != visible_string)
+			if (d->transfers[line].dataType != cf_visible_string)
 				( (char *) data)[*size - 1 - i] = lineData[i];
 			else /* String of bytes. */
 				( (char *) data)[i] = lineData[i];
@@ -2317,7 +2317,7 @@ UNS8 getReadResultNetworkDict (CO_Data* d, UNS8 nodeId, void* data, UNS32 *size,
 #else //SDO_DYNAMIC_BUFFER_ALLOCATION
 	for  ( i = 0 ; i < *size ; i++) {
 # ifdef CANOPEN_BIG_ENDIAN
-		if (d->transfers[line].dataType != visible_string)
+		if (d->transfers[line].dataType != cf_visible_string)
 			( (char *) data)[*size - 1 - i] = d->transfers[line].data[i];
 		else /* String of bytes. */
 			( (char *) data)[i] = d->transfers[line].data[i];
