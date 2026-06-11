@@ -13,15 +13,28 @@ See COPYING file for copyrights details.
  * here (a TU cannot both register and declare the same module). */
 #define CANFESTIVAL_LOG_MODULE_REGISTER
 
+#include <zephyr/devicetree.h>
+
 #include "canfestival.h"
 #include "canfestival_config.h"
 #include "timers_driver.h"
 
 LOG_MODULE_REGISTER(canfestival, CONFIG_CANFESTIVAL_LOG_LEVEL);
 
-/* One CAN port per CAN bus; each port statically owns its receive task control
- * block and stack through the embedded TASK_HANDLE. */
-#define MAX_NB_CAN_PORTS MAX_CAN_BUS_ID
+/* One CAN port per declared CAN interface; each port statically owns its receive
+ * task control block and stack through the embedded TASK_HANDLE.
+ *
+ * The count comes from the "canfestival,interfaces" devicetree node - the same
+ * source can_zephyr.c sizes its device pool from. It is computed in C with
+ * DT_PROP_LEN rather than at CMake configure time, because Zephyr's dt_prop()
+ * cannot enumerate a phandle-array (it would yield 1, leaving no free port for
+ * the second node). One node per interface is assumed. */
+#define CF_IFACES_NODE DT_COMPAT_GET_ANY_STATUS_OKAY(canfestival_interfaces)
+#if DT_NODE_EXISTS(CF_IFACES_NODE)
+#define MAX_NB_CAN_PORTS DT_PROP_LEN(CF_IFACES_NODE, interfaces)
+#else
+#define MAX_NB_CAN_PORTS 1
+#endif
 
 /** CAN port structure */
 typedef struct {

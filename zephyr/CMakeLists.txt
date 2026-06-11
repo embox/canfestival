@@ -10,16 +10,10 @@ if(CONFIG_CANFESTIVAL)
   # ---------------------------------------------------------------------------
   #  Stack constants (mirror the defaults of the top-level CMakeLists.txt)
   # ---------------------------------------------------------------------------
-  # Number of CAN buses = number of interfaces declared in the
-  # "canfestival,interfaces" devicetree node (board overlay), defaulting to 1.
-  dt_comp_path(cf_ifaces_node COMPATIBLE "canfestival,interfaces" INDEX 0)
-  if(cf_ifaces_node)
-    dt_prop(cf_ifaces PATH "${cf_ifaces_node}" PROPERTY "interfaces")
-    list(LENGTH cf_ifaces CF_MAX_CAN_BUS_ID)
-  endif()
-  if(NOT CF_MAX_CAN_BUS_ID OR CF_MAX_CAN_BUS_ID LESS 1)
-    set(CF_MAX_CAN_BUS_ID 1)
-  endif()
+  # The number of CAN ports is NOT configured here: drivers/zephyr/zephyr.c and
+  # drivers/can_zephyr/can_zephyr.c size their pools directly from the
+  # "canfestival,interfaces" devicetree node (DT_PROP_LEN), which is the single
+  # source of truth (CMake's dt_prop() cannot enumerate a phandle-array).
   # Remaining stack constants are tunable through Kconfig.
   set(CF_SDO_MAX_LENGTH_TRANSFER ${CONFIG_CANFESTIVAL_SDO_MAX_LENGTH_TRANSFER})
   set(CF_SDO_BLOCK_SIZE ${CONFIG_CANFESTIVAL_SDO_BLOCK_SIZE})

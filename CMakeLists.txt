@@ -14,7 +14,6 @@ option(CF_BUILD_EXAMPLES "Build example applications" OFF)
 option(CF_SDO_DYNAMIC_BUFFER_ALLOCATION "Use dynamic (heap) buffers for large SDO transfers" OFF)
 
 # Stack constants
-set(CF_MAX_CAN_BUS_ID 1 CACHE STRING "Number of CAN buses")
 set(CF_SDO_MAX_LENGTH_TRANSFER 32 CACHE STRING "Max SDO transfer bytes")
 set(CF_SDO_BLOCK_SIZE 16 CACHE STRING "SDO block transfer size")
 set(CF_SDO_MAX_SIMULTANEOUS_TRANSFERS 4 CACHE STRING "Concurrent SDO transfers")

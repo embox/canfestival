@@ -55,8 +55,8 @@ config CANFESTIVAL_RX_STACK_SIZE
 	default 2048
 
 # --- CANopen stack sizing (substituted into the generated config.h) ---------
-# The number of CAN buses (MAX_CAN_BUS_ID) is NOT configured here: it is
-# deduced from the "canfestival,interfaces" devicetree node count.
+# The number of CAN ports is NOT configured here: the drivers size their pools
+# directly from the "canfestival,interfaces" devicetree node (DT_PROP_LEN).
 
 config CANFESTIVAL_SDO_MAX_LENGTH_TRANSFER
 	int "Maximum SDO transfer length (bytes)"
