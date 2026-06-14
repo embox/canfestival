@@ -115,6 +115,16 @@ config CANFESTIVAL_LSS_FS_TIMEOUT_MS
 
 endif # CANFESTIVAL_ENABLE_LSS
 
+config CANFESTIVAL_DEBUG_MSG_CONSOLE
+	bool "Trace CAN frames sent/received by the driver"
+	help
+	  Define DEBUG_MSG_CONSOLE_ON so the CAN driver logs every frame it
+	  sends and receives via print_message() (decoded as "in :"/"out :").
+	  The trace is emitted through the CanFestival log module at INFO level,
+	  so CANFESTIVAL_LOG_LEVEL must be INF or higher for it to appear. Note
+	  that each frame produces many log lines (one per print_message() field),
+	  so this is for debugging only.
+
 # CanFestival log module (defines CONFIG_CANFESTIVAL_LOG_LEVEL), used by the
 # MSG/MSG_ERR/MSG_WAR macros routed through Zephyr logging.
 module = CANFESTIVAL

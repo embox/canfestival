@@ -102,6 +102,7 @@ if(CONFIG_CANFESTIVAL)
 
   zephyr_library_compile_definitions(NOT_USE_DYNAMIC_LOADING)
   zephyr_library_compile_definitions_ifdef(CONFIG_CANFESTIVAL_ENABLE_LSS CO_ENABLE_LSS)
+  zephyr_library_compile_definitions_ifdef(CONFIG_CANFESTIVAL_DEBUG_MSG_CONSOLE DEBUG_MSG_CONSOLE_ON)
 
   set(CF_INCLUDE_DIRS
     ${CF_ROOT}/include

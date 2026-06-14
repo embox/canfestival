@@ -170,6 +170,10 @@ UNS8 canReceive_driver(CAN_HANDLE fd0, Message *m)
 		memcpy(m->data, frame.data, frame.dlc);
 	}
 
+#if defined DEBUG_MSG_CONSOLE_ON
+	MSG("in : ");
+	print_message(m);
+#endif
 	return 0;
 }
 
@@ -191,6 +195,10 @@ UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m)
 		memcpy(frame.data, m->data, m->len);
 	}
 
+#if defined DEBUG_MSG_CONSOLE_ON
+	MSG("out : ");
+	print_message(m);
+#endif
 	if (can_send(h->dev, &frame, K_MSEC(CONFIG_CANFESTIVAL_TX_TIMEOUT_MS),
 		     NULL, NULL) != 0) {
 		return 1;
