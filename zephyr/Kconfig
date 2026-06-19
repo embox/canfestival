@@ -35,9 +35,26 @@ config CANFESTIVAL_RX_MSGQ_DEPTH
 	  and the receive thread. Size it for the worst-case burst; on overflow
 	  incoming frames are dropped.
 
-config CANFESTIVAL_TX_TIMEOUT_MS
-	int "CanFestival CAN send timeout (ms)"
-	default 100
+config CANFESTIVAL_TX_MSGQ_DEPTH
+	int "CanFestival TX message queue depth (frames)"
+	default 16
+	help
+	  Number of CAN frames that can be buffered by the non-blocking transmit
+	  path between canSend() and the TX worker thread. Size it for the
+	  worst-case burst; on overflow the lowest-priority queued frame (the one
+	  with the highest CAN COB-ID) is dropped so higher-priority frames are
+	  kept.
+
+config CANFESTIVAL_TX_THREAD_PRIO
+	int "CanFestival CAN transmit thread priority"
+	default 5
+	help
+	  Priority of the per-port thread draining the software TX queue into the
+	  Zephyr CAN driver.
+
+config CANFESTIVAL_TX_STACK_SIZE
+	int "CanFestival transmit thread stack size"
+	default 1024
 
 config CANFESTIVAL_TIMER_THREAD_PRIO
 	int "CanFestival timer dispatch thread priority"

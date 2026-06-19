@@ -41,8 +41,16 @@ See COPYING file for copyrights details.
 #define CONFIG_CANFESTIVAL_RX_MSGQ_DEPTH 16
 #endif
 
-#ifndef CONFIG_CANFESTIVAL_TX_TIMEOUT_MS
-#define CONFIG_CANFESTIVAL_TX_TIMEOUT_MS 100
+#ifndef CONFIG_CANFESTIVAL_TX_MSGQ_DEPTH
+#define CONFIG_CANFESTIVAL_TX_MSGQ_DEPTH 16
+#endif
+
+#ifndef CONFIG_CANFESTIVAL_TX_THREAD_PRIO
+#define CONFIG_CANFESTIVAL_TX_THREAD_PRIO 5
+#endif
+
+#ifndef CONFIG_CANFESTIVAL_TX_STACK_SIZE
+#define CONFIG_CANFESTIVAL_TX_STACK_SIZE 1024
 #endif
 
 /* Internal handle: what CAN_HANDLE actually points to. One static slot per
@@ -54,6 +62,22 @@ struct cf_can_dev {
 	char rxq_buf[CONFIG_CANFESTIVAL_RX_MSGQ_DEPTH * sizeof(struct can_frame)];
 	int filter_id;
 	atomic_t closing;
+
+	/* Non-blocking transmit path. canSend_driver() never touches the CAN
+	 * device directly: it inserts the frame into txq (a software priority
+	 * queue kept sorted by ascending CAN id, i.e. highest priority at the
+	 * head) and wakes tx_thread. The thread hands one frame at a time to
+	 * can_send() with a completion callback; the next frame is dequeued only
+	 * once cf_tx_done() fires. Single-in-flight keeps same-COB-id segmented
+	 * transfers (SDO) in FIFO order, as required by the Zephyr CAN API, and
+	 * lets a newly-arrived higher-priority frame overtake between sends. */
+	struct can_frame txq[CONFIG_CANFESTIVAL_TX_MSGQ_DEPTH];
+	int txq_count;
+	struct k_spinlock txq_lock;
+	bool tx_busy;
+	struct k_sem tx_wake;
+	struct k_thread tx_thread;
+	K_KERNEL_STACK_MEMBER(tx_stack, CONFIG_CANFESTIVAL_TX_STACK_SIZE);
 };
 
 static struct cf_can_dev cf_can_devs[CF_NUM_IFACES];
@@ -177,10 +201,132 @@ UNS8 canReceive_driver(CAN_HANDLE fd0, Message *m)
 	return 0;
 }
 
+/* Frame ordering on the CAN bus: the lower the id, the higher the priority; a
+ * data frame outranks a remote frame with the same id. Returns <0 if a sorts
+ * before b (a is higher priority), >0 if after, 0 if equal priority. */
+static int cf_frame_cmp(const struct can_frame *a, const struct can_frame *b)
+{
+	if (a->id != b->id) {
+		return (int)a->id - (int)b->id;
+	}
+	/* Data (RTR clear) before remote (RTR set) at equal id. */
+	return (a->flags & CAN_FRAME_RTR) - (b->flags & CAN_FRAME_RTR);
+}
+
+/* Insert frame into the priority queue, keeping it sorted by ascending
+ * priority (head = highest priority). Stable: among equal-priority frames the
+ * new one goes last, preserving FIFO order for segmented same-COB-id transfers.
+ * When the queue is full, the lowest-priority frame is evicted so priority
+ * prevails. Returns true if the incoming frame was stored, false if it was the
+ * one dropped. Caller must hold txq_lock. */
+static bool cf_txq_insert(struct cf_can_dev *h, const struct can_frame *frame)
+{
+	int pos;
+
+	if (h->txq_count == CONFIG_CANFESTIVAL_TX_MSGQ_DEPTH) {
+		/* Full: drop the incoming frame unless it outranks the current
+		 * lowest-priority one (the tail), in which case evict the tail. */
+		if (cf_frame_cmp(frame, &h->txq[h->txq_count - 1]) >= 0) {
+			return false;
+		}
+		h->txq_count--;
+	}
+
+	/* Stable insertion sort: place after all frames of equal-or-higher
+	 * priority. */
+	for (pos = h->txq_count; pos > 0; pos--) {
+		if (cf_frame_cmp(&h->txq[pos - 1], frame) <= 0) {
+			break;
+		}
+		h->txq[pos] = h->txq[pos - 1];
+	}
+	h->txq[pos] = *frame;
+	h->txq_count++;
+	return true;
+}
+
+/* Pop the highest-priority frame (head) into *out. Returns false if empty.
+ * Caller must hold txq_lock. */
+static bool cf_txq_pop(struct cf_can_dev *h, struct can_frame *out)
+{
+	if (h->txq_count == 0) {
+		return false;
+	}
+	*out = h->txq[0];
+	h->txq_count--;
+	memmove(&h->txq[0], &h->txq[1], h->txq_count * sizeof(h->txq[0]));
+	return true;
+}
+
+/* can_send() completion callback - runs in interrupt context, so it must not
+ * call can_send() itself (the Zephyr CAN send path takes a mutex). Release the
+ * single-in-flight gate and wake the TX thread to send the next queued frame. */
+static void cf_tx_done(const struct device *dev, int error, void *user_data)
+{
+	struct cf_can_dev *h = user_data;
+	k_spinlock_key_t key;
+
+	ARG_UNUSED(dev);
+	ARG_UNUSED(error);
+
+	key = k_spin_lock(&h->txq_lock);
+	h->tx_busy = false;
+	k_spin_unlock(&h->txq_lock, key);
+	k_sem_give(&h->tx_wake);
+}
+
+/* TX worker: drains the priority queue into the CAN driver, one frame in flight
+ * at a time. */
+static void cf_tx_thread(void *p1, void *p2, void *p3)
+{
+	struct cf_can_dev *h = p1;
+
+	ARG_UNUSED(p2);
+	ARG_UNUSED(p3);
+
+	while (!atomic_get(&h->closing)) {
+		struct can_frame frame;
+		k_spinlock_key_t key;
+		int err;
+
+		k_sem_take(&h->tx_wake, K_FOREVER);
+
+		key = k_spin_lock(&h->txq_lock);
+		if (h->tx_busy || !cf_txq_pop(h, &frame)) {
+			k_spin_unlock(&h->txq_lock, key);
+			continue;
+		}
+		h->tx_busy = true;
+		k_spin_unlock(&h->txq_lock, key);
+
+		err = can_send(h->dev, &frame, K_NO_WAIT, cf_tx_done, h);
+		if (err != 0) {
+			key = k_spin_lock(&h->txq_lock);
+			h->tx_busy = false;
+			if (err == -EAGAIN) {
+				(void)cf_txq_insert(h, &frame);
+			}
+			k_spin_unlock(&h->txq_lock, key);
+			if (err == -EAGAIN) {
+				/* No mailbox free: nothing is in flight, so no
+				 * cf_tx_done() will re-wake us. Back off briefly
+				 * and re-arm to retry the requeued frame. */
+				k_sleep(K_MSEC(1));
+				k_sem_give(&h->tx_wake);
+			} else {
+				MSG("canSend: can_send failed (%d), frame dropped\n",
+				    err);
+			}
+		}
+	}
+}
+
 UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m)
 {
 	struct cf_can_dev *h = (struct cf_can_dev *)fd0;
 	struct can_frame frame;
+	k_spinlock_key_t key;
+	bool stored;
 
 	if (h == NULL || h->dev == NULL) {
 		return 1;
@@ -199,12 +345,16 @@ UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m)
 	MSG("out : ");
 	print_message(m);
 #endif
-	if (can_send(h->dev, &frame, K_MSEC(CONFIG_CANFESTIVAL_TX_TIMEOUT_MS),
-		     NULL, NULL) != 0) {
-		return 1;
-	}
 
-	return 0;
+	/* Non-blocking: queue the frame (priority-ordered, lowest priority
+	 * dropped on overflow) and let the TX thread transmit it. */
+	key = k_spin_lock(&h->txq_lock);
+	stored = cf_txq_insert(h, &frame);
+	k_spin_unlock(&h->txq_lock, key);
+	k_sem_give(&h->tx_wake);
+
+	/* Report failure only when this very frame was dropped on overflow. */
+	return stored ? 0 : 1;
 }
 
 CAN_HANDLE canOpen_driver(s_BOARD *board)
@@ -260,6 +410,9 @@ CAN_HANDLE canOpen_driver(s_BOARD *board)
 	memset(h, 0, sizeof(*h));
 	h->dev = dev;
 	atomic_set(&h->closing, 0);
+	h->tx_busy = false;
+	h->txq_count = 0;
+	k_sem_init(&h->tx_wake, 0, 1);
 	k_msgq_init(&h->rxq, h->rxq_buf, sizeof(struct can_frame),
 		    CONFIG_CANFESTIVAL_RX_MSGQ_DEPTH);
 
@@ -278,6 +431,11 @@ CAN_HANDLE canOpen_driver(s_BOARD *board)
 		can_remove_rx_filter(dev, h->filter_id);
 		return NULL;
 	}
+
+	k_thread_create(&h->tx_thread, h->tx_stack,
+			K_KERNEL_STACK_SIZEOF(h->tx_stack),
+			cf_tx_thread, h, NULL, NULL,
+			CONFIG_CANFESTIVAL_TX_THREAD_PRIO, 0, K_NO_WAIT);
 
 	h->used = 1;
 	return (CAN_HANDLE)h;
@@ -300,6 +458,10 @@ int canClose_driver(CAN_HANDLE fd0)
 	/* Unblock canReceive_driver(), which is waiting in k_msgq_get(). */
 	memset(&sentinel, 0, sizeof(sentinel));
 	k_msgq_put(&h->rxq, &sentinel, K_NO_WAIT);
+
+	/* Wake the TX thread so it observes the closing flag and exits. */
+	k_sem_give(&h->tx_wake);
+	k_thread_join(&h->tx_thread, K_FOREVER);
 
 	h->used = 0;
 	return 0;
