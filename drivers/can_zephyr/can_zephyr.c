@@ -357,6 +357,30 @@ UNS8 canSend_driver(CAN_HANDLE fd0, Message const *m)
 	return stored ? 0 : 1;
 }
 
+/* Report the local CAN controller state and bus error counters. All three
+ * outputs fit in a byte (enum can_state is small; the error counters are
+ * uint8_t). On failure the outputs are left untouched so the caller keeps the
+ * last known value. */
+UNS8 canGetState_driver(CAN_HANDLE fd0, UNS8 *state, UNS8 *txerr, UNS8 *rxerr)
+{
+	struct cf_can_dev *h = (struct cf_can_dev *)fd0;
+	enum can_state st;
+	struct can_bus_err_cnt cnt;
+
+	if (h == NULL || h->dev == NULL) {
+		return 1;
+	}
+
+	if (can_get_state(h->dev, &st, &cnt) != 0) {
+		return 1;
+	}
+
+	*state = (UNS8)st;
+	*txerr = cnt.tx_err_cnt;
+	*rxerr = cnt.rx_err_cnt;
+	return 0;
+}
+
 CAN_HANDLE canOpen_driver(s_BOARD *board)
 {
 	const struct device *dev = cf_select_can(board->busname);

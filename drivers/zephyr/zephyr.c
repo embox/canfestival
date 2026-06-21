@@ -65,6 +65,23 @@ UNS8 canSend(CAN_PORT port, Message *m)
 }
 
 /**
+ * Query the local CAN controller state and bus error counters
+ * @param d CAN object data
+ * @param state receives the controller state
+ * @param txerr receives the transmit error counter
+ * @param rxerr receives the receive error counter
+ * @return 0 on success, non-zero otherwise
+ */
+UNS8 canGetState(CO_Data *d, UNS8 *state, UNS8 *txerr, UNS8 *rxerr)
+{
+	CANPort *port = (CANPort *)d->canHandle;
+	if(port){
+		return canGetState_driver(port->fd, state, txerr, rxerr);
+	}
+	return 1; // NOT OK
+}
+
+/**
  * CAN Receiver Task
  * @param port CAN port
  */

@@ -38,6 +38,10 @@ UNS8 DLL_CALL(canSend)(CAN_HANDLE, Message const *)FCT_PTR_INIT;
 CAN_HANDLE DLL_CALL(canOpen)(s_BOARD *)FCT_PTR_INIT;
 int DLL_CALL(canClose)(CAN_HANDLE)FCT_PTR_INIT;
 UNS8 DLL_CALL(canChangeBaudRate)(CAN_HANDLE, char *)FCT_PTR_INIT;
+/* Optional: query the local CAN controller state and bus error counters.
+ * Only the Zephyr driver implements this; other targets neither define nor
+ * reference it. */
+UNS8 DLL_CALL(canGetState)(CAN_HANDLE, UNS8 *, UNS8 *, UNS8 *)FCT_PTR_INIT;
 
 #if defined DEBUG_MSG_CONSOLE_ON || defined NEED_PRINT_MESSAGE
 

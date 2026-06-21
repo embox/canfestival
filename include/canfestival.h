@@ -45,6 +45,18 @@ UNS8 canSend(CAN_PORT port, Message *m);
 
 /**
  * @ingroup can
+ * @brief Query the local CAN controller state and bus error counters
+ * @param *d Pointer to the CAN object data structure
+ * @param *state Receives the controller state (driver-specific encoding)
+ * @param *txerr Receives the transmit error counter
+ * @param *rxerr Receives the receive error counter
+ * @return 0 on success; non-zero if unsupported or unavailable (outputs untouched)
+ * @note Only implemented by the Zephyr driver; other targets do not provide it.
+ */
+UNS8 canGetState(CO_Data *d, UNS8 *state, UNS8 *txerr, UNS8 *rxerr);
+
+/**
+ * @ingroup can
  * @brief Open a CANOpen device
  * @param *board Pointer to the board structure that contains busname and baudrate
  * @param *d Pointer to the CAN object data structure
