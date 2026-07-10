@@ -1083,7 +1083,8 @@ class NodeManager:
                                 editor["value"] = "dcf"
                             else:
                                 editor["value"] = "domain"
-                            dic["value"] = dic["value"].hex()
+                            if isinstance(dic["value"], bytes):
+                                dic["value"] = dic["value"].hex()
                         elif dic["type"] == "BOOLEAN":
                             editor["value"] = "bool"
                             dic["value"] = BoolType[dic["value"]]

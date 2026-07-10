@@ -25,7 +25,7 @@
 import node
 from node import nosub, var, array, rec, plurivar, pluriarray, plurirec
 from time import *
-import os,re
+import os,re,ast
 
 # Regular expression for finding index section names
 index_model = re.compile('([0-9A-F]{1,4}$)')
@@ -81,6 +81,23 @@ ENTRY_TYPES = {2 : {"name" : " DOMAIN",
                     "require" : ["PARAMETERNAME", "OBJECTTYPE", "SUBNUMBER"],
                     "optional" : ["OBJFLAGS"]}}
 
+
+# DOMAIN values (e.g. Concise DCF in 0x1F22) are binary, and serialized as an
+# hexadecimal string in the (text based) DCF file. Decode them back to bytes,
+# leaving the value untouched if it isn't a valid hex string (e.g. legacy files).
+def DecodeDomainValue(value):
+    if isinstance(value, str) and value:
+        # Legacy files stored DOMAIN values as a Python bytes repr (b'\\x..').
+        if value[:2] in ("b'", "b\""):
+            try:
+                return ast.literal_eval(value)
+            except (ValueError, SyntaxError):
+                return value
+        try:
+            return bytes.fromhex(value)
+        except ValueError:
+            pass
+    return value
 
 # Function that search into Node Mappings the informations about an index or a subindex
 # and return the default value
@@ -321,8 +338,16 @@ def ParseEDSFile(filepath):
                 if keyname.isalnum():
                     # value can be preceded and followed by whitespaces, so we escape them
                     value = value.strip()
+                    # String and DOMAIN typed values are kept verbatim and must not go
+                    # through numeric coercion: an hex-encoded DOMAIN (e.g. Concise DCF)
+                    # made only of decimal digits would otherwise be mistaken for an
+                    # octal/decimal number. DataType is emitted before the value, so it
+                    # is already known here. VerifyValue() later enforces the str type.
+                    if keyname.upper() in ("DEFAULTVALUE", "PARAMETERVALUE") and \
+                       values.get("DATATYPE") in (0x09, 0x0A, 0x0B, 0x0F):
+                        computed_value = value
                     # First case, value starts with "$NODEID", then it's a formula
-                    if value.upper().startswith("$NODEID"):
+                    elif value.upper().startswith("$NODEID"):
                         try:
                             test = int(value.upper().replace("$NODEID+", ""), 16)
                             computed_value = "\"%s\""%value
@@ -538,6 +563,8 @@ def GenerateFileContent(Node, filepath):
             text += "AccessType=%s\n"%subentry_infos["access"]
             if subentry_infos["type"] == 1:
                 text += "DefaultValue=%s\n"%BOOL_TRANSLATE[values]
+            elif subentry_infos["type"] == 0xF and isinstance(values, bytes):
+                text += "DefaultValue=%s\n"%values.hex()
             else:
                 text += "DefaultValue=%s\n"%values
             text += "PDOMapping=%s\n"%BOOL_TRANSLATE[subentry_infos["pdo"]]
@@ -565,6 +592,8 @@ def GenerateFileContent(Node, filepath):
                     subtext += "AccessType=%s\n"%subentry_infos["access"]
                     if subentry_infos["type"] == 1:
                         subtext += "DefaultValue=%s\n"%BOOL_TRANSLATE[value]
+                    elif subentry_infos["type"] == 0xF and isinstance(value, bytes):
+                        subtext += "DefaultValue=%s\n"%value.hex()
                     else:
                         subtext += "DefaultValue=%s\n"%value
                     subtext += "PDOMapping=%s\n"%BOOL_TRANSLATE[subentry_infos["pdo"]]
@@ -754,6 +783,8 @@ def GenerateNode(filepath, nodeID = 0):
                     # Find default value for value type of the entry
                     else:
                         value = GetDefaultValue(Node, entry)
+                    if values.get("DATATYPE") == 0xF:
+                        value = DecodeDomainValue(value)
                     Node.AddEntry(entry, 0, value)
                 # Second case, entry is an ARRAY or a RECORD
                 elif values["OBJECTTYPE"] in [8, 9]:
@@ -772,6 +803,9 @@ def GenerateNode(filepath, nodeID = 0):
                             # Find default value for value type of the subindex
                             else:
                                 value = GetDefaultValue(Node, entry, subindex)
+                            if subindex in values["subindexes"] and \
+                               values["subindexes"][subindex].get("DATATYPE") == 0xF:
+                                value = DecodeDomainValue(value)
                             Node.AddEntry(entry, subindex, value)
                     else:
                         raise SyntaxError(_("Array or Record entry 0x%4.4X must have a \"SubNumber\" attribute")%entry)
